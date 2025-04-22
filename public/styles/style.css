@@ -20,7 +20,8 @@ body {
 }
 
 /* CABEÇALHO */
-.nav {   position: fixed;
+.nav {   
+    position: fixed;
     display: flex;
     justify-content: space-between;
     padding: 15px 50px;
@@ -28,6 +29,7 @@ body {
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     background-color: white;
     width: 100%;
+    z-index: 10;
 }
 
 .nav_titulo {
@@ -112,32 +114,28 @@ body {
 
 /* FIM DO BANNER */
 /* ESTRATÉGIA */
-.bloco1
-{
+.bloco1 {
     display: flex;
     flex-direction: row;
     padding: 80px 80px;
     justify-content: space-between;
 
 }
-.bloco1 img{
+.bloco1 img {
     border-radius: 20px;
 }
 
-.titulo_principal
-{
+.titulo_principal {
     font-size: 40px;
 }
 
-.paragrafo_principal
-{
+.paragrafo_principal {
     font-size: 20px;
     margin-top: 35px;
     width: 80%;
 }
 
-.botao_titulo
-{
+.botao_titulo {
     border-style: none;
     padding: 20px 40px;
     border-radius: 50px;
@@ -148,10 +146,17 @@ body {
     -webkit-transition: all 0.5s;
 }
 
-.botao_titulo:hover
-{
+.botao_titulo:hover {
     background-color: rgb(3, 91, 91);
     transform: scale(1.1);
+}
+
+.corpo_items {
+    width: 50%;
+}
+
+.imagem_japones {
+    height: 100%;
 }
 /* FIM ESTRATÉGIA */
 /* FRASE */
@@ -219,26 +224,15 @@ body {
 
 }
 /* FIM DE TRANFORME DADOS EM AÇÃO */
-.corpo_items
-{
-    width: 50%;
-}
-
-.imagem_japones
-{
-    height: 100%;
-}
-
-.bloco2
-{
+/* AVALIAÇÕES */
+.bloco2 {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgb(0, 128, 128);
 }
 
-.quadrado
-{
+.quadrado {
     background-color: aliceblue;
     width: 300px;
     height: 300px;
@@ -248,58 +242,86 @@ body {
     padding: 20px;
 }
 
-.imagem-avaliacao
-{
+.imagem-avaliacao {
     width: 60px;
     height: 60px;
     border-radius: 100px;
     background-size: cover;
 }
 
-.img-nome
-{
+.img-nome {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.img1
-{
+.img1 {
     background-image: url(../assets/img/homem1.jpg);   
 }
 
-.img2
-{
+.img2 {
     background-image: url(../assets/img/mulher1.jpg);   
 }
 
-.img3
-{
+.img3 {
     background-image: url(../assets/img/mulher2.jpg);   
 }
 
-.img4
-{
+.img4 {
     background-image: url(../assets/img/homem2.jpg);   
 }
 
-.quad1
-{
+.quad1 {
     background-image: url(img/placa-mae.jpg);
 }
 
-.quad2
-{
+.quad2 {
     background-image: url(img/corredor-mercado.jpg);
 }
 
-.quad3
-{
+.quad3 {
     background-image: url(img/mulher-mercado.jpg);
 }
-.blocos_quebra_linha
-{
+/* FIM DA AVALIAÇÕES */
+/* BANNER COMO FUNCIONA */
+.bloco5{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 100px 80px;
+    margin: auto;
+}
+.bloco5 h1{
+    font: 400 60px 'Belanosima', sans-serif;
+    color: #008080;
+}
+
+.bloco5 .diagrama{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;  
+}
+
+.bloco5 img{
+    width: auto;
+    height: 740px;
+    border-radius: 20px;
+}
+
+.bloco5 .diagrama img{
+    height: 600px;
+}
+/* FIM DE COMO FUNCIONA */
+
+.blocos_quebra_linha {
     display: flex;
     gap: 30px;
     margin: 60px 0px;
@@ -482,48 +504,6 @@ input {
 }
 /* FIM DO RODAPÉ */
 
-/* BANNER COMO FUNCIONA */
-.bloco5{
-    display: flex;
-    flex-direction: row;
-    height: 750px;
-    width: 80%;
-
-    background-size: cover;
-    align-items: center;
-
-    border-radius: 20px;
-    margin: auto;
-    margin-top: 20px;
-}
-.bloco5 h1{
-background-color: #ffffff;
-    font: 400 60px 'Belanosima', sans-serif;
-    margin-left: 10px;
-    color: #008080;
-    
-
-}
-
-.bloco5 .diagrama{
-    width: 100%;
-    height: 90%;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 20px;  
-    
-}
-.bloco5 img{
-    width: auto;
-    height: 745px;
-    border-radius: 20px;
-}
-
-.bloco5 .diagrama img{
-    height: 600px;
-}
 /* CONTATO */
 .navbar {
     display: flex;
