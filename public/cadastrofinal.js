@@ -6,6 +6,7 @@ function cadastro() {
     var confirmacao_email=ipt_emailConfirmar.value
     output_email.innerHTML = "";
     output_senha.innerHTML = "";
+    output_confirmacao.innerHTML="";
     //CONDICOES REGEX
     const regex_numero = /\d/;
     const regex_letra_maiuscula = /[A-Z]/;
@@ -24,6 +25,7 @@ function cadastro() {
                 output_email.innerHTML += `O email deve terminar em .com<br>`
                 output_email.style.color = 'red';
             }
+        
 
         }
         //Condicao 2
@@ -36,8 +38,9 @@ function cadastro() {
         }
         else if(i==3){
             if(email!=confirmacao_email){
-                output_confirmacao.innerHTML += `Os emails devem ser iguais>`
-                output_email.style.color = 'red';
+                output_confirmacao.innerHTML += `Os emails devem ser iguais`
+                output_confirmacao.style.color = 'red';
+                console.log(`sim`)
             }
         }
     }
