@@ -31,39 +31,41 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: 'localhost',
-            user: 'teste',
-            password: 'Sptech#2024',
+            user: 'inserir',
+            password: 'Urubu100#',
             database: 'inFlow',
             port: 3307
         }
     ).promise();
 
-    // lista as portas seriais disponíveis e procura pelo Arduino
-    const portas = await serialport.SerialPort.list();
-    // const portaArduino = portas.find((porta) => porta.vendorId == 2341 && porta.productId == 43);
-    const portaArduino = portas.find((porta) => porta.path == "COM2");
-    
-    if (!portaArduino) {
-        throw new Error('O arduino não foi encontrado em nenhuma porta serial');
-    }
+   // lista as portas seriais disponíveis e procura pelo Arduino
+   const portas = await serialport.SerialPort.list();
+   const portaArduino = portas.find((porta) => porta.vendorId == 2341 && porta.productId == 43);
+   if (!portaArduino) {
+       throw new Error('O arduino não foi encontrado em nenhuma porta serial');
+   }
 
-    // configura a porta serial com o baud rate especificado
-    const arduino = new serialport.SerialPort(
-        {
-            path: portaArduino.path,
-            baudRate: SERIAL_BAUD_RATE
-        }
-    );
+   // configura a porta serial com o baud rate especificado
+   const arduino = new serialport.SerialPort(
+       {
+           path: portaArduino.path,
+           baudRate: SERIAL_BAUD_RATE
+       }
+   );
+
 
     // evento quando a porta serial é aberta
     arduino.on('open', () => {
         console.log(`A leitura do arduino foi iniciada na porta ${portaArduino.path} utilizando Baud Rate de ${SERIAL_BAUD_RATE}`);
     });
-
+    console.log("chegou");
     // processa os dados recebidos do Arduino
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
+        console.log("chegou");
+
         const valores = data.split(';');
         const sensorDigital = parseInt(valores[0]);
+        console.log(valores);
         // const sensorAnalogico = parseFloat(valores[1]);
 
         // armazena os valores dos sensores nos arrays correspondentes
