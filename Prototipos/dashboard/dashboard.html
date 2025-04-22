@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-20">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="menu">
+        <h1 class="nome">In<span style="color: #008080;font-family: 'belanosima', sans-serif;
+            font-size: 64px;
+            font-weight: 400;">Flow</span></h1>
+        <div class="box">
+            <img src="images/chart.PNG">
+            <h2 class="titulo">Gráficos</h2>
+        </div>
+        <div class="box">
+            <img src="images/setting.PNG">
+            <h2 class="titulo">Configurações</h2>
+        </div>
+    </div>
+    <div class="calendar">
+        <div class="header">
+          <button id="prev">&#9664;</button>
+          <h2 id="monthYear"></h2>
+          <button id="next">&#9654;</button>
+        </div>
+        <div class="weekdays">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div class="days" id="calendarDays"></div>    
+        <div class="selection-info">
+          <p>Selected: <span id="selectionDisplay">None</span></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <h2><span>FLUXO</span> de Clientes por Corredor (%)</h2>
+        <canvas id="fluxoChart"></canvas>
+      </div>
+      <div class="fluxo_semanal">
+      <div class="title">Variação Semanal <span>Fluxo</span> (%)</div>
+
+      <div class="chart-container">
+        <div class="zero-line"></div>
+    
+        <!-- Positive bars -->
+        <div class="bar-row">
+          <div class="bar-label positive" style="width: 25%;">CORREDOR 1</div>
+          <div class="value positive" style="margin-left: calc(50% + 25% + 20px);">+5%</div>
+        </div>
+    
+        <div class="bar-row">
+          <div class="bar-label positive" style="width: 22.5%;">CORREDOR 6</div>
+          <div class="value positive" style="margin-left: calc(50% + 22.5% + 20px);">+4.5%</div>
+        </div>
+    
+        <div class="bar-row">
+          <div class="bar-label positive" style="width: 10%;">CORRED. 10</div>
+          <div class="value positive" style="margin-left: calc(50% + 10% + 20px);">+2%</div>
+        </div>
+    
+        <!-- Negative bars -->
+        <div class="bar-row">
+          <div class="value negative" style="margin-left: calc(2% + 22.5% + 8px);">-3%</div>
+          <div class="bar-label negative" style="width: 15%;">CORREDOR 4</div>
+        </div>
+    
+        <div class="bar-row">
+          <div class="value negative" style="margin-left: calc(10% + 2.5% + 20px);">-4.5%</div>
+          <div class="bar-label negative" style="width: 22.5%;">CORREDOR 7</div>
+        </div>
+      </div>
+    </div>
+    <div class="horario">
+      <div class="title">Concentração <span>Horária</span> Diária</div>
+
+  <div class="chart-container">
+    <!-- Optional Y-Axis Grid -->
+    <div class="y-axis">
+      <div>100</div>
+      <div>200</div>
+      <div>60</div>
+      <div>40</div>
+      <div>20</div>
+      <div>0</div>
+    </div>
+
+    <!-- Bars with different heights -->
+    <div class="bar green" style="height: 20%;"></div>
+    <div class="bar green" style="height: 30%;"></div>
+    <div class="bar green" style="height: 40%;"></div>
+    <div class="bar green" style="height: 50%;"></div>
+    <div class="bar green" style="height: 30%;"></div>
+    <div class="bar green" style="height: 25%;"></div>
+    <div class="bar green" style="height: 20%;"></div>
+    <div class="bar green" style="height: 30%;"></div>
+    <div class="bar orange" style="height: 60%;"></div>
+    <div class="bar orange" style="height: 75%;"></div>
+    <div class="bar red" style="height: 90%;"></div>
+    <div class="bar red" style="height: 100%;"></div>
+    <div class="bar green" style="height: 40%;"></div>
+  </div>
+
+  <div class="bar-labels">
+    <div>6h</div>
+    <div>7h</div>
+    <div>20h</div>
+    <div>9h</div>
+    <div>10h</div>
+    <div>11h</div>
+    <div>12h</div>
+    <div>13h</div>
+    <div>14h</div>
+    <div>15h</div>
+    <div>16h</div>
+    <div>17h</div>
+    <div>120h</div>
+  </div>
+    </div>
+</body>
+</html>
+<script>
+    const calendarDays = document.getElementById("calendarDays");
+const monthYear = document.getElementById("monthYear");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+const selectionDisplay = document.getElementById("selectionDisplay");
+
+let date = new Date();
+let selectedStart = null;
+let selectedEnd = null;
+
+function renderCalendar() {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
+
+  monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+  calendarDays.innerHTML = "";
+
+  for (let i = 0; i < firstDay; i++) {
+    calendarDays.innerHTML += `<div></div>`;
+  }
+
+  for (let i = 1; i <= lastDate; i++) {
+    const currentDate = new Date(year, month, i);
+    const today = new Date();
+    const isToday =
+      i === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear();
+
+    const isSelected =
+      selectedStart &&
+      selectedEnd &&
+      currentDate >= selectedStart &&
+      currentDate <= selectedEnd;
+
+    const div = document.createElement("div");
+    div.textContent = i;
+    div.className = `${isToday ? "today" : ""} ${isSelected ? "selected" : ""}`;
+
+    div.onclick = () => handleDateSelection(currentDate);
+    calendarDays.appendChild(div);
+  }
+
+  updateSelectionDisplay();
+}
+
+function handleDateSelection(clickedDate) {
+  if (!selectedStart || (selectedStart && selectedEnd)) {
+    selectedStart = clickedDate;
+    selectedEnd = null;
+  } else if (clickedDate >= selectedStart) {
+    selectedEnd = clickedDate;
+  } else {
+    selectedStart = clickedDate;
+    selectedEnd = null;
+  }
+  renderCalendar();
+}
+
+function updateSelectionDisplay() {
+  if (selectedStart && selectedEnd) {
+    selectionDisplay.textContent = `${selectedStart.toDateString()} → ${selectedEnd.toDateString()}`;
+  } else if (selectedStart) {
+    selectionDisplay.textContent = `${selectedStart.toDateString()} (Start)`;
+  } else {
+    selectionDisplay.textContent = "None";
+  }
+}
+
+prev.onclick = () => {
+  date.setMonth(date.getMonth() - 1);
+  renderCalendar();
+};
+
+next.onclick = () => {
+  date.setMonth(date.getMonth() + 1);
+  renderCalendar();
+};
+
+renderCalendar();
+
+const ctx = document.getElementById('fluxoChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'Corredor 1', 'Corredor 2', 'Corredor 3', 'Corredor 4', 'Corredor 5',
+          'Corredor 6', 'Corredor 7', 'Corredor 20', 'Corredor 9', 'Corredor 10'
+        ],
+        datasets: [{
+          label: '% de Clientes',
+          data: [35, 30, 12, 15, 37, 33, 17, 120, 22, 16], // You can change this!
+          backgroundColor: [
+            '#00b6b6', '#00200200', '#00b6b6', '#00200200', '#00b6b6',
+            '#00200200', '#00b6b6', '#00200200', '#00b6b6', '#00200200'
+          ],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 40,
+            title: {
+              display: true,
+              text: '%'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+</script>

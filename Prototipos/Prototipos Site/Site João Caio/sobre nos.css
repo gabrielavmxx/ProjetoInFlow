@@ -1,0 +1,141 @@
+.body{
+    margin: 0;
+    padding: auto;
+    background-color: whitesmoke;
+}
+.container{
+    width: 80%;
+    margin: auto;
+    display: flex;
+}
+.header .container {
+    justify-content: space-between; /*levou para o canto direito*/
+}
+.header .navbar {
+    color: black;
+    list-style-type: none; /* tira as bolinhas que ficam antes do texto, que ocorrem por ser uma lista */
+
+    display: flex; /* deixa os textos um ao lado do outro */
+    align-items: center; /*Alinha o texto dentro da div na vertical, nesse caso coloca no meio da div verticalmente */  
+    width: 500px; /*Define uma largura fixa para o tamanho da navbar*/
+    justify-content: space-evenly; /* Espaçamentos iguais entre os itens*/
+    
+}
+.header .navbar button {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: aqua;
+    border-radius: 20px; /* Ajuste o valor conforme necessário */
+  padding: 5px 10px;  /* Apenas para melhorar a aparência */
+}
+.header {
+    border-bottom: solid black 1px; /*Deicou a borda em baixo do texto*/
+}
+.header .container .logo {
+    color: black;
+}
+.header .container .logo span {
+    color: aqua;
+}
+.main {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pagina{
+      width: 80%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+    }
+    .main .titulo {
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-align: center;  /* colocando o texto centralizado */
+        font-style: italic;
+        font-size: 30px; /* Coloca o texto em itálico */
+    }
+    .main .titulo span {
+        color: aqua;
+        align-items: center;
+    }
+    .espacamento{
+        margin: 10px;
+    }
+    .partePrincipal{
+        width: auto;
+        margin: auto;
+        display: flex;
+      }
+    .partePrincipal{
+        background-color: aqua;
+        border: solid aqua 2px; /*Deicou a borda em baixo do texto*/
+        border-radius: 70px; /* Ajuste o valor conforme necessário */
+        padding: 5px 10px;  /* Apenas para melhorar a aparência */
+        padding: 30px;
+        
+    }
+    .main .partePrincipal {
+    align-items: center;
+    justify-content: space-between;
+    }
+
+    .img img {
+        width: 200px;            /* Define a largura da imagem */
+        height: 200px;           /* Define a altura da imagem */
+        border-radius: 30px;
+    }  
+.partePrincipal .tituloh2 {
+    text-align: center;
+    justify-content: flex-start; /* Alinha o conteúdo no topo */
+    width: 100%; /* Faz o título ocupar toda a largura disponível */
+}
+.partePrincipal .tituloh2 {
+    display: flex;
+    flex-direction: column; /* Garante que o título fique em coluna */
+    align-items: center; /* Centraliza o título horizontalmente */
+    margin-bottom: 20px; /* Adiciona espaço abaixo do título */
+}
+
+.partePrincipal .paragrafo {
+        align-items: flex-end;
+        font-size: 20px;
+}
+.partePrincipal span {
+    display: block;
+}
+
+.Quebradelinha {
+height: 10px;
+}
+.linhafinal{
+    border-bottom: 4px;
+}
+
+footer{
+    background-color: aqua;
+}
+.container{
+    width: 80%;
+    margin: auto;
+    display: flex;
+}
+.footer .container {
+    justify-content: space-between; /*levou para o canto direito*/
+}
+.footer .navbar {
+    color: black;
+    list-style-type: none; /* tira as bolinhas que ficam antes do texto, que ocorrem por ser uma lista */
+
+    display: flex; /* deixa os textos um ao lado do outro */
+    align-items: center; /*Alinha o texto dentro da div na vertical, nesse caso coloca no meio da div verticalmente */  
+    width: 500px; /*Define uma largura fixa para o tamanho da navbar*/
+    justify-content: space-evenly; /* Espaçamentos iguais entre os itens*/
+    
+}
+
+.footer .titulo span {
+    color: white;
+    align-items: center;
+}
+

@@ -1,0 +1,210 @@
+body {
+    margin: 0;
+}
+/* CABEÇALHO */
+.header {
+    display: flex;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+    border-bottom: solid #616269 0.8px;
+
+}
+
+.header .container h2 {
+    font-family: "Belanosima";
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.header .container h2 span {
+    color: #008080;
+}
+
+.header .navbar {
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    width: 400px;
+    justify-content: space-evenly;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    font-family: "Inter";
+}
+.botao-login{
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 10,20;
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.834);
+}
+.botao-login a{
+    text-decoration: none;
+    color: white;
+}
+.botao-login:hover{
+    background-color: #006666;
+    transition: 0.3s;
+}
+/* PAGINA */
+.banner .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+}
+.banner .container h1 {
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 50px;
+    
+}
+.banner .container h1 span {
+    color: #008080;
+    font-style: italic;
+}
+.cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+}
+.card2{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin: auto;
+    background-color: #ffffff;
+    margin-right: 81px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 40px;
+    border: solid #616269 0.8px;
+
+}
+.card2 h2{
+    color: rgb(0, 0, 0);
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+.card2 p{
+    color: rgb(0, 0, 0);
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+}
+.card1{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin: auto;
+    background-color: #008080;
+    margin-left: 81px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 40px;
+
+}
+    .card1 h2{
+        color: white;
+        font-family: "Inter";
+        font-weight: 600;
+        font-size: 30px;
+        margin-bottom: 0px;
+    }
+    .card1 p{
+        color: white;
+        font-family: "Inter";
+        font-weight: 400;
+        font-size: 20px;
+    }
+    
+.cards{
+    gap: 30px;
+}
+.cards .container {
+    display: flex;
+    justify-content: flex-start;
+
+    align-items: start;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 20px;
+}
+.imagemcard {
+    width: 300px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 10px;
+}
+.imagemcard img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+/* FOOTER */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
+    background-color: #008080;
+}
+.footer .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 80%;
+    margin: auto;
+}
+.footer .container h2 {
+    font-family: "Belanosima";
+    font-weight: 400;
+    font-size: 30px;
+    color: #ffffff;
+}
+.footer .navbar{
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    width: 400px;
+    justify-content: space-evenly;
+}
+.footer .navbar a {
+    text-decoration: none;
+    color: white;
+    font-family: "Inter";
+}
+.footer p{
+    color: white;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+}
+

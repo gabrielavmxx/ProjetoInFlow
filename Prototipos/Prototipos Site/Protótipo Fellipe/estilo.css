@@ -1,0 +1,114 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+    align-items: center;
+    border-bottom: 1px rgb(0, 0, 0, 0.2) solid;
+}
+
+.titulo {
+    margin: 0;
+    font-size: 40px;    
+}
+
+span {
+    color: teal; 
+}
+
+.links {
+    display: flex;
+    gap: 50px;
+}
+
+.itembar {
+    text-decoration: none;
+    color: black;    
+}
+
+.botao {
+    border-radius: 10px;
+    border: 0px;
+    background-color: teal;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.Contato {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.tudo {
+    display: flex;
+    padding: 10px 50px;
+    flex-direction: column;
+}
+
+.container-principal {
+    display: flex;
+    background-color: teal;
+    padding: 20px 30px;
+    border-radius: 15px;
+    justify-content: space-between;
+}
+
+.container-principal .contato_agora {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 15px 20px 20px 0px;  
+}
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.comece {
+    color: cyan;
+    margin: 0;
+    margin-top: 30px;    
+}
+
+.inputs {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;    
+}
+
+.botao_contato {
+    background-color: cyan;
+    border: none;
+    color: white;
+    font-weight: bolder;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.input_mensagem {
+    display: flex;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    height: 100px;        
+}
+
+.imagem {
+    background-image: url(foto_dinossario.png);
+    width: 600px;
+    border-radius: 15px;    
+}
+
+.footer {
+    display: flex;
+}

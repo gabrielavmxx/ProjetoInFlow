@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-20">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- MENU LATERAL -->
+    <div id="menu">
+      <div class="logo">
+        <h1>In<span>Flow</span></h1>
+      </div>
+      <div class="escolha">
+        <div class="box">
+          <div class="icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <p class="titulo">Dashboard</p>
+        </div>
+        <div class="box">
+          <div class="icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <a href="cadastro.html" class="titulo">Adicionar usuários</a>
+        </div>
+        <div class="box">
+          <div class="icon">
+            <i class="fa-solid fa-gear"></i>
+          </div>
+          <p class="titulo">Configurações</p>
+        </div>
+      </div>
+      <div class="dadosPerfil">
+        <div class="fotoPerfil conteudo">
+          <img src="assets/img/homem1.jpg" alt="">
+        </div>
+        <div class="infoPerfil conteudo">
+          <p class="nome">Renato</p>
+          <p class="email">renato.silva@gmail.com</p>
+        </div>
+        <div class="maisInfo conteudo">
+          <i class="fa-solid fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+    <!-- FIM DO MENU LATERAL -->
+    <div id="main">
+      <div class="conteudoDashboard">
+        <div class="elementosKPI">
+          <div class="kpi k1">
+            <p class="titulo">Corredor com maior fluxo</p>
+            <div class="dados">
+              <p>Corredor 6</p>
+              <p>:</p>
+              <p>55</p>
+            </div>
+          </div>
+          <div class="kpi k2">
+            <p class="titulo">Corredor com menor fluxo</p>
+            <div class="dados">
+              <p>Corredor 1</p>
+              <p>:</p>
+              <p>21</p>
+            </div>
+          </div>
+          <div class="kpi k3">
+            <p class="titulo">Horário com maior fluxo</p>
+            <div class="dados">
+              <p>18:00</p>
+              <p>:</p>
+              <p>88</p>
+            </div>
+          </div>
+          <div class="kpi k4">
+            <p class="titulo">Horário com menor fluxo</p>
+            <div class="dados">
+              <p>11:00</p>
+              <p>:</p>
+              <p>32</p>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="calendar">
+          <div class="header">
+            <button id="prev">&#9664;</button>
+            <h2 id="monthYear"></h2>
+            <button id="next">&#9654;</button>
+          </div>
+          <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="days" id="calendarDays"></div>
+          <div class="selection-info">
+            <p>Selected: <span id="selectionDisplay">None</span></p>
+          </div>
+        </div> -->
+
+        <div class="conteudoGrafico">
+
+
+          <div class="grafico ">
+            <canvas id="grafico1"></canvas>
+          </div>
+          <div class="grafico ">
+            <canvas id="grafico2"></canvas>
+          </div>
+        </div>
+
+        <div class="heatmap_container">
+          <h1>Mapa de calor</h1>
+          <p>Acompanhe em tempo real a movimentação</p>
+          <div class="heatmap">
+            <div id="heatmapContainer"></div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
+<script>
+  // const calendarDays = document.getElementById("calendarDays");
+  // const monthYear = document.getElementById("monthYear");
+  // const prev = document.getElementById("prev");
+  // const next = document.getElementById("next");
+  // const selectionDisplay = document.getElementById("selectionDisplay");
+
+  // let date = new Date();
+  // let selectedStart = null;
+  // let selectedEnd = null;
+
+  // function renderCalendar() {
+  //   const year = date.getFullYear();
+  //   const month = date.getMonth();
+  //   const firstDay = new Date(year, month, 1).getDay();
+  //   const lastDate = new Date(year, month + 1, 0).getDate();
+
+  //   monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+  //   calendarDays.innerHTML = "";
+
+  //   for (let i = 0; i < firstDay; i++) {
+  //     calendarDays.innerHTML += `<div></div>`;
+  //   }
+
+  //   for (let i = 1; i <= lastDate; i++) {
+  //     const currentDate = new Date(year, month, i);
+  //     const today = new Date();
+  //     const isToday =
+  //       i === today.getDate() &&
+  //       month === today.getMonth() &&
+  //       year === today.getFullYear();
+
+  //     const isSelected =
+  //       selectedStart &&
+  //       selectedEnd &&
+  //       currentDate >= selectedStart &&
+  //       currentDate <= selectedEnd;
+
+  //     const div = document.createElement("div");
+  //     div.textContent = i;
+  //     div.className = `${isToday ? "today" : ""} ${isSelected ? "selected" : ""}`;
+
+  //     div.onclick = () => handleDateSelection(currentDate);
+  //     calendarDays.appendChild(div);
+  //   }
+
+  //   updateSelectionDisplay();
+  // }
+
+  // function handleDateSelection(clickedDate) {
+  //   if (!selectedStart || (selectedStart && selectedEnd)) {
+  //     selectedStart = clickedDate;
+  //     selectedEnd = null;
+  //   } else if (clickedDate >= selectedStart) {
+  //     selectedEnd = clickedDate;
+  //   } else {
+  //     selectedStart = clickedDate;
+  //     selectedEnd = null;
+  //   }
+  //   renderCalendar();
+  // }
+
+  // function updateSelectionDisplay() {
+  //   if (selectedStart && selectedEnd) {
+  //     selectionDisplay.textContent = `${selectedStart.toDateString()} → ${selectedEnd.toDateString()}`;
+  //   } else if (selectedStart) {
+  //     selectionDisplay.textContent = `${selectedStart.toDateString()} (Start)`;
+  //   } else {
+  //     selectionDisplay.textContent = "None";
+  //   }
+  // }
+
+  // prev.onclick = () => {
+  //   date.setMonth(date.getMonth() - 1);
+  //   renderCalendar();
+  // };
+
+  // next.onclick = () => {
+  //   date.setMonth(date.getMonth() + 1);
+  //   renderCalendar();
+  // };
+
+  const heatmapInstance = h337.create({
+    container: document.getElementById('heatmapContainer'),
+    radius: 70,
+  });
+
+  const data = {
+    max: 100,
+    data: [
+      { x: 500, y: 100, value: 100 },
+      { x: 400, y: 300, value: 60 },
+      { x: 100, y: 400, value: 90 },
+      { x: 200, y: 200, value: 40 },
+      { x: 100, y: 100, value: 70 },
+      { x: 250, y: 450, value: 80 },
+      { x: 500, y: 400, value: 95 },
+      { x: 50, y: 300, value: 40 },
+    ]
+  };
+
+  heatmapInstance.setData(data);
+
+
+  // renderCalendar();
+  const ctx1 = document.getElementById('grafico1');
+  // const ctx2 = document.getElementById('grafico2');
+
+  const grafico1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+      datasets: [{
+        label: 'Pessoas',
+        data: [39, 32, 65, 35, 67, 54, 76, 54, 88, 34],
+        borderWidth: 1,
+        borderColor: '#115e59',
+        backgroundColor: '#115e59'
+      }]
+    },
+    options: {
+
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+            title: {
+                display: true,
+                text: 'Movimentação por horário',
+                font: {
+                    size: 24
+                },
+                color: '#333' 
+            }
+        }
+    }
+  })
+  const ctx2 = document.getElementById('grafico2');
+  const grafico2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Corredor 1', 'Corredor 2', 'Corredor 3', 'Corredor 4', 'Corredor 5', 'Corredor 6', 'Corredor 7', 'Corredor 8', 'Corredor 9', 'Corredor 10'],
+      datasets: [{
+        label: 'Pessoas', //<- legenda da tabela
+        data: [10, 22, 43, 32, 11, 54, 43, 21, 55, 53], //<- muda o valor dos dados no grafico para adicionar mais valores é necessario adicionar mais corredores acima
+        borderWidth: 1,
+        borderColor: '#115e59',
+        backgroundColor: '#115e59'
+      }]
+    },
+    options: {
+      tension: 0.5,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+            title: {
+                display: true,
+                text: 'Movimentação por corredor',
+                font: {
+                    size: 24
+                },
+                color: '#333' // (opcional) cor do título
+            }
+        }
+    }
+}
+    
+  )
+</script>

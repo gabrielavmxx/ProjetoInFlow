@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <div class="esquerda">
+            <div class="imagem-lateral">
+                <img src="loginCadastro.jpg" alt="">
+            </div>
+        </div>
+        <div class="direita">
+            <div class="formulario-login">
+                <div class="logo"><h1>In<span>Flow</span></h1></div>
+                <div class="formulario-cadastro">
+                    <div class="formulario-principal">
+                        <label>Nome do usuário</label>
+                        <input type="text" placeholder="*" id="ipt_nomeUsuario">
+                        <label>Nome da empresa</label>
+                        <input type="text" placeholder="Nome da empresa*" id="ipt_nomeEmpresa">
+                        <label>Endereço de email</label>
+                        <input type="email" placeholder="email*" id="ipt_email">
+                        <label>Confirme o email</label>
+                        <input type="email" placeholder="email*" id="ipt_emailConfirmar">
+                        <label>Senha</label>
+                        <input type="password" placeholder="senha*" id="ipt_senha">
+                        <button onclick="cadastrar()">Entrar</button>
+                        <div id="div_mensagemImportante"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+<script>
+    function cadastrar() {
+        var nomeUsuario = ipt_nomeUsuario.value;
+        var nomeEmpresa = ipt_nomeEmpresa.value;
+        var email = ipt_email.value;
+        var emailCorfirmar = ipt_emailConfirmar.value;
+        var senha = ipt_senha.value;
+
+        var textoPreenchido = (nomeUsuario == '' || nomeEmpresa == '' || email == '' || emailCorfirmar == '' || senha == '');
+        
+        while(textoPreenchido){
+            div_mensagemImportante.innerHTML = `Preencha todos os campos`;
+        }
+
+        
+    }
+</script>

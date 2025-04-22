@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+*
+{
+    box-sizing: border-box;
+}
+
+h1, p, a
+{
+    font-family: "Inter Tight";
+    margin: 0;
+}
+
+.home .bloco1 .bloco3
+{
+    padding: 0px 80px;
+}
+
+.nav
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    align-items: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav_titulo
+{
+    font-family: "Belanosima";
+    font-size: 40px;
+    margin: 0;
+}
+
+.nav_items
+{
+    display: flex;
+    gap: 40px;
+}
+
+.nav_item
+{
+    margin: 0px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+.botao_login
+{
+    border-style: none;
+    padding: 10px 30px;
+    border-radius: 40px;
+    background-color: teal;
+    color: aliceblue;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.botao_login:hover
+{
+    background-color: rgb(3, 91, 91);
+    transform: scale(1.1);
+}
+
+.icone_usuario
+{
+    font-size: 15px;
+}
+
+.bloco1
+{
+    display: flex;
+    flex-direction: row;
+    padding: 80px 80px;
+    justify-content: space-between;
+}
+
+.titulo_principal
+{
+    font-size: 40px;
+}
+
+.paragrafo_principal
+{
+    font-size: 20px;
+    margin-top: 35px;
+    width: 80%;
+}
+
+.botao_titulo
+{
+    border-style: none;
+    padding: 20px 40px;
+    border-radius: 50px;
+    margin-top: 40px;
+    background-color: teal;
+    color: aliceblue;
+    font-size: 20px; transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.botao_titulo:hover
+{
+    background-color: rgb(3, 91, 91);
+    transform: scale(1.1);
+}
+
+.corpo_items
+{
+    width: 50%;
+}
+
+.imagem_japones
+{
+    height: 100%;
+}
+
+.bloco2
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0, 128, 128);
+    padding: 0px 80px;
+}
+
+.quadrado
+{
+    background-color: red;
+    width: 400px;
+    height: 200px;
+}
+
+.quad1
+{
+    background-image: url(img/placa-mae.jpg);
+}
+
+.quad2
+{
+    background-image: url(img/corredor-mercado.jpg);
+}
+
+.quad3
+{
+    background-image: url(img/mulher-mercado.jpg);
+}
+
+.blocos_quebra_linha
+{
+    display: flex;
+    gap: 30px;
+    margin: 60px 0px;
+    width: 100%;
+}
+
+.titulo-quebra-sessao
+{
+    margin-top: 60px;
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: aliceblue;
+}
+
+.textos-principais-calc
+{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.paragrafo_calc
+{
+    font-size: 20px;
+    width: 100%;
+}
+
+.titulo_calc
+{
+    font-size: 40px;
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+.calculadora_financeira
+{
+    display: flex;
+    flex-direction: row;
+    background-color: teal;
+    border-radius: 20px;
+    width: 100%;
+    justify-content: space-between;
+    gap: 50px;
+    margin-top: 60px;
+}
+
+.bloco3
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 80px;
+}
+
+.textos-calc
+{
+    padding: 50px;
+    width: 50%;
+    color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.inputs_calc
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.img_calc
+{
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    background-image: url(img/calculadora.jpeg);
+    width: 50%;
+}
+
+input {
+    border-style: none;
+    border-radius: 20px;
+    padding: 10px 10px;
+    width: 100%;
+    background-color: azure;
+    font-size: 16px; 
+}
+
+.botao_calc {
+    border-radius: 20px;
+    border-style: none;
+    width: 100%;
+    padding: 10px 0px;
+    font-weight: bold;
+    font-size: medium;
+    background-color: #0cb6ae;
+    color: aliceblue; transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.input-texto
+{
+    margin-top: 20px;
+}
+
+.botao_calc:hover
+{
+    background-color: rgb(5, 172, 172);
+    transform: scale(1.1);
+}
+
+.paragrafo-quebra-sessao
+{
+    width: 80%;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.rodape
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 50px;
+    border-top: 2px solid rgb(0, 0, 0, 0.2);
+    margin-top: 60px;
+    align-items: center;
+}
+
+.rodape_items
+{
+    display: flex;
+    gap: 30px;
+    width: 50%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.direitos-autorais
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    color: rgb(0, 0, 0, 0.6);
+}
+
+.icons-rodape
+{
+    gap: 30px;
+}
+
+.icone
+{
+    width: 50px;
+    height: 100%;
+    font-size: 25px;
+}

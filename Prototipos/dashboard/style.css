@@ -1,0 +1,290 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Belanosima:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Belanosima:wght@400;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+*{
+   font-family: 'poppins', sans-serif;
+    margin: 0;
+}
+
+body{
+    height:2000px;
+}
+
+.menu{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 250px;
+    height: 2000px;
+    border-right: solid #616269 2px;
+}
+.menu h1{
+    font-family: 'belanosima', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.menu .box{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+.menu .box img{
+    width: 50px;
+    margin-right: 10px;
+}
+
+.calendar {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 320px;
+    position: relative;
+    left: 700px;
+    bottom: 1900px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .header h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .weekdays, .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .weekdays div {
+    font-weight: bold;
+    padding: 5px;
+  }
+  
+  .days div {
+    padding: 10px;
+    background: #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .days div.today {
+    background: #00bcd4;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .days div.selected {
+    background: #008080;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .selection-info {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    position: relative;
+    left: 120px;
+    bottom: 1800px;
+  }
+
+  h2 {
+    font-weight: normal;
+  }
+
+  h2 span {
+    color: #00b6b6;
+    font-weight: bold;
+  }
+
+  canvas {
+    margin-top: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .title span {
+    color: #00b6b6;
+  }
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+  }
+
+  .zero-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #ccc;
+    z-index: 0;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .bar-label {
+    position: absolute;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+  .bar-label.positive {
+    background-color: #00b06e;
+    left: 50%;
+    justify-content: flex-start;
+  }
+
+  .bar-label.negative {
+    background-color: #e53935;
+    right: 50%;
+    justify-content: flex-end;
+  }
+
+  .value {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .value.positive {
+    margin-left:8px;
+  }
+
+  .value.negative {
+    margin-right: 8px;
+    color: #e53935;
+  }
+
+  .fluxo_semanal{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    left: 120px;
+    bottom: 1700px;
+  }
+
+  .horario .title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .horario .title span {
+    color: #00b6b6;
+    font-weight: bold;
+  }
+
+  .horario .chart-container {
+    width: 100%;
+    max-width: 600px;
+    height: 250px;
+    border-left: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    padding: 0 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    position: relative;
+  }
+
+  .horario .bar {
+    width: 20px;
+    border-radius: 3px 3px 0 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .horario .bar.green {
+    background-color: #66cc66;
+  }
+
+  .horario .bar.orange {
+    background-color: #ffaa66;
+  }
+
+  .horario .bar.red {
+    background-color: #ff6666;
+  }
+
+  .horario .bar-labels {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 12px;
+    max-width: 600px;
+    width: 600px;
+    justify-content: flex-start;
+  }
+
+  .horario .bar-labels div {
+    width: 20px;
+    text-align: center;
+  }
+
+  .horario .y-axis {
+    position: absolute;
+    left: -30px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    font-size: 12px;
+    color: #888;
+  }
+
+  .horario .y-axis div {
+    height: 1px;
+    border-top: 1px dashed #ccc;
+    position: relative;
+    top: -6px;
+  }
+
+  .horario{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    left: 120px;
+    bottom: 1600px;
+  }
