@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*
-{
+*{
     margin: 0;
     padding: 0;
     border: 0;
@@ -12,20 +11,16 @@ a {
     text-decoration: none;
 }
 
-h1, p, a
-{
+body {
     font-family: "Poppins";
-    margin: 0;
 }
 
-.home .bloco1 .bloco3
-{
+.home .bloco1 .bloco3 {
     padding: 0px 80px;
 }
 
 /* CABEÇALHO */
-.nav
-{   position: fixed;
+.nav {   position: fixed;
     display: flex;
     justify-content: space-between;
     padding: 15px 50px;
@@ -35,29 +30,25 @@ h1, p, a
     width: 100%;
 }
 
-.nav_titulo
-{
+.nav_titulo {
     font-family: "Belanosima";
     font-size: 40px;
     margin: 0;
 }
 
-.nav_items
-{
+.nav_items {
     display: flex;
     gap: 40px;
 }
 
-.nav_item
-{
+.nav_item {
     margin: 0px;
     text-decoration: none;
     color: black;
     font-size: 18px;
 }
 
-.botao_login
-{
+.botao_login {
     padding: 10px 30px;
     border-radius: 40px;
     background-color: teal;
@@ -71,18 +62,56 @@ h1, p, a
     -webkit-transition: all 0.5s;
 }
 
-.botao_login:hover
-{
+.botao_login:hover {
     background-color: rgb(3, 91, 91);
     transform: scale(1.1);
 }
 
-.icone_usuario
-{
+.icone_usuario {
     font-size: 15px;
 }
 /* FIM DO CABEÇALHO */
+/* BANNER1 HOME */
+.banner{
+    display: flex;
+    flex-direction: row;
+    height: 600px;
+    width: 100%;
+    background-color: #008080;
+    align-items: center;
+}
 
+.imagem_banner{
+    width: 50%;
+    height: 100%;
+    background-image: url('../assets/img/abstract-blur-supermarket-department-store.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50% 0% 00% 50%;
+}
+
+.banner .container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 80px;
+    height: 400px;
+    width: 60%;
+}
+
+.banner .container h1{
+    font: 400 52px 'Belanosima', sans-serif;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.banner .container p{
+    font: 400 20px 'Poppins', sans-serif;
+    color: rgb(232, 231, 231);
+}
+
+/* FIM DO BANNER */
+/* ESTRATÉGIA */
 .bloco1
 {
     display: flex;
@@ -124,7 +153,72 @@ h1, p, a
     background-color: rgb(3, 91, 91);
     transform: scale(1.1);
 }
+/* FIM ESTRATÉGIA */
+/* FRASE */
+.separacao {
+    font: 400 20px 'Poppins', sans-serif;
+    background-color: #008080;
+    color: rgb(210, 206, 206);
+    font-style: italic;
+    text-align: center;
+    padding: 50px 0px;
+}
+/* FIM DA FRASE */
+/* TRANFORME DADOS EM AÇÃO */
+.bloco4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    margin: 30px 80px;
+}
+.bloco4 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+.bloco4 .box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #008080;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    width: 250px;
+    height: 400px;
+}
+.bloco4 .box:hover{
+    background-color: #008080;
+    transform: scale(1.05);
+    transition: all 0.5s;
 
+}
+.bloco4 .boxes .box img{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+.bloco4 .boxes .box h4{
+    font: 500 20px 'Belanosima', sans-serif;
+    margin: 20px;
+    color: white;
+    text-align: center;
+}
+.bloco4 .boxes .box p{
+    font: 400 14px 'Poppins', sans-serif;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: rgb(232, 231, 231);
+    text-align: center;
+}
+.bloco4 .boxes{
+    display: flex;
+    flex-direction: row;
+
+}
+/* FIM DE TRANFORME DADOS EM AÇÃO */
 .corpo_items
 {
     width: 50%;
@@ -387,120 +481,7 @@ input {
     font-size: 25px;
 }
 /* FIM DO RODAPÉ */
-/* BANNER1 HOME */
-.banner{
 
-    display: flex;
-    flex-direction: row;
-    height: 600px;
-    width: 100%;
-    background-color: #008080;
-
-}
-.imagem_banner{
-    width: 50%;
-    height: 100%;
-    background-image: url('../assets/img/abstract-blur-supermarket-department-store.jpg');
-    background-size: cover;
-    background-position: center;
-    border-radius: 50% 0% 00% 50%;
-
-}
-.banner .container{
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    margin: 20px;
-    height: 400px;
-    width: 60%;
-    
-
-
-}
-.banner .container h1{
-    font: 400 60px 'Belanosima', sans-serif;
-    margin-bottom: 20px;
-    color: white;
-
-}
-.banner .container p{
-    font: 400 20px 'inter', sans-serif;
-    margin-bottom: 20px;
-    font-weight: 400;
-    color: rgb(232, 231, 231);
-    background-color: 0;
-}
-/* BLOCO 4 */
-.bloco4
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 80px;
-
-    margin: 30px 0px;
-}
-.bloco4 img{
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-}
-.bloco4 .box{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #008080;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 10px;
-    width: 300px;
-    height: 400px;
-}
-.bloco4 .box:hover{
-    background-color: #008080;
-    transform: scale(1.05);
-    transition: all 0.5s;
-
-}
-.bloco4 .boxes .box img{
-    width: 100px;
-    height: 100px;
-    border-radius: 20px;
-}
-.bloco4 .boxes .box h4{
-    font: 500 20px 'Belanosima', sans-serif;
-    margin: 20px;
-    color: white;
-    text-align: center;
-}
-.bloco4 .boxes .box p{
-    font: 400 16px 'inter', sans-serif;
-    margin-bottom: 20px;
-    font-weight: 400;
-    color: rgb(232, 231, 231);
-    text-align: center;
-}
-.bloco4 .boxes{
-    display: flex;
-    flex-direction: row;
-
-}
-.separacao{
-    background-color: #008080;
-
-    height: 100px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter';
-    font-size: 20px;
-    font-weight: 400;
-    color: rgb(210, 206, 206);
-    font-style: italic;
-    text-align: center;
-}
 /* BANNER COMO FUNCIONA */
 .bloco5{
     display: flex;
