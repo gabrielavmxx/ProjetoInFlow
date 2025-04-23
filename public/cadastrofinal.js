@@ -48,7 +48,7 @@ function cadastro() {
     for (j = 1; j < 6; j++) {
         if (j == 1) {
             if (!regex_caractere_especial.test(senha)) {
-                output_senha.innerHTML += `A senha deve conter no mínimo 1 caracter epecial<br>`
+                output_senha.innerHTML += `A senha deve conter no mínimo 1 caracter especial<br>`
                 output_senha.style.color = `red`
             }
 
