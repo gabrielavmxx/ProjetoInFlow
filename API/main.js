@@ -74,15 +74,18 @@ const serial = async (
 
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
+            if(sensorDigital == 1){ 
 
             // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
-                'INSERT INTO medida (sensor_digital) VALUES (?)',
+                'INSERT INTO registros (sensor_digital) VALUES (?)',
                 [sensorDigital]
             );
             console.log("valores inseridos no banco: ", sensorDigital);
-
+        }else { 
+        console.log('Valor capturado:', sensorDigital)
         }
+    }
 
     });
 
