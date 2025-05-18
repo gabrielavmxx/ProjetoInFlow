@@ -63,7 +63,33 @@ function cadastrar(req, res) {
     }
 }
 
+function alterarDados(req, res){
+    var fotoPerfil = req.body.fotoPerfilServer;
+    var id = req.body.idServer;
+
+    if (fotoPerfil == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    }else{
+        usuarioModel.alterarDados(fotoPerfil, id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao tentar alterar dados! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    alterarDados
 }
