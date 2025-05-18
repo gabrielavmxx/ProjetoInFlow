@@ -10,6 +10,11 @@ require("dotenv").config({ path: caminho_env });
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
+
+//multer é responsavél por salvar as imagens
+var multer = require("multer");
+var upload = multer()
+
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
 
@@ -17,6 +22,7 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
+var uploadUser = require('./src/middleware/uploadImage');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +32,30 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
+
+app.post('/profile', uploadUser.single('imagem'), async (req, res ) => {
+
+    if(req.file){
+        console.log(req.file)
+        return res.json({
+            erro: false,
+            mensagem: "Upload realizado com sucesso!",
+            nomeArquivo: req.file.filename
+        })
+    }
+    return res.json({
+        erro: false,
+        mensagem: "Upload realizado com sucesso!, formato de imagem incorreto"
+    });
+})
+
+// Teste de requisição
+// app.post('/profile-image', async (req, res ) => {
+//     return res.json({
+//         erro: false,
+//         mensagem: "Upload realizado com sucesso"
+//     })
+// })
 
 app.listen(PORTA_APP, function () {
     console.log(`

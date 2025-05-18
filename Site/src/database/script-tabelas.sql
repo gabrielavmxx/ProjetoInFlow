@@ -1,7 +1,7 @@
-CREATE DATABASE supermercado;
-USE supermercado;
+CREATE DATABASE inflow;
+USE inflow;
 
-drop database supermercado;
+drop database inflow;
 
 -- Tabela endereco
 CREATE TABLE endereco(
@@ -40,17 +40,17 @@ CREATE TABLE supermercado(
 CREATE TABLE usuario(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
-    cpf VARCHAR(100),
-    telefone VARCHAR(20),
+    -- cpf VARCHAR(100),
+    -- telefone VARCHAR(20),
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(20) NOT NULL,
     fotoPerfil VARCHAR(255),
-    acesso VARCHAR(10),
-    fksupermercado INT,
-    FOREIGN KEY(fksupermercado) REFERENCES supermercado(id),
-    UNIQUE ix_email (email),
-    UNIQUE ix_cpf (cpf),
-    CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
+    -- acesso VARCHAR(10),
+    -- fksupermercado INT,
+    -- FOREIGN KEY(fksupermercado) REFERENCES supermercado(id),
+	UNIQUE ix_email (email)
+    -- UNIQUE ix_cpf (cpf),
+    -- CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
 );
 
 -- Tabela areas (mantive plural)
@@ -103,7 +103,7 @@ VALUES ('Carrefour Hypermarket Tietê', '45543915002125', 1, 2),
 ('Carrefour Hipermercado', '45543915072689', 1, 3),
 ('Hipermercado Zaffari Morumbi Town', '93015006003309', 2, 5);
 
-INSERT INTO usuario (nome, cpf, telefone, email, senha, fotoPerfil, acesso, fksupermercado)
+INSERT INTO usuario (nome, email, senha, fotoPerfil)
 VALUES ();
 
 INSERT INTO area (nome, fksupermercado)

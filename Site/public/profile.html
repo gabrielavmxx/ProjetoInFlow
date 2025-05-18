@@ -25,12 +25,14 @@
         </a>
     </div>
     
-    <div class="container-todo-perfil">
+    <form class="container-todo-perfil" id="uploadForm" action="/profile" method="post" enctype="multipart/form-data">
         <div class="container-perfil">
             <div class="container-foto">
                 <p class="paragrafo-foto">Alterar foto de perfil</p>  
-                <label for="input_foto" class="botao-customizado"></label>
-                <input id="input_foto" type="file" accept="image/png, image/jpeg"/>
+                <label for="input_foto"class="botao-customizado" id="imagem_fundo">
+                    <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+                </label>
+                <input id="input_foto" type="file" name="imagem" accept="image/png, image/jpeg" required/>
 
             </div>
             <div class="container-items-foto">
@@ -47,9 +49,9 @@
                     <input class="ipt-container-foto" type="password">
                 </div>
             </div>
-            <button onclick="alterarDados()" class="btn-foto">Salvar dados</button>
+            <button type="submit" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
         </div>
-    </div>
+    </form>
 
     <div class="todo-rodape">
         <div class="rodape">
@@ -72,48 +74,66 @@
     </div>
 
     <script>
-        function alterarDados(){
-            var fotoPerfilVar = input_foto.value;
+        let imagemFundo = document.getElementById('imagem_fundo')
+        let arquivo = document.getElementById('input_foto')
 
-            if (
-                fotoPerfilVar == ""
-            ) {
-                alert('Mensagem de erro para todos os campos em branco')
-                return false;
-            }
+       arquivo.addEventListener('change', (event) => {
+        let leitor = new FileReader();
 
-            fetch("/usuarios/alterarDados", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                fotoPerfilServer: fotoPerfilVar,
-                idServer: sessionStorage.ID_USUARIO
-            }),
-            })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                alert("Dados alterados com sucesso!")
-
-                setTimeout(() => {
-                    window.location = "login.html";
-                }, "2000");
-
-                } else {
-                throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-
-            return false;
+        leitor.onload = () => {
+            let img = imagemFundo.querySelector('img');
+            img.src = leitor.result;
         }
+
+        leitor.readAsDataURL(arquivo.files[0]);
+    });
+
+        function alterarDados() {
+        const form = document.getElementById("uploadForm");
+        const formData = new FormData(form);
+
+        fetch("/profile", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.erro && data.nomeArquivo) {
+                sessionStorage.setItem("fotoPerfil", data.nomeArquivo);
+                alert("Upload realizado com sucesso!");
+
+                fetch("/usuarios/alterarDados", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        fotoPerfilServer: data.nomeArquivo,
+                        idServer: sessionStorage.ID_USUARIO
+                    }),
+                })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Dados alterados com sucesso!");
+                        setTimeout(() => {
+                            window.location = "login.html";
+                        }, 2000);
+                    } else {
+                        alert("Erro ao salvar dados.");
+                    }
+                })
+                .catch(err => console.error(err));
+            } else {
+                alert("Erro: " + data.mensagem);
+            }
+        })
+        .catch(error => {
+            console.error("Erro no upload:", error);
+            alert("Erro ao enviar imagem.");
+        });
+
+        return false;
+}
     </script>
 </body>
 </html>

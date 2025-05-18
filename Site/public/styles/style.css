@@ -810,18 +810,18 @@ span {
 }
 
 .botao-customizado {
-    height: 150px;
-    width: 150px;
+    height: 170px;
+    width: 170px;
     border-radius: 100%;
-    display: flex;
-    background-image: url(../assets/img/icon_foto.jpg); 
+    display: flex; 
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
+    transition: background .3s;
 }
 
 .botao-customizado:hover {
-    background-color: darkcyan;
+    background-color: darkgray;
 }
 
 .paragrafo-foto{
