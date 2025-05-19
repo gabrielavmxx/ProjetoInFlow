@@ -3,7 +3,8 @@ var dashModel = require("../models/dashModel");
 function buscarGraficosPorHipermercado(req, res) {
   var idUsuario = req.params.idUsuario; // precisa mudar!!
 
-  dashModel.buscarGraficosPorHipermercado(idUsuario).then((resultado) => {
+  dashModel.buscarDadosDashBoard(idUsuario) //aqui o erro
+  .then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -11,7 +12,7 @@ function buscarGraficosPorHipermercado(req, res) {
     }
   }).catch(function (erro) {
     console.log(erro);
-    console.log("Houve um erro ao buscar os aquarios: ", erro.sqlMessage);
+    console.log("Houve um erro ao buscar os registros: ", erro.sqlMessage);
     res.status(500).json(erro.sqlMessage);
   });
 }
