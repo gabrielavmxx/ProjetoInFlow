@@ -28,7 +28,7 @@ CREATE TABLE Sensor (
 );
 
 CREATE TABLE Usuario (
-    idUsuario int,
+    idUsuario int auto_increment,
     nome varchar(100),
     email varchar(100) UNIQUE,
     senha varchar(20),
@@ -44,6 +44,6 @@ CREATE TABLE Registro (
     data_hora_entrada timestamp default current_timestamp,
     data_hora_saida TIMESTAMP,
     primary key(idRegistro),
-    foreign key (fkSensor) references Sensor(fkSensor)
+    foreign key (fkSensor) references Sensor(idSensor)
     
 );
