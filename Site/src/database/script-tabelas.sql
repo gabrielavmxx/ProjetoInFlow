@@ -1,8 +1,6 @@
 CREATE DATABASE inflow;
 USE inflow;
 
-drop database inflow;
-
 -- Tabela endereco
 CREATE TABLE endereco(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -30,9 +28,9 @@ CREATE TABLE supermercado(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     cnpj CHAR(14),
-    fkEmpresa INT,
+    fkempresa INT,
     fkEndereco INT,
-    CONSTRAINT fk_em_sup FOREIGN KEY (fkEmpresa) REFERENCES empresa(id),
+    CONSTRAINT fk_em_sup FOREIGN KEY (fkempresa) REFERENCES empresa(id),
     CONSTRAINT fk_end_sup FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
 );
 
@@ -40,32 +38,39 @@ CREATE TABLE supermercado(
 CREATE TABLE usuario(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
-    -- cpf VARCHAR(100),
-    -- telefone VARCHAR(20),
+    cpf VARCHAR(100),
+    telefone VARCHAR(20),
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(20) NOT NULL,
     fotoPerfil VARCHAR(255),
-    -- acesso VARCHAR(10),
-    -- fksupermercado INT,
-    -- FOREIGN KEY(fksupermercado) REFERENCES supermercado(id),
-	UNIQUE ix_email (email)
-    -- UNIQUE ix_cpf (cpf),
-    -- CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
+    acesso VARCHAR(10),
+    fkempresa INT,
+    FOREIGN KEY(fkempresa) REFERENCES empresa(id),
+	UNIQUE ix_email (email),
+    UNIQUE ix_cpf (cpf),
+    CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
 );
 
 -- Tabela areas (mantive plural)
 CREATE TABLE areas(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50),
-    fksupermercado INT,
-    FOREIGN KEY(fksupermercado) REFERENCES supermercado(id)
+    nome VARCHAR(50)
+);
+
+CREATE TABLE areas_supermercado(
+	fkareas INT,
+    fksupermercados INT,
+    PRIMARY KEY(fkareas, fksupermercados),
+    CONSTRAINT fk_a_as FOREIGN KEY (fkareas) REFERENCES areas(id),
+    CONSTRAINT fk_s_as FOREIGN KEY (fksupermercados) REFERENCES supermercado(id)
 );
 
 -- Tabela corredor
 CREATE TABLE corredor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fkarea INT,
-    FOREIGN KEY(fkarea) REFERENCES areas(id)
+    fksupermercado INT,
+    FOREIGN KEY(fkarea, fksupermercado) REFERENCES areas_supermercado(fkareas, fksupermercados)
 );
 
 -- Tabela sensor
@@ -103,22 +108,49 @@ VALUES ('Carrefour Hypermarket Tietê', '45543915002125', 1, 2),
 ('Carrefour Hipermercado', '45543915072689', 1, 3),
 ('Hipermercado Zaffari Morumbi Town', '93015006003309', 2, 5);
 
-INSERT INTO usuario (nome, email, senha, fotoPerfil)
-VALUES ();
+-- Inserir usuários
+INSERT INTO usuario (nome, cpf, telefone, email, senha, fotoPerfil, acesso, fksupermercado)
+VALUES 
+('João Silva', '12345678901', '11999998888', 'joao.silva@email.com', 'senha123', null, 'Admin', 1),
+('Maria Oliveira', '98765432100', '11999997777', 'maria.oliveira@email.com', 'senha456', null, 'Analista', 1),
+('Carlos Souza', '11223344556', '11988887777', 'carlos.souza@email.com', 'senha789', null, 'Gestor', 1);
 
-INSERT INTO area (nome, fksupermercado)
-VALUES ();
+-- Inserir áreas
+INSERT INTO areas (nome)
+VALUES 
+('Padaria'),
+('Hortifruti'),
+('Açougue'),
+('Laticínios');
 
-INSERT INTO corredor (id, fkarea)
-VALUES ();
+-- Vincular áreas aos supermercados
+INSERT INTO areas_supermercado (fkareas, fksupermercados)
+VALUES 
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 3);
+
+INSERT INTO corredor (fkarea, fksupermercado)
+VALUES 
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 3);
 
 INSERT INTO sensor (statuses, fkcorredor)
-VALUES ();
+VALUES
+('Ativo', 1),
+('Ativo', 2),
+('Ativo', 3),
+('Ativo', 4),
+('Ativo', 1);
 
-INSERT INTO registro (datahora, fksensor, presenca)
-VALUES ();
+INSERT INTO registros (datahora, fksensor, presenca) VALUES
+();
 
-SELECT * FROM area;
+
+SELECT * FROM areas;
 SELECT * FROM corredor;
 SELECT * FROM empresa;
 SELECT * FROM endereco;
@@ -126,3 +158,9 @@ SELECT * FROM registros;
 SELECT * FROM sensor;
 SELECT * FROM supermercado;
 SELECT * FROM usuario;
+
+SELECT fksensor, COUNT(presenca) FROM registros r
+INNER JOIN sensor s ON r.fksensor = s.id
+INNER JOIN corredor c ON s.fkcorredor = c.id
+INNER JOIN supermercado sm ON c.fksupermercado = sm.id
+GROUP BY fksensor;
