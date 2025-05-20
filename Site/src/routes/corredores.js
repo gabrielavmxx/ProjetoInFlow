@@ -3,7 +3,7 @@ var router = express.Router();
 
 var corredorController = require("../controllers/corredorController");
 
-router.get("/:supermercadoId", function (req, res) {
+router.get("/:empresaId", function (req, res) {
   corredorController.buscarcorredorPorEmpresa(req, res);
 });
 
