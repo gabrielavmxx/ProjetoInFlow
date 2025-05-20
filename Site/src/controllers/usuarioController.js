@@ -22,7 +22,7 @@ function autenticar(req, res) {
                       if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        corredorModel.buscarCorredoresPorEmpresa(resultadoAutenticar[0].empresaId)
+                        corredorModel.buscarCorredoresPor(resultadoAutenticar[0].supermercadoId)
                             .then((resultadoCorredores) => {
                                 if (resultadoCorredores.length > 0) {
                                     res.json({
