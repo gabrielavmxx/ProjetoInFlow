@@ -23,6 +23,8 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var uploadUser = require('./src/middleware/uploadImage');
+var corredoresRouter = require("./src/routes/corredores");
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +34,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/corredores", corredoresRouter);
 
 app.post('/profile', uploadUser.single('imagem'), async (req, res ) => {
 
