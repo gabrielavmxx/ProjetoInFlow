@@ -9,9 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+<script src="js/sessao"></script>
 </head>
 
-<body>
+<body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
   <div class="container">
     <!-- MENU LATERAL -->
     <div id="menu">
@@ -440,5 +441,20 @@
     grafico3.data.datasets[0].data = valores[item]
     grafico3.update()
   }
+  
+  function exibirCorredores() {
+        JSON.parse(sessionStorage.CORREDORES).forEach(item => {
+            document.getElementById("corredores").innerHTML += `
+                    <div class="corredor">
+            
+                            <h1>${item.id}</h1>
+                            <p>AREA:${item.nome}</p>
+
+                      
+                    </div>
+                    `
+        });
+    }
+
 
 </script>
