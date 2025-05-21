@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar perfil</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="imagex/png" href="assets/img/logo.ico">
+</head>
+<body>
+    <div class="nav">
+        <div>
+            <p class="nav_titulo">In<span style="color: teal;">Flow</span></p>
+        </div>
+        <div class="nav_items">
+            <a href="index.html#home" class="nav_item">Home</a>
+            <a href="index.html#solucao" class="nav_item">Solução</a>
+            <a href="index.html#sobrenos" class="nav_item">Sobre Nós</a>
+            <a href="index.html#comofunciona" class="nav_item">Como funciona</a>
+            <a href="index.html#contato" class="nav_item">Contato</a>
+        </div>
+        <a href="login.html" class="botao_login">
+            <p>Login</p><i class="fa-solid fa-user icone_usuario"></i>
+        </a>
+    </div>
+    
+    <form class="container-todo-perfil" id="uploadForm" action="/profile" method="post" enctype="multipart/form-data">
+        <div class="container-perfil">
+            <div class="container-foto">
+                <p class="paragrafo-foto">Alterar foto de perfil</p>  
+                <label for="input_foto"class="botao-customizado" id="imagem_fundo">
+                    <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+                </label>
+                <input id="input_foto" type="file" name="imagem" accept="image/png, image/jpeg" required/>
+
+            </div>
+            <div class="container-items-foto">
+                <div class="items-ipt">
+                    <p class="paragrafo-foto">Alterar nome</p>
+                    <input class="ipt-container-foto" type="text">
+                </div>
+                <div class="items-ipt">
+                    <p class="paragrafo-foto">Alterar email</p>
+                    <input class="ipt-container-foto" type="text">
+                </div>
+                <div class="items-ipt">
+                    <p class="paragrafo-foto">Alterar senha</p>
+                    <input class="ipt-container-foto" type="password">
+                </div>
+            </div>
+            <button type="submit" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
+        </div>
+    </form>
+
+    <div class="todo-rodape">
+        <div class="rodape">
+            <div>
+                <p class="nav_titulo">In<span style="color: teal;">Flow</span></p>
+            </div>
+            <div class="rodape_items">
+                <p>Termos de serviço</p>
+                <p>Configurações de controle</p>
+                <p>Politica de privacidade</p>
+                <p class="direitos-autorais">2025© InFlow. Todos os direitos reservados - SPTECH</p>
+            </div>
+
+            <div class="icons-rodape">
+                <i class="fa-brands fa-instagram icone"></i>
+                <i class="fa-brands fa-facebook icone"></i>
+                <i class="fa-brands fa-linkedin icone"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let imagemFundo = document.getElementById('imagem_fundo')
+        let arquivo = document.getElementById('input_foto')
+
+       arquivo.addEventListener('change', (event) => {
+        let leitor = new FileReader();
+
+        leitor.onload = () => {
+            let img = imagemFundo.querySelector('img');
+            img.src = leitor.result;
+        }
+
+        leitor.readAsDataURL(arquivo.files[0]);
+    });
+
+        function alterarDados() {
+        const form = document.getElementById("uploadForm");
+        const formData = new FormData(form);
+
+        fetch("/profile", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.erro && data.nomeArquivo) {
+                sessionStorage.setItem("fotoPerfil", data.nomeArquivo);
+                alert("Upload realizado com sucesso!");
+
+                fetch("/usuarios/alterarDados", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        fotoPerfilServer: data.nomeArquivo,
+                        idServer: sessionStorage.ID_USUARIO
+                    }),
+                })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Dados alterados com sucesso!");
+                        setTimeout(() => {
+                            window.location = "login.html";
+                        }, 2000);
+                    } else {
+                        alert("Erro ao salvar dados.");
+                    }
+                })
+                .catch(err => console.error(err));
+            } else {
+                alert("Erro: " + data.mensagem);
+            }
+        })
+        .catch(error => {
+            console.error("Erro no upload:", error);
+            alert("Erro ao enviar imagem.");
+        });
+
+        return false;
+}
+    </script>
+</body>
+</html>
