@@ -109,7 +109,7 @@ VALUES ('Carrefour Hypermarket Tietê', '45543915002125', 1, 2),
 ('Hipermercado Zaffari Morumbi Town', '93015006003309', 2, 5);
 
 -- Inserir usuários
-INSERT INTO usuario (nome, cpf, telefone, email, senha, fotoPerfil, acesso, fksupermercado)
+INSERT INTO usuario (nome, cpf, telefone, email, senha, fotoPerfil, acesso, fkempresa)
 VALUES 
 ('João Silva', '12345678901', '11999998888', 'joao.silva@email.com', 'senha123', null, 'Admin', 1),
 ('Maria Oliveira', '98765432100', '11999997777', 'maria.oliveira@email.com', 'senha456', null, 'Analista', 1),
@@ -148,7 +148,6 @@ VALUES
 
 INSERT INTO registros (datahora, fksensor, presenca) VALUES
 ();
-
 
 SELECT * FROM areas;
 SELECT * FROM corredor;
