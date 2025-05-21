@@ -70,6 +70,7 @@ CREATE TABLE corredor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fkarea INT,
     fksupermercado INT,
+    descricao VARCHAR(20),
     FOREIGN KEY(fkarea, fksupermercado) REFERENCES areas_supermercado(fkareas, fksupermercados)
 );
 
@@ -79,6 +80,8 @@ CREATE TABLE sensor(
     statuses VARCHAR(10) DEFAULT 'Ativo',
     CONSTRAINT chk_status CHECK(statuses IN ('Ativo','Inativo')),
     fkcorredor INT,
+    numero_serie CHAR(8),
+    UNIQUE ix_ns (numero_serie),
     FOREIGN KEY(fkcorredor) REFERENCES corredor(id)
 );
 
@@ -131,12 +134,12 @@ VALUES
 (3, 2),
 (4, 3);
 
-INSERT INTO corredor (fkarea, fksupermercado)
+INSERT INTO corredor (fkarea, fksupermercado, descricao)
 VALUES 
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 3);
+(1, 1, 'Corredor 1'),
+(2, 1, 'Corredor 2'),
+(3, 2, 'Corredor 1'),
+(4, 3, 'Corredor 1');
 
 INSERT INTO sensor (statuses, fkcorredor)
 VALUES
@@ -146,14 +149,11 @@ VALUES
 ('Ativo', 4),
 ('Ativo', 1);
 
-INSERT INTO registros (datahora, fksensor, presenca) VALUES
-();
-
 SELECT * FROM areas;
 SELECT * FROM corredor;
 SELECT * FROM empresa;
 SELECT * FROM endereco;
-SELECT * FROM registros;
+SELECT * FROM registros ORDER BY id DESC;
 SELECT * FROM sensor;
 SELECT * FROM supermercado;
 SELECT * FROM usuario;
@@ -162,4 +162,7 @@ SELECT fksensor, COUNT(presenca) FROM registros r
 INNER JOIN sensor s ON r.fksensor = s.id
 INNER JOIN corredor c ON s.fkcorredor = c.id
 INNER JOIN supermercado sm ON c.fksupermercado = sm.id
+INNER JOIN empresa em ON sm.fkempresa = em.id
+WHERE sm.id = 1 AND datahora > DATE_SUB(('2025-05-19 08:11:00'), INTERVAL 5 MINUTE)
 GROUP BY fksensor;
+select * from registros where month(datahora) = 'May'
