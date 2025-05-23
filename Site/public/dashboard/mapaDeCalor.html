@@ -23,7 +23,7 @@
           <div class="icon">
             <i class="fa-solid fa-table-columns"></i>
           </div>
-          <a href="dashboard.html" class="titulo">Dashboard Análico</a>
+          <a href="dashboard.html" class="titulo">Dashboard Analítica</a>
         </div>
         <div class="box agora">
           <div class="icon">
@@ -59,6 +59,12 @@
     </div>
     <!-- FIM DO MENU LATERAL -->
     <div id="main">
+      <div id="mercadosGeral">
+        <select id="select_mercadosGeral" class="btn-chart"
+          onchange="exibirAquario(this.options[this.selectedIndex].value)">
+
+        </select>
+      </div>
       <div class="conteudoDashboard">
         <div class="elementosKPI">
           <div class="kpi k1">
@@ -95,11 +101,7 @@
           </div>
         </div>
         <div id="heatmaparea">
-          <h1>Mapa de calor</h1>
-          <p>Acompanhe em tempo real a movimentação</p>
-          <div class="heatmap">
-            <div id="heatmapContainer"></div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -118,45 +120,38 @@
   function exibirAquariosDoUsuario() {
     var supermercado = JSON.parse(sessionStorage.ID_SUPERMERCADO);
     supermercado.forEach(item => {
-      document.getElementById("heatmaparea").innerHTML += `
-        <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
+      document.getElementById("select_mercadosGeral").innerHTML += `
+        <option id="btnAquario${item.id}" value="${item.id}">${item.descricao}</option>
         `
 
-      document.getElementById("graficos").innerHTML += `
-            <div id="grafico${item.id}" class="display-none">
-                <h3 class="tituloGraficos">
-                    <span id="tituloAquario${item.id}">${item.descricao}</span>
-                </h3>
-                <div class="graph">
-                    <canvas id="myChartCanvas${item.id}"></canvas>
-                </div>
-                <div class="label-captura">
-                    <p id="avisoCaptura${item.id}" style="color: white"></p>
-                </div>
+      document.getElementById("heatmaparea").innerHTML += `
+          <div class="mapasDeCalor" class="display-none">
+            <h1>Mapa de calor</h1>
+            <p>Acompanhe em tempo real a movimentação</p>
+            <div class="heatmap${item.id}">
+              <div id="heatmapContainer${item.id}"></div>
             </div>
+            <div class="label-captura">
+              <p id="avisoCaptura${item.id}" style="color: white"></p>
+            </div>
+          </div>
         `
 
       obterDadosGrafico(item.id)
     });
 
-    if (aquarios.length > 0) {
-      exibirAquario(aquarios[0].id)
+    if (supermercado.length > 0) {
+      exibirAquario(supermercado[0].id)
     }
   }
 
-  function alterarTitulo(idAquario) {
-    var tituloAquario = document.getElementById(`tituloAquario${idAquario}`)
-    var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
-    tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
-  }
+  function exibirAquario(idSupermercado) {
+    let todosMapasDeCalor = JSON.parse(sessionStorage.ID_SUPERMERCADO);
 
-  function exibirAquario(idAquario) {
-    let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
-
-    for (i = 0; i < todosOsGraficos.length; i++) {
+    for (i = 0; i < todosMapasDeCalor.length; i++) {
       // exibindo - ou não - o gráfico
-      if (todosOsGraficos[i].id != idAquario) {
-        let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
+      if (todosMapasDeCalor[i].id != idAquario) {
+        let elementoAtual = document.getElementById(`heatmaparea${todosMapasDeCalor[i].id}`)
         if (elementoAtual.classList.contains("display-block")) {
           elementoAtual.classList.remove("display-block")
         }
@@ -164,22 +159,22 @@
 
         // alterando estilo do botão
         let btnAtual = document.getElementById(`btnAquario${todosOsGraficos[i].id}`)
-        if (btnAtual.classList.contains("btn-pink")) {
-          btnAtual.classList.remove("btn-pink")
-        }
-        btnAtual.classList.add("btn-white")
+        // if (btnAtual.classList.contains("btn-pink")) {
+        //   btnAtual.classList.remove("btn-pink")
+        // }
+        // btnAtual.classList.add("btn-white")
       }
     }
 
     // exibindo - ou não - o gráfico
-    let graficoExibir = document.getElementById(`grafico${idAquario}`)
+    let graficoExibir = document.getElementById(`heatmaparea${idSupermercado}`)
     graficoExibir.classList.remove("display-none")
     graficoExibir.classList.add("display-block")
 
     // alterando estilo do botão
-    let btnExibir = document.getElementById(`btnAquario${idAquario}`)
-    btnExibir.classList.remove("btn-white")
-    btnExibir.classList.add("btn-pink")
+    // let btnExibir = document.getElementById(`btnAquario${idAquario}`)
+    // btnExibir.classList.remove("btn-white")
+    // btnExibir.classList.add("btn-pink")
   }
 
   // O gráfico é construído com três funções:
@@ -222,31 +217,28 @@
   // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
   // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-  function plotarGrafico(resposta, idAquario) {
+  function plotarGrafico(resposta, idSupermercado) {
 
     console.log('iniciando plotagem do gráfico...');
 
-    // Criando estrutura para plotar gráfico - labels
-    let labels = [];
-
-    // Criando estrutura para plotar gráfico - dados
-    let dados = {
-      labels: labels,
-      datasets: [{
-        label: 'Umidade',
-        data: [],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      },
-      {
-        label: 'Temperatura',
-        data: [],
-        fill: false,
-        borderColor: 'rgb(199, 52, 52)',
-        tension: 0.1
-      }]
-    };
+  // Estrutura de dados separada por locais, cada local tem várias capturas de dados com datas e horários
+  var dadosPorLocal = {
+    local1: [
+      { x: 95, y: 175, value: 30, radius: 130, dataHora: '2024-10-01T10:30' },
+    ],
+    local2: [
+      { x: 310, y: 225, value: 20, radius: 90, dataHora: '2024-10-02T10:45' },
+    ],
+    local3: [
+      { x: 545, y: 190, value: 60, radius: 100, dataHora: '2024-10-01T11:10' },
+    ]//,
+    // local4: [
+    //   { x: 190, y: 364, value: 50, radius: 130, dataHora: '2024-10-02T11:00' },
+    // ],
+    // local5: [
+    //   { x: 400, y: 365, value: 80, radius: 130, dataHora: '2024-10-03T11:05' },
+    // ]
+  };
 
     console.log('----------------------------------------------')
     console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
@@ -275,12 +267,12 @@
     };
 
     // Adicionando gráfico criado em div na tela
-    let myChart = new Chart(
-      document.getElementById(`myChartCanvas${idAquario}`),
-      config
-    );
+    // Criar uma instância do heatmap.js
+    var instanciaHeatmap = h337.create({
+      container: document.getElementById('.heatmapContainer')
+    });
 
-    setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
+    setTimeout(() => atualizarGrafico(idSupermercado, dados, instanciaHeatmap), 2000);
   }
 
 
@@ -343,30 +335,6 @@
 
   }
 
-
-  // Criar uma instância do heatmap.js
-  var instanciaHeatmap = h337.create({
-    container: document.getElementById('.heatmapContainer')
-  });
-
-  // Estrutura de dados separada por locais, cada local tem várias capturas de dados com datas e horários
-  var dadosPorLocal = {
-    local1: [
-      { x: 95, y: 175, value: 30, radius: 130, dataHora: '2024-10-01T10:30' },
-    ],
-    local2: [
-      { x: 310, y: 225, value: 20, radius: 90, dataHora: '2024-10-02T10:45' },
-    ],
-    local3: [
-      { x: 545, y: 190, value: 60, radius: 100, dataHora: '2024-10-01T11:10' },
-    ]//,
-    // local4: [
-    //   { x: 190, y: 364, value: 50, radius: 130, dataHora: '2024-10-02T11:00' },
-    // ],
-    // local5: [
-    //   { x: 400, y: 365, value: 80, radius: 130, dataHora: '2024-10-03T11:05' },
-    // ]
-  };
 
   // Função para converter data e hora em um objeto Date
   function converterParaDataCompleta(data, hora) {

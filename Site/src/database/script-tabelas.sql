@@ -70,7 +70,7 @@ CREATE TABLE corredor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     fkarea INT,
     fksupermercado INT,
-    descricao VARCHAR(20),
+    posicao VARCHAR(20),
     FOREIGN KEY(fkarea, fksupermercado) REFERENCES areas_supermercado(fkareas, fksupermercados)
 );
 
@@ -143,11 +143,11 @@ VALUES
 
 INSERT INTO sensor (statuses, fkcorredor)
 VALUES
-('Ativo', 1),
-('Ativo', 2),
-('Ativo', 3),
-('Ativo', 4),
-('Ativo', 1);
+('Ativo', 1, 'AABBCCD1'),
+('Ativo', 2, 'AABBCCD2'),
+('Ativo', 3, 'AABBCCD3'),
+('Ativo', 4, 'AABBCCD4'),
+('Ativo', 1, 'AABBCCD5');
 
 SELECT * FROM areas;
 SELECT * FROM corredor;
@@ -164,5 +164,6 @@ INNER JOIN corredor c ON s.fkcorredor = c.id
 INNER JOIN supermercado sm ON c.fksupermercado = sm.id
 INNER JOIN empresa em ON sm.fkempresa = em.id
 WHERE sm.id = 1 AND datahora > DATE_SUB(('2025-05-19 08:11:00'), INTERVAL 5 MINUTE)
+AND s.numero_serie = 'AABBCCD1'; 
 GROUP BY fksensor;
 select * from registros where month(datahora) = 'May'
