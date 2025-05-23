@@ -69,11 +69,11 @@ const serial = async (
             );
             console.log("valores inseridos no banco: ",  + sensorDigital);
     
+        }else{
+            console.log(`Dado captura: ${sensorDigital}`)
         }
                         
-    } else{
-        console.log(`Dado captura: ${sensorDigital}`)
-    }
+    } 
     
     });
 
