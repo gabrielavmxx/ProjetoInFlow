@@ -213,7 +213,7 @@ body {
   border: #ffffff 4px solid;
   border-radius: 20px;
 }
-.heatmaparea {
+#heatmaparea {
  background-color: #008080;
   width: 100%;
   height: fit-content;
