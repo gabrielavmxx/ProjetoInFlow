@@ -91,7 +91,7 @@
               <option value="2030">2030</option>
             </select>
 
-            <button id="btn"> Buscar</button>
+            <button id="btn" onclick="BuscarDados()"> Buscar</button>
           </div>
 
         </div>
@@ -356,39 +356,75 @@
 
   heatmapInstance.setData(data);
 
+function  BuscarDados(){ 
 
-  const ctx2 = document.getElementById('grafico2');
-  const grafico2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: ['Corredor 1', 'Corredor 2', 'Corredor 3', 'Corredor 4', 'Corredor 5', 'Corredor 6', 'Corredor 7', 'Corredor 8', 'Corredor 9', 'Corredor 10'],
-      datasets: [{
-        label: 'Pessoas', //<- legenda da tabela
-        data: [10, 22, 43, 32, 11, 54, 43, 21, 55, 53], //<- muda o valor dos dados no grafico para adicionar mais valores é necessario adicionar mais corredores acima
-        borderWidth: 1,
-        borderColor: '#115e59',
-        backgroundColor: '#115e59'
-      }]
-    },
-    options: {
-      tension: 0.5,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
+
+fetch(`/hipermercado/${idUsuario}`) // faz a requisição no banco de dados
+  .then(response => {
+   
+    if (!response.ok) { // verifica se não contem nenhum erro
+      throw new Error('Erro na requisição'); // se tiver erro, ele anuncia 
+    }
+
+    return response.json(); // converte para json
+  })
+  .then(dados => { // array para guardar os dados que vinheram do banco de dados
+
+    const labels = [];
+    const data = [];
+
+    dados.forEach(item => {  // cria um array para cada label e dados
+
+
+      labels.push(`${item.corredor} (${item.mes}/${item.ano})`); // faz um label onde junta o nome do corredor com o mes e ano.
+      
+      data.push(item.total_movimentacoes); // insere o total de movimentos no array de dados 
+    });
+
+    
+    const ctx2 = document.getElementById('grafico2').getContext('2d'); // Traz a dash
+
+
+    const grafico2 = new Chart(ctx2, { // cria o grafico
+      type: 'bar', // tipo da dash
+      data: {
+        labels: labels, // labels no eixo X (corredor + mês/ano)
+        datasets: [{
+          label: 'Movimentação por corredor', // nome da legenda
+          data: data, // valores que preenchem as barras
+          borderWidth: 1, // espessura da borda das barras
+          borderColor: '#115e59', // cor da borda das barras
+          backgroundColor: '#115e59' // cor do preenchimento das barras
+        }]
       },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Movimentação por corredor',
-          font: {
-            size: 24
-          },
-          color: '#333' // (opcional) cor do título
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true // Faz com que o eixo y sempre comece em 0
+          }
+        },
+        plugins: {
+          title: {
+            display: true, // mostra o título do gráfico
+            text: 'Movimentação por corredor e mês', // texto do título
+            font: {
+              size: 24 // tamanho da fonte do título
+            },
+            color: '#333' // cor do título
+          }
         }
       }
-    }
+    });
   })
+  .catch(erro => { // Caso ocorra um erro na requisição, ele exibe no console
+  
+    console.error('Erro ao buscar dados:', erro);
+  })
+};
+
+// fim da function
+
+
   const ctx3 = document.getElementById('grafico3').getContext('2d');
   const grafico3 = new Chart(ctx3, {
     type: 'bar',

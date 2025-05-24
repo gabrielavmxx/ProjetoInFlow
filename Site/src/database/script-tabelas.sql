@@ -167,3 +167,16 @@ WHERE sm.id = 1 AND datahora > DATE_SUB(('2025-05-19 08:11:00'), INTERVAL 5 MINU
 AND s.numero_serie = 'AABBCCD1'
 GROUP BY fksensor;
 select * from registros where month(datahora) = 'May'
+
+SELECT 
+    sm.nome AS supermercado,
+    c.posicao AS corredor,
+    MONTH(r.datahora) AS mes,
+    YEAR(r.datahora) AS ano,
+    COUNT(r.presenca) AS total_movimentacoes
+FROM registros r
+INNER JOIN sensor s ON r.fksensor = s.id
+INNER JOIN corredor c ON s.fkcorredor = c.id
+INNER JOIN supermercado sm ON c.fksupermercado = sm.id
+GROUP BY sm.nome, c.posicao, mes, ano
+ORDER BY ano DESC, mes DESC, sm.nome, c.posicao;
