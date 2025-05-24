@@ -2,9 +2,8 @@ var mapaModel = require("../models/mapaModel");
 
 function buscarValoresDosUltimos5minPorSensor(req, res) {
     var idSupermercado = req.params.idSupermercado;
-    var sensor = req.params.sensor;
 
-    mapaModel.buscarValoresDosUltimos5minPorSensor(idSupermercado, sensor).then(function (resultado){
+    mapaModel.buscarValoresDosUltimos5minPorSensor(idSupermercado).then(function (resultado){
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
