@@ -358,66 +358,67 @@
 
 function  BuscarDados(){ 
 
+fetch('/hipermercado') // faz a rota
+  .then(response => { // verifica se a resposta foi bem-sucedida
+    if (!response.ok) {
 
-fetch(`/hipermercado/${idUsuario}`) // faz a requisição no banco de dados
-  .then(response => {
-   
-    if (!response.ok) { // verifica se não contem nenhum erro
-      throw new Error('Erro na requisição'); // se tiver erro, ele anuncia 
+      throw new Error('Erro na requisição'); //  // se não estiver okay, lança um erro no catch
     }
-
-    return response.json(); // converte para json
+   
+    return response.json(); // caso esteja tudo okay ele converte o select em json
   })
-  .then(dados => { // array para guardar os dados que vinheram do banco de dados
+  .then(dados => {
 
-    const labels = [];
+    const labels = []; // armazena os dados dentro de um vetor
     const data = [];
 
-    dados.forEach(item => {  // cria um array para cada label e dados
+   
+    dados.forEach(item => { // cria o array
+   
+      labels.push(`${item.corredor} (${item.mes}/${item.ano})`); // monta o label que o une os nomes do corredores com o mes e o ano
 
 
-      labels.push(`${item.corredor} (${item.mes}/${item.ano})`); // faz um label onde junta o nome do corredor com o mes e ano.
-      
-      data.push(item.total_movimentacoes); // insere o total de movimentos no array de dados 
+      data.push(item.total_movimentacoes); // colcoa as movimentações dentro do array
     });
 
-    
-    const ctx2 = document.getElementById('grafico2').getContext('2d'); // Traz a dash
+    const ctx2 = document.getElementById('grafico2').getContext('2d'); //  chama a tag canvas
 
+   
+    const grafico2 = new Chart(ctx2, {
+      type: 'bar', // tipo de grafico
 
-    const grafico2 = new Chart(ctx2, { // cria o grafico
-      type: 'bar', // tipo da dash
       data: {
-        labels: labels, // labels no eixo X (corredor + mês/ano)
+        labels: labels, // define os labels no eixo x
         datasets: [{
-          label: 'Movimentação por corredor', // nome da legenda
-          data: data, // valores que preenchem as barras
-          borderWidth: 1, // espessura da borda das barras
-          borderColor: '#115e59', // cor da borda das barras
-          backgroundColor: '#115e59' // cor do preenchimento das barras
+          label: 'Movimentação por corredor', // Legenda
+          data: data, //define os valores da data, no caso aqui ele puxa os dados do json
+          borderWidth: 1, // espessura das barras
+          borderColor: '#115e59', //define a cor das bordas das barras
+          backgroundColor: '#115e59' //define a cor das barras
         }]
       },
+
       options: {
         scales: {
           y: {
-            beginAtZero: true // Faz com que o eixo y sempre comece em 0
+            beginAtZero: true // garante que o eixo y não venha em 0
           }
         },
         plugins: {
           title: {
-            display: true, // mostra o título do gráfico
-            text: 'Movimentação por corredor e mês', // texto do título
+            display: true, // exuibe o título no gráfico
+            text: 'Movimentação por corredor e mês', //texto do titulo
             font: {
-              size: 24 // tamanho da fonte do título
+              size: 24 //
             },
-            color: '#333' // cor do título
+            color: '#333' //
           }
         }
       }
     });
   })
-  .catch(erro => { // Caso ocorra um erro na requisição, ele exibe no console
-  
+  .catch(erro => {
+    // Caso ocorra algum erro sera exibido no console
     console.error('Erro ao buscar dados:', erro);
   })
 };
