@@ -104,7 +104,7 @@
             </div>
           </div>
         </div>
-        <div id="heatmaparea">
+        <div id="heatmapareas">
 
         </div>
       </div>
@@ -128,8 +128,8 @@
         <option id="btnAquario${item.id}" value="${item.id}">${item.nome}</option>
         `
 
-      document.getElementById("heatmaparea").innerHTML += `
-          <div class="mapasDeCalor" class="display-none">
+      document.getElementById("heatmapareas").innerHTML += `
+          <div id="heatmaparea${item.id}" class="display-none">
             <h1>Mapa de calor</h1>
             <p>Acompanhe em tempo real a movimentação</p>
             <div class="heatmap${item.id}">
