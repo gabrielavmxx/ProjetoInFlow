@@ -25,8 +25,8 @@ var usuarioRouter = require("./src/routes/usuarios");
 var dashRouter = require('./src/routes/dashboard');
 var uploadUser = require('./src/middleware/uploadImage');
 var corredoresRouter = require("./src/routes/corredores");
-var mapaRouter = require("./src/routes/mapa")
-
+var mapaRouter = require("./src/routes/mapa");
+var supermercadoRouter = require("./src/routes/supermercado");
 
 
 app.use(express.json());
@@ -40,6 +40,8 @@ app.use("/usuarios", usuarioRouter);
 app.use("/corredores", corredoresRouter);
 app.use("/dashboard", dashRouter);
 app.use("/mapa", mapaRouter);
+app.use("/supermercado", supermercadoRouter);
+
 
 app.post('/profile', uploadUser.single('imagem'), async (req, res ) => {
 

@@ -16,3 +16,7 @@ function buscarValoresDosUltimos5minPorSensor(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+
+module.exports = {
+    buscarValoresDosUltimos5minPorSensor
+}

@@ -134,14 +134,14 @@ VALUES
 (3, 2),
 (4, 3);
 
-INSERT INTO corredor (fkarea, fksupermercado, descricao)
+INSERT INTO corredor (fkarea, fksupermercado, posicao)
 VALUES 
 (1, 1, 'Corredor 1'),
 (2, 1, 'Corredor 2'),
 (3, 2, 'Corredor 1'),
 (4, 3, 'Corredor 1');
 
-INSERT INTO sensor (statuses, fkcorredor)
+INSERT INTO sensor (statuses, fkcorredor, numero_serie)
 VALUES
 ('Ativo', 1, 'AABBCCD1'),
 ('Ativo', 2, 'AABBCCD2'),
@@ -164,6 +164,6 @@ INNER JOIN corredor c ON s.fkcorredor = c.id
 INNER JOIN supermercado sm ON c.fksupermercado = sm.id
 INNER JOIN empresa em ON sm.fkempresa = em.id
 WHERE sm.id = 1 AND datahora > DATE_SUB(('2025-05-19 08:11:00'), INTERVAL 5 MINUTE)
-AND s.numero_serie = 'AABBCCD1'; 
+AND s.numero_serie = 'AABBCCD1'
 GROUP BY fksensor;
 select * from registros where month(datahora) = 'May'
