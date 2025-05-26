@@ -1,6 +1,7 @@
-  var dashModel = require("../models/dashModel");
-  
-  function buscarGraficosPorHipermercado(req, res) {
+var dashModel = require("../models/dashModel");
+
+function buscarGraficosPorHipermercado(req, res) {
+  // Ajustado: sem capturar req.params.idUsuario
   dashModel.buscarDadosDashBoard()
     .then((resultado) => {
       if (resultado.length > 0) {
@@ -14,6 +15,6 @@
     });
 }
 
-  module.exports = {
-    buscarGraficosPorHipermercado
-  }
+module.exports = {
+  buscarGraficosPorHipermercado
+};

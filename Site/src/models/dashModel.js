@@ -15,10 +15,11 @@ function buscarDadosDashBoard() {
         GROUP BY sm.nome, c.posicao, mes, ano
         ORDER BY ano DESC, mes DESC, sm.nome, c.posicao;
   `;
+
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
 module.exports = {
-    buscarDadosDashBoard
+  buscarDadosDashBoard
 };
