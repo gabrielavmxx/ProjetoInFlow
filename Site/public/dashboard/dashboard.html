@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
   <script src="js/sessao"></script>
+  <script src="js/sessao"></script>
 </head>
 
 <body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
@@ -97,7 +98,16 @@
 
           <button id="btn"> Buscar</button>
         </div>
+          <button id="btn"> Buscar</button>
+        </div>
 
+      </div>
+      <div id="div_mes_escolhido"> </div>
+      <div class="elementosKPI">
+        <div class="kpi k1">
+          <p class="titulo">Ativações totais</p>
+          <div class="dados">
+            <p>40000</p>
       </div>
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
@@ -120,6 +130,20 @@
           <p class="titulo"> Dia com maior fluxo</p>
           <div class="dados">
             <p>10</p>
+            <p>10% Maior que o mes passado</p>
+          </div>
+        </div>
+        <div class="kpi k2">
+          <p class="titulo">Corredor com maior fluxo</p>
+          <div class="dados">
+            <p>6</p>
+            <p>Com picos a sexta no periodo da tarde</p>
+          </div>
+        </div>
+        <div class="kpi k3">
+          <p class="titulo"> Dia com maior fluxo</p>
+          <div class="dados">
+            <p>10</p>
 
           </div>
         </div>
@@ -127,7 +151,17 @@
           <p class="titulo">Corredor com queda de fluxo</p>
           <div class="dados">
             <p>Corredor 4</p>
+          </div>
+        </div>
+        <div class="kpi k4">
+          <p class="titulo">Corredor com queda de fluxo</p>
+          <div class="dados">
+            <p>Corredor 4</p>
 
+          </div>
+        </div>
+      </div>
+      <!-- <div class="calendar">
           </div>
         </div>
       </div>
@@ -152,6 +186,7 @@
           </div>
         </div> -->
 
+      <div class="conteudoGrafico">
       <div class="conteudoGrafico">
 
 
@@ -224,6 +259,13 @@
           <div id="heatmapContainer"></div>
         </div>
       </div>
+      <div class="heatmaparea">
+        <h1>Mapa de calor</h1>
+        <p>Acompanhe em tempo real a movimentação</p>
+        <div class="heatmap">
+          <div id="heatmapContainer"></div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -231,8 +273,14 @@
 </div>
 </div>
 </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
 </body>
-<div id="btnSupermercado" class="btn-supermercado">
+<div id="btnSupermercado" class="btns-dash">
 </div>
 <div id="graficos" class="graficos">
 </div>
@@ -247,9 +295,13 @@
     var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
     supermercados.forEach(item => {
       document.getElementById("btnSupermercado").innerHTML += `
+    var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
+    supermercados.forEach(item => {
+      document.getElementById("btnSupermercado").innerHTML += `
             <button class="btn-chart" onclick="exibirSupermercado(${item.id})" id="btnSupermercado${item.id}">${item.nome}</button>
             `
 
+      document.getElementById("graficos").innerHTML += `
       document.getElementById("graficos").innerHTML += `
                 <div id="grafico${item.id}" class="display-none">
                     <h3 class="tituloGraficos">
@@ -271,7 +323,16 @@
       exibirSupermercado(supermercados[0].id)
     }
   }
+    if (supermercados.length > 0) {
+      exibirSupermercado(supermercados[0].id)
+    }
+  }
 
+  function alterarTitulo(idSupermercado) {
+    var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
+    var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
+    tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
+  }
   function alterarTitulo(idSupermercado) {
     var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
     var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
@@ -299,6 +360,14 @@
         btnAtual.classList.add("btn-white")
       }
     }
+        // alterando estilo do botão
+        let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
+        if (btnAtual.classList.contains("btn-pink")) {
+          btnAtual.classList.remove("btn-pink")
+        }
+        btnAtual.classList.add("btn-white")
+      }
+    }
 
     // exibindo - ou não - o gráfico
     let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
@@ -310,10 +379,17 @@
     btnExibir.classList.remove("btn-white")
     btnExibir.classList.add("btn-pink")
   }
+    // alterando estilo do botão
+    let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
+    btnExibir.classList.remove("btn-white")
+    btnExibir.classList.add("btn-pink")
+  }
 
 
   function obterDadosGrafico(idSupermercado) {
+  function obterDadosGrafico(idSupermercado) {
 
+    alterarTitulo(idSupermercado)
     alterarTitulo(idSupermercado)
 
 
@@ -322,9 +398,24 @@
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
+    fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
 
           plotarGrafico(resposta, idSupermercado);
+          plotarGrafico(resposta, idSupermercado);
 
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
         });
       } else {
         console.error('Nenhum dado encontrado ou erro na API');
@@ -340,6 +431,11 @@
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
 
   function plotarGrafico(resposta, idSupermercado) {
+  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+
+  function plotarGrafico(resposta, idSupermercado) {
     console.log('Iniciando plotagem do gráfico de barras...');
 
     // Labels dinâmicas - nomes dos corredores
@@ -350,6 +446,9 @@
 
     // Preenchendo os dados a partir da resposta
     for (let i = 0; i < resposta.length; i++) {
+      let registro = resposta[i];
+      labels.push(`Corredor ${registro.corredor}`);
+      dadosFluxo.push(registro.fluxoPessoas);
       let registro = resposta[i];
       labels.push(`Corredor ${registro.corredor}`);
       dadosFluxo.push(registro.fluxoPessoas);
@@ -397,14 +496,46 @@
           }
         }
       }
+      type: 'bar',
+      data: dados,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Quantidade de Pessoas'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Corredores'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: 'Fluxo de Pessoas por Corredor'
+          }
+        }
+      }
     };
 
     // Renderizando o gráfico na tela
     const myChart = new Chart(
       document.getElementById(`myChartCanvas${idSupermercado}`),
       config
+      document.getElementById(`myChartCanvas${idSupermercado}`),
+      config
     );
   }
+  }
+
 
 
 
@@ -527,6 +658,8 @@
   });
 
   function exibirCorredores() {
+    JSON.parse(sessionStorage.CORREDORES).forEach(item => {
+      document.getElementById("corredores").innerHTML += `
     JSON.parse(sessionStorage.CORREDORES).forEach(item => {
       document.getElementById("corredores").innerHTML += `
                     <div class="corredor">
