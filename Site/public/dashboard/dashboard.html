@@ -295,15 +295,10 @@
     var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
     supermercados.forEach(item => {
       document.getElementById("btnSupermercado").innerHTML += `
-    var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
-    supermercados.forEach(item => {
-      document.getElementById("btnSupermercado").innerHTML += `
             <button class="btn-chart" onclick="exibirSupermercado(${item.id})" id="btnSupermercado${item.id}">${item.nome}</button>
             `
 
       document.getElementById("graficos").innerHTML += `
-      document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
                     <h3 class="tituloGraficos">
                         <span id="tituloSupermercado${item.id}">${item.nome}</span>
                     </h3>
@@ -321,12 +316,7 @@
 
     if (supermercados.length > 0) {
       exibirSupermercado(supermercados[0].id)
-    }
-  }
-    if (supermercados.length > 0) {
-      exibirSupermercado(supermercados[0].id)
-    }
-  }
+    }}
 
   function alterarTitulo(idSupermercado) {
     var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
@@ -351,15 +341,6 @@
           elementoAtual.classList.remove("display-block")
         }
         elementoAtual.classList.add("display-none")
-
-        // alterando estilo do botão
-        let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
-        if (btnAtual.classList.contains("btn-pink")) {
-          btnAtual.classList.remove("btn-pink")
-        }
-        btnAtual.classList.add("btn-white")
-      }
-    }
         // alterando estilo do botão
         let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
         if (btnAtual.classList.contains("btn-pink")) {
@@ -379,17 +360,8 @@
     btnExibir.classList.remove("btn-white")
     btnExibir.classList.add("btn-pink")
   }
-    // alterando estilo do botão
-    let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
-    btnExibir.classList.remove("btn-white")
-    btnExibir.classList.add("btn-pink")
-  }
-
 
   function obterDadosGrafico(idSupermercado) {
-  function obterDadosGrafico(idSupermercado) {
-
-    alterarTitulo(idSupermercado)
     alterarTitulo(idSupermercado)
 
 
@@ -398,24 +370,9 @@
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-    fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          resposta.reverse();
-
           plotarGrafico(resposta, idSupermercado);
           plotarGrafico(resposta, idSupermercado);
 
-        });
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
-    })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-  }
         });
       } else {
         console.error('Nenhum dado encontrado ou erro na API');
@@ -446,9 +403,6 @@
 
     // Preenchendo os dados a partir da resposta
     for (let i = 0; i < resposta.length; i++) {
-      let registro = resposta[i];
-      labels.push(`Corredor ${registro.corredor}`);
-      dadosFluxo.push(registro.fluxoPessoas);
       let registro = resposta[i];
       labels.push(`Corredor ${registro.corredor}`);
       dadosFluxo.push(registro.fluxoPessoas);
@@ -495,7 +449,7 @@
             text: 'Fluxo de Pessoas por Corredor'
           }
         }
-      }
+      },
       type: 'bar',
       data: dados,
       options: {
@@ -528,8 +482,6 @@
 
     // Renderizando o gráfico na tela
     const myChart = new Chart(
-      document.getElementById(`myChartCanvas${idSupermercado}`),
-      config
       document.getElementById(`myChartCanvas${idSupermercado}`),
       config
     );
@@ -660,8 +612,6 @@
   function exibirCorredores() {
     JSON.parse(sessionStorage.CORREDORES).forEach(item => {
       document.getElementById("corredores").innerHTML += `
-    JSON.parse(sessionStorage.CORREDORES).forEach(item => {
-      document.getElementById("corredores").innerHTML += `
                     <div class="corredor">
             
                             <h1>${item.id}</h1>
@@ -697,6 +647,4 @@
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
-
-
 </script>
