@@ -11,132 +11,132 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
-<script src="js/sessao"></script>
+  <script src="js/sessao"></script>
 </head>
 
 <body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
-  <div class="container">
-    <!-- MENU LATERAL -->
-    <div id="menu">
-      <div class="logo">
-        <h1>In<span>Flow</span></h1>
+<div class="container">
+  <!-- MENU LATERAL -->
+  <div id="menu">
+    <div class="logo">
+      <h1>In<span>Flow</span></h1>
+    </div>
+    <div class="escolha">
+      <div class="box">
+        <div class="icon">
+          <i class="fa-solid fa-table-columns"></i>
+        </div>
+        <a href="dashboard.html" class="titulo">Dashboard Analítica</a>
       </div>
-      <div class="escolha">
-        <div class="box">
-          <div class="icon">
-            <i class="fa-solid fa-table-columns"></i>
-          </div>
-          <a href="dashboard.html" class="titulo">Dashboard Analítica</a>
+      <div class="box agora">
+        <div class="icon">
+          <i class="fa-solid fa-gauge"></i>
         </div>
-        <div class="box agora">
-          <div class="icon">
-            <i class="fa-solid fa-gauge"></i>
-          </div>
-          <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
-        </div>
-        <div class="box">
-          <div class="icon">
-            <i class="fa-solid fa-users"></i>
-          </div>
-          <a href="cadastro.html" class="titulo">Adicionar usuários</a>
-        </div>
-        <div class="box">
-          <div class="icon">
-            <i class="fa-solid fa-gear"></i>
-          </div>
-          <p class="titulo">Configurações</p>
-        </div>
+        <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
       </div>
-      <div class="dadosPerfil">
-        <div class="fotoPerfil conteudo">
-          <img src="assets/img/homem1.jpg" alt="">
+      <div class="box">
+        <div class="icon">
+          <i class="fa-solid fa-users"></i>
         </div>
-        <div class="infoPerfil conteudo">
-          <p class="nome">Renato</p>
-          <p class="email">renato.silva@gmail.com</p>
+        <a href="cadastro.html" class="titulo">Adicionar usuários</a>
+      </div>
+      <div class="box">
+        <div class="icon">
+          <i class="fa-solid fa-gear"></i>
         </div>
-        <div class="maisInfo conteudo">
-          <i class="fa-solid fa-angle-right"></i>
-        </div>
+        <p class="titulo">Configurações</p>
       </div>
     </div>
-    <!-- FIM DO MENU LATERAL -->
-    <div id="main">
-      <div class="conteudoDashboard">
-        <div class="div_titulo_mercado">
-          <h1> Carrefour 12312</h1>
+    <div class="dadosPerfil">
+      <div class="fotoPerfil conteudo">
+        <img src="assets/img/homem1.jpg" alt="">
+      </div>
+      <div class="infoPerfil conteudo">
+        <p class="nome">Renato</p>
+        <p class="email">renato.silva@gmail.com</p>
+      </div>
+      <div class="maisInfo conteudo">
+        <i class="fa-solid fa-angle-right"></i>
+      </div>
+    </div>
+  </div>
+  <!-- FIM DO MENU LATERAL -->
+  <div id="main">
+    <div class="conteudoDashboard">
+      <div class="div_titulo_mercado">
+        <h1> Carrefour 12312</h1>
+      </div>
+      <div class="div_escolhermes">
+        <div class="logo">
+          <h1>In<span>Flow</span></h1>
         </div>
-        <div class="div_escolhermes">
-          <div class="logo">
-            <h1>In<span>Flow</span></h1>
-          </div>
-          <div class="select">
-            <label for="mes">Escolha o mês:</label>
-            <br>
-            <select id="mes">
-              <option value="janeiro">Janeiro</option>
-              <option value="fevereiro">Fevereiro</option>
-              <option value="marco">Março</option>
-              <option value="abril">Abril</option>
-              <option value="maio">Maio</option>
-              <option value="junho">Junho</option>
-              <option value="julho">Julho</option>
-              <option value="agosto">Agosto</option>
-              <option value="setembro">Setembro</option>
-              <option value="outubro">Outubro</option>
-              <option value="novembro">Novembro</option>
-              <option value="dezembro">Dezembro</option>
-            </select>
-            <label for="ano">Escolha o ano:</label>
-            <br>
-            <select id="ano">
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
+        <div class="select">
+          <label for="mes">Escolha o mês:</label>
+          <br>
+          <select id="mes">
+            <option value="janeiro">Janeiro</option>
+            <option value="fevereiro">Fevereiro</option>
+            <option value="marco">Março</option>
+            <option value="abril">Abril</option>
+            <option value="maio">Maio</option>
+            <option value="junho">Junho</option>
+            <option value="julho">Julho</option>
+            <option value="agosto">Agosto</option>
+            <option value="setembro">Setembro</option>
+            <option value="outubro">Outubro</option>
+            <option value="novembro">Novembro</option>
+            <option value="dezembro">Dezembro</option>
+          </select>
+          <label for="ano">Escolha o ano:</label>
+          <br>
+          <select id="ano">
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+          </select>
 
-            <button id="btn"> Buscar</button>
-          </div>
-
+          <button id="btn"> Buscar</button>
         </div>
-        <div id="div_mes_escolhido"> </div>
-        <div class="elementosKPI">
-          <div class="kpi k1">
-            <p class="titulo">Ativações totais</p>
-            <div class="dados">
-              <p>40000</p>
 
-              <p>10% Maior que o mes passado</p>
-            </div>
-          </div>
-          <div class="kpi k2">
-            <p class="titulo">Corredor com maior fluxo</p>
-            <div class="dados">
-              <p>6</p>
-              <p>Com picos a sexta no periodo da tarde</p>
-            </div>
-          </div>
-          <div class="kpi k3">
-            <p class="titulo"> Dia com maior fluxo</p>
-            <div class="dados">
-              <p>10</p>
+      </div>
+      <div id="div_mes_escolhido"> </div>
+      <div class="elementosKPI">
+        <div class="kpi k1">
+          <p class="titulo">Ativações totais</p>
+          <div class="dados">
+            <p>40000</p>
 
-            </div>
-          </div>
-          <div class="kpi k4">
-            <p class="titulo">Corredor com queda de fluxo</p>
-            <div class="dados">
-              <p>Corredor 4</p>
-
-            </div>
+            <p>10% Maior que o mes passado</p>
           </div>
         </div>
-        <!-- <div class="calendar">
+        <div class="kpi k2">
+          <p class="titulo">Corredor com maior fluxo</p>
+          <div class="dados">
+            <p>6</p>
+            <p>Com picos a sexta no periodo da tarde</p>
+          </div>
+        </div>
+        <div class="kpi k3">
+          <p class="titulo"> Dia com maior fluxo</p>
+          <div class="dados">
+            <p>10</p>
+
+          </div>
+        </div>
+        <div class="kpi k4">
+          <p class="titulo">Corredor com queda de fluxo</p>
+          <div class="dados">
+            <p>Corredor 4</p>
+
+          </div>
+        </div>
+      </div>
+      <!-- <div class="calendar">
           <div class="header">
             <button id="prev">&#9664;</button>
             <h2 id="monthYear"></h2>
@@ -157,81 +157,81 @@
           </div>
         </div> -->
 
-        <div class="conteudoGrafico">
+      <div class="conteudoGrafico">
 
 
-          <div class="grafico ">
-            <canvas id="graficoPizza"></canvas>
-          </div>
-          <div class="grafico ">
-            <canvas id="grafico2"></canvas>
-          </div>
+        <div class="grafico ">
+          <canvas id="graficoPizza"></canvas>
         </div>
-        <div class="corredores">
-          <div onclick="corredor('a')" class="corredor">
-            <h3>Corredor 1</h3>
-            <p>Movimentação: 10</p>
-          </div>
-          <div onclick="corredor('b')" class="corredor">
-            <h3>Corredor 2</h3>
-            <p>Movimentação: 10</p>
-          </div>
-          <div onclick="corredor('c')" class="corredor">
-            <h3>Corredor 3</h3>
-            <p>Movimentação: 10</p>
-          </div>
-          <div onclick="corredor('d')" class="corredor">
-            <h3>Corredor 4</h3>
-            <p>Movimentação: 10</p>
-          </div>
-          <div onclick="corredor('e')" class="corredor">
-            <h3>Corredor 5</h3>
-            <p>Movimentação: 10</p>
-          </div>
-          <div onclick="corredor('f')" class="corredor">
-            <h3>Corredor 6</h3>
-            <p>Movimentação: 10</p>
-          </div>
+        <div class="grafico ">
+          <canvas id="grafico2"></canvas>
         </div>
-        <div id="container-corredor" class="container-corredor">
-          <div class="conteudoGrafico1" id="conteudoGrafico" style="display: none;">
-            <!-- <div class="grafico"> -->
-            <div class="elementosKPI">
-              <div class="kpi k1">
-                <p class="titulo">Melhor periodo para promoções</p>
-                <div class="dados">
-                  <p>Manhã</p>
-                </div>
-              </div>
-              <div class="kpi k2">
-                <p class="titulo">Melhor dia do mês</p>
-                <div class="dados">
-                  <p>21</p>
-                </div>
+      </div>
+      <div class="corredores">
+        <div onclick="corredor('a')" class="corredor">
+          <h3>Corredor 1</h3>
+          <p>Movimentação: 10</p>
+        </div>
+        <div onclick="corredor('b')" class="corredor">
+          <h3>Corredor 2</h3>
+          <p>Movimentação: 10</p>
+        </div>
+        <div onclick="corredor('c')" class="corredor">
+          <h3>Corredor 3</h3>
+          <p>Movimentação: 10</p>
+        </div>
+        <div onclick="corredor('d')" class="corredor">
+          <h3>Corredor 4</h3>
+          <p>Movimentação: 10</p>
+        </div>
+        <div onclick="corredor('e')" class="corredor">
+          <h3>Corredor 5</h3>
+          <p>Movimentação: 10</p>
+        </div>
+        <div onclick="corredor('f')" class="corredor">
+          <h3>Corredor 6</h3>
+          <p>Movimentação: 10</p>
+        </div>
+      </div>
+      <div id="container-corredor" class="container-corredor">
+        <div class="conteudoGrafico1" id="conteudoGrafico" style="display: none;">
+          <!-- <div class="grafico"> -->
+          <div class="elementosKPI">
+            <div class="kpi k1">
+              <p class="titulo">Melhor periodo para promoções</p>
+              <div class="dados">
+                <p>Manhã</p>
               </div>
             </div>
-            <canvas id="grafico3" height="100"></canvas>
-            <!-- </div> -->
+            <div class="kpi k2">
+              <p class="titulo">Melhor dia do mês</p>
+              <div class="dados">
+                <p>21</p>
+              </div>
+            </div>
           </div>
+          <canvas id="grafico3" height="100"></canvas>
+          <!-- </div> -->
         </div>
-
-
-        <div class="heatmaparea">
-          <h1>Mapa de calor</h1>
-          <p>Acompanhe em tempo real a movimentação</p>
-          <div class="heatmap">
-            <div id="heatmapContainer"></div>
-          </div>
-        </div>
-
       </div>
+
+
+      <div class="heatmaparea">
+        <h1>Mapa de calor</h1>
+        <p>Acompanhe em tempo real a movimentação</p>
+        <div class="heatmap">
+          <div id="heatmapContainer"></div>
+        </div>
+      </div>
+
     </div>
   </div>
-  </div>
-  </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
 </body>
-<div id="btnSupermercado" class="btn-supermercado">
+<div id="btnSupermercado" class="btns-dash">
 </div>
 <div id="graficos" class="graficos">
 </div>
@@ -239,15 +239,15 @@
 
 </html>
 <script>
-      window.onload = exibirSupermercadosDoUsuario();
+  window.onload = exibirSupermercadosDoUsuario();
   function exibirSupermercadosDoUsuario() {
-        var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
-        supermercados.forEach(item => {
-            document.getElementById("btnSupermercado").innerHTML += `
+    var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
+    supermercados.forEach(item => {
+      document.getElementById("btnSupermercado").innerHTML += `
             <button class="btn-chart" onclick="exibirSupermercado(${item.id})" id="btnSupermercado${item.id}">${item.nome}</button>
             `
 
-            document.getElementById("graficos").innerHTML += `
+      document.getElementById("graficos").innerHTML += `
                 <div id="grafico${item.id}" class="display-none">
                     <h3 class="tituloGraficos">
                         <span id="tituloSupermercado${item.id}">${item.nome}</span>
@@ -260,82 +260,84 @@
                     </div>
                 </div>
             `
+      obterDadosGrafico(item.id)
+    });
 
-            obterDadosGrafico(item.id)
-        });
-
-        if (supermercados.length > 0) {
-            exibirSupermercado(supermercados[0].id)
-        }
+    if (supermercados.length > 0) {
+      exibirSupermercado(supermercados[0].id)
     }
+  }
 
-    function alterarTitulo(idSupermercado) {
-        var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
-        var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
-        tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
-    }
+  function alterarTitulo(idSupermercado) {
+    var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
+    var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
+    tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
+  }
 
-    function exibirSupermercado(idSupermercado) {
-        let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
+  function exibirSupermercado(idSupermercado) {
+    let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
 
-        for (i = 0; i < todosOsGraficos.length; i++) {
-            // exibindo - ou não - o gráfico
-            if (todosOsGraficos[i].id != idSupermercado) {
-                let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
-                if (elementoAtual.classList.contains("display-block")) {
-                    elementoAtual.classList.remove("display-block")
-                }
-                elementoAtual.classList.add("display-none")
-
-                // alterando estilo do botão
-                let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
-                if (btnAtual.classList.contains("btn-pink")) {
-                    btnAtual.classList.remove("btn-pink")
-                }
-                btnAtual.classList.add("btn-white")
-            }
+    for (let i = 0; i < todosOsGraficos.length; i++) {
+      // exibindo - ou não - o gráfico
+      if (todosOsGraficos[i].id != idSupermercado) {
+        console.log(todosOsGraficos[i].id + "AQUI")
+        let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
+        if (elementoAtual.classList.contains("display-block")) {
+          elementoAtual.classList.remove("display-block")
         }
-
-        // exibindo - ou não - o gráfico
-        let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
-        graficoExibir.classList.remove("display-none")
-        graficoExibir.classList.add("display-block")
+        elementoAtual.classList.add("display-none")
 
         // alterando estilo do botão
-        let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
-        btnExibir.classList.remove("btn-white")
-        btnExibir.classList.add("btn-pink")
+        let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
+        if (btnAtual.classList.contains("btn-pink")) {
+          btnAtual.classList.remove("btn-pink")
+        }
+        btnAtual.classList.add("btn-white")
+      }
     }
 
-
-    function obterDadosGrafico(idSupermercado) {
-
-        alterarTitulo(idSupermercado)
+    // exibindo - ou não - o gráfico
 
 
-        fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
+    let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
+    graficoExibir.classList.remove("display-none")
+    graficoExibir.classList.add("display-block")
 
-                    plotarGrafico(resposta, idSupermercado);
+    // alterando estilo do botão
+    let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
+    btnExibir.classList.remove("btn-white")
+    btnExibir.classList.add("btn-pink")
+  }
 
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
 
-    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-   
-function plotarGrafico(resposta, idSupermercado) {
+  function obterDadosGrafico(idSupermercado) {
+
+    alterarTitulo(idSupermercado)
+
+
+    fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarGrafico(resposta, idSupermercado);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+
+  function plotarGrafico(resposta, idSupermercado) {
     console.log('Iniciando plotagem do gráfico de barras...');
 
     // Labels dinâmicas - nomes dos corredores
@@ -346,64 +348,64 @@ function plotarGrafico(resposta, idSupermercado) {
 
     // Preenchendo os dados a partir da resposta
     for (let i = 0; i < resposta.length; i++) {
-        let registro = resposta[i];
-        labels.push(`Corredor ${registro.corredor}`); 
-        dadosFluxo.push(registro.fluxoPessoas); 
+      let registro = resposta[i];
+      labels.push(`Corredor ${registro.corredor}`);
+      dadosFluxo.push(registro.fluxoPessoas);
     }
 
     // Estrutura de dados para o gráfico
-    const dados = {
-        labels: labels,
-        datasets: [{
-            label: 'Fluxo de Pessoas',
-            data: dadosFluxo,
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
+    let dados = {
+      labels: labels,
+      datasets: [{
+        label: 'Fluxo de Pessoas',
+        data: dadosFluxo,
+        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
     };
 
     // Configuração do gráfico de barras
     const config = {
-        type: 'bar',
-        data: dados,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Quantidade de Pessoas'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Corredores'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true
-                },
-                title: {
-                    display: true,
-                    text: 'Fluxo de Pessoas por Corredor'
-                }
+      type: 'bar',
+      data: dados,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Quantidade de Pessoas'
             }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Corredores'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true
+          },
+          title: {
+            display: true,
+            text: 'Fluxo de Pessoas por Corredor'
+          }
         }
+      }
     };
 
     // Renderizando o gráfico na tela
     const myChart = new Chart(
-        document.getElementById(`myChartCanvas${idSupermercado}`),
-        config
+      document.getElementById(`myChartCanvas${idSupermercado}`),
+      config
     );
-}
+  }
 
 
-    
+
   const ctx = document.getElementById('graficoPizza').getContext('2d');
   const graficoPizza = new Chart(ctx, {
     type: 'pie',
@@ -603,11 +605,11 @@ function plotarGrafico(resposta, idSupermercado) {
   var valores =
   {
     'a': [1, 2, 3, 4, 5, 6, 7, 10, 4, 1],
-    'b': [7, 6, 5, 4, 3, 2, 1,1, 10, 7],
-    'c': [2, 4, 6, 8, 10, 12, 14,4,7,7],
-    'd': [14, 12, 10, 8, 4, 6, 2, 4,6,6],
-    'e': [1, 3, 6, 9, 12, 18, 24,9,9, 10],
-    'f': [9, 8, 3, 2, 5, 3, 61,9,9,8]
+    'b': [7, 6, 5, 4, 3, 2, 1, 1, 10, 7],
+    'c': [2, 4, 6, 8, 10, 12, 14, 4, 7, 7],
+    'd': [14, 12, 10, 8, 4, 6, 2, 4, 6, 6],
+    'e': [1, 3, 6, 9, 12, 18, 24, 9, 9, 10],
+    'f': [9, 8, 3, 2, 5, 3, 61, 9, 9, 8]
   }
 
   function corredor(item) {
@@ -618,10 +620,10 @@ function plotarGrafico(resposta, idSupermercado) {
     grafico3.data.datasets[0].data = valores[item]
     grafico3.update()
   }
-  
+
   function exibirCorredores() {
-        JSON.parse(sessionStorage.CORREDORES).forEach(item => {
-            document.getElementById("corredores").innerHTML += `
+    JSON.parse(sessionStorage.CORREDORES).forEach(item => {
+      document.getElementById("corredores").innerHTML += `
                     <div class="corredor">
             
                             <h1>${item.id}</h1>
@@ -630,8 +632,8 @@ function plotarGrafico(resposta, idSupermercado) {
                       
                     </div>
                     `
-        });
-    }
+    });
+  }
 
 
 </script>
