@@ -7,6 +7,8 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="dashboard.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
 <script src="js/sessao"></script>
@@ -229,10 +231,179 @@
   </div>
   </div>
 </body>
+<div id="btnSupermercado" class="btn-supermercado">
+</div>
+<div id="graficos" class="graficos">
+</div>
 
 
 </html>
 <script>
+      window.onload = exibirSupermercadosDoUsuario();
+  function exibirSupermercadosDoUsuario() {
+        var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
+        supermercados.forEach(item => {
+            document.getElementById("btnSupermercado").innerHTML += `
+            <button class="btn-chart" onclick="exibirSupermercado(${item.id})" id="btnSupermercado${item.id}">${item.nome}</button>
+            `
+
+            document.getElementById("graficos").innerHTML += `
+                <div id="grafico${item.id}" class="display-none">
+                    <h3 class="tituloGraficos">
+                        <span id="tituloSupermercado${item.id}">${item.nome}</span>
+                    </h3>
+                    <div class="graph">
+                        <canvas id="myChartCanvas${item.id}"></canvas>
+                    </div>
+                    <div class="label-captura">
+                        <p id="avisoCaptura${item.id}" style="color: white"></p>
+                    </div>
+                </div>
+            `
+
+            obterDadosGrafico(item.id)
+        });
+
+        if (supermercados.length > 0) {
+            exibirSupermercado(supermercados[0].id)
+        }
+    }
+
+    function alterarTitulo(idSupermercado) {
+        var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
+        var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
+        tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
+    }
+
+    function exibirSupermercado(idSupermercado) {
+        let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
+
+        for (i = 0; i < todosOsGraficos.length; i++) {
+            // exibindo - ou não - o gráfico
+            if (todosOsGraficos[i].id != idSupermercado) {
+                let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
+                if (elementoAtual.classList.contains("display-block")) {
+                    elementoAtual.classList.remove("display-block")
+                }
+                elementoAtual.classList.add("display-none")
+
+                // alterando estilo do botão
+                let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
+                if (btnAtual.classList.contains("btn-pink")) {
+                    btnAtual.classList.remove("btn-pink")
+                }
+                btnAtual.classList.add("btn-white")
+            }
+        }
+
+        // exibindo - ou não - o gráfico
+        let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
+        graficoExibir.classList.remove("display-none")
+        graficoExibir.classList.add("display-block")
+
+        // alterando estilo do botão
+        let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
+        btnExibir.classList.remove("btn-white")
+        btnExibir.classList.add("btn-pink")
+    }
+
+
+    function obterDadosGrafico(idSupermercado) {
+
+        alterarTitulo(idSupermercado)
+
+
+        fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    plotarGrafico(resposta, idSupermercado);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+   
+function plotarGrafico(resposta, idSupermercado) {
+    console.log('Iniciando plotagem do gráfico de barras...');
+
+    // Labels dinâmicas - nomes dos corredores
+    let labels = [];
+
+    // Dados do fluxo de pessoas por corredor
+    let dadosFluxo = [];
+
+    // Preenchendo os dados a partir da resposta
+    for (let i = 0; i < resposta.length; i++) {
+        let registro = resposta[i];
+        labels.push(`Corredor ${registro.corredor}`); 
+        dadosFluxo.push(registro.fluxoPessoas); 
+    }
+
+    // Estrutura de dados para o gráfico
+    const dados = {
+        labels: labels,
+        datasets: [{
+            label: 'Fluxo de Pessoas',
+            data: dadosFluxo,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    // Configuração do gráfico de barras
+    const config = {
+        type: 'bar',
+        data: dados,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade de Pessoas'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Corredores'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                },
+                title: {
+                    display: true,
+                    text: 'Fluxo de Pessoas por Corredor'
+                }
+            }
+        }
+    };
+
+    // Renderizando o gráfico na tela
+    const myChart = new Chart(
+        document.getElementById(`myChartCanvas${idSupermercado}`),
+        config
+    );
+}
+
+
+    
   const ctx = document.getElementById('graficoPizza').getContext('2d');
   const graficoPizza = new Chart(ctx, {
     type: 'pie',

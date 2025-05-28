@@ -22,6 +22,29 @@ function buscarUltimasMedidas(req, res) {
 }
 
 
+function buscarFluxoPorCorredor(req, res) {
+    var idSupermercado = req.params.idSupermercado;
+
+    console.log(`Recuperando fluxo de pessoas por corredor do supermercado ${idSupermercado}`);
+
+    medidaModel.buscarFluxoPorCorredor(idSupermercado)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar o fluxo por corredor.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
+
+
 function buscarMedidasEmTempoReal(req, res) {
 
     var idAquario = req.params.idAquario;
@@ -43,6 +66,7 @@ function buscarMedidasEmTempoReal(req, res) {
 
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    buscarFluxoPorCorredor
 
 }
