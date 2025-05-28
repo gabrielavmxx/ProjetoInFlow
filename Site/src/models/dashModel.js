@@ -20,6 +20,20 @@ function buscarDadosDashBoard() {
   return database.executar(instrucaoSql);
 }
 
+function dadosPorCorredor(idSupermercado, idCorredor, ano){
+  var instrucaoSql = `
+    select COUNT(r.id) AS fluxoPessoas
+    from registros r
+    inner join sensor s on r.fksensor = s.id
+    inner join corredor c on s.fkcorredor = c.id
+    where c.fksupermercado = ${idSupermercado} and c.id = ${idCorredor} and year(r.datahora) = '${ano}' group by month(r.datahora);
+  `
+
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
-  buscarDadosDashBoard
+  buscarDadosDashBoard,
+  dadosPorCorredor
 };
