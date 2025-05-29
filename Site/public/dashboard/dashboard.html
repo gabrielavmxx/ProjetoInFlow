@@ -12,7 +12,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
   <script src="js/sessao"></script>
-  <script src="js/sessao"></script>
 </head>
 
 <body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
@@ -94,20 +93,16 @@
             <option value="2023">2023</option>
             <option value="2024">2024</option>
             <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
           </select>
 
           <button id="btn"> Buscar</button>
         </div>
-          <button id="btn"> Buscar</button>
-        </div>
 
-      </div>
-      <div id="div_mes_escolhido"> </div>
-      <div class="elementosKPI">
-        <div class="kpi k1">
-          <p class="titulo">Ativações totais</p>
-          <div class="dados">
-            <p>40000</p>
       </div>
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
@@ -130,20 +125,6 @@
           <p class="titulo"> Dia com maior fluxo</p>
           <div class="dados">
             <p>10</p>
-            <p>10% Maior que o mes passado</p>
-          </div>
-        </div>
-        <div class="kpi k2">
-          <p class="titulo">Corredor com maior fluxo</p>
-          <div class="dados">
-            <p>6</p>
-            <p>Com picos a sexta no periodo da tarde</p>
-          </div>
-        </div>
-        <div class="kpi k3">
-          <p class="titulo"> Dia com maior fluxo</p>
-          <div class="dados">
-            <p>10</p>
 
           </div>
         </div>
@@ -151,17 +132,7 @@
           <p class="titulo">Corredor com queda de fluxo</p>
           <div class="dados">
             <p>Corredor 4</p>
-          </div>
-        </div>
-        <div class="kpi k4">
-          <p class="titulo">Corredor com queda de fluxo</p>
-          <div class="dados">
-            <p>Corredor 4</p>
 
-          </div>
-        </div>
-      </div>
-      <!-- <div class="calendar">
           </div>
         </div>
       </div>
@@ -187,48 +158,42 @@
         </div> -->
 
       <div class="conteudoGrafico">
-      <div class="conteudoGrafico">
 
 
         <div class="grafico ">
           <canvas id="graficoPizza"></canvas>
         </div>
         <div class="grafico ">
-          <canvas id="grafico2"></canvas>
+          <canvas id="grafico22"></canvas>
         </div>
       </div>
       <div class="corredores">
-        <div onclick="obterDados(1)" class="corredor">
+        <div onclick="corredor('a')" class="corredor">
           <h3>Corredor 1</h3>
           <p>Movimentação: 10</p>
         </div>
-        <div onclick="obterDados(2)" class="corredor">
+        <div onclick="corredor('b')" class="corredor">
           <h3>Corredor 2</h3>
           <p>Movimentação: 10</p>
         </div>
-        <div onclick="obterDados(3)" class="corredor">
+        <div onclick="corredor('c')" class="corredor">
           <h3>Corredor 3</h3>
           <p>Movimentação: 10</p>
         </div>
-        <div onclick="obterDados(4)" class="corredor">
+        <div onclick="corredor('d')" class="corredor">
           <h3>Corredor 4</h3>
           <p>Movimentação: 10</p>
         </div>
-        <div onclick="obterDados(5)" class="corredor">
+        <div onclick="corredor('e')" class="corredor">
           <h3>Corredor 5</h3>
           <p>Movimentação: 10</p>
         </div>
-        <div onclick="obterDados(6)" class="corredor">
+        <div onclick="corredor('f')" class="corredor">
           <h3>Corredor 6</h3>
           <p>Movimentação: 10</p>
         </div>
       </div>
       <div id="container-corredor" class="container-corredor">
-        <select id="ano_g3">
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-        </select>
         <div class="conteudoGrafico1" id="conteudoGrafico" style="display: none;">
           <!-- <div class="grafico"> -->
           <div class="elementosKPI">
@@ -245,8 +210,7 @@
               </div>
             </div>
           </div>
-
-          <canvas id="grafico3" height="100"></canvas>
+          <canvas id="grafico33" height="100"></canvas>
           <!-- </div> -->
         </div>
       </div>
@@ -259,20 +223,7 @@
           <div id="heatmapContainer"></div>
         </div>
       </div>
-      <div class="heatmaparea">
-        <h1>Mapa de calor</h1>
-        <p>Acompanhe em tempo real a movimentação</p>
-        <div class="heatmap">
-          <div id="heatmapContainer"></div>
-        </div>
-      </div>
 
-    </div>
-  </div>
-</div>
-</div>
-</div>
-</div>
     </div>
   </div>
 </div>
@@ -288,8 +239,6 @@
 
 </html>
 <script>
-  let idSupermercadoAtual = 0
-
   window.onload = exibirSupermercadosDoUsuario();
   function exibirSupermercadosDoUsuario() {
     var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
@@ -299,6 +248,7 @@
             `
 
       document.getElementById("graficos").innerHTML += `
+                <div id="grafico${item.id}" class="display-none">
                     <h3 class="tituloGraficos">
                         <span id="tituloSupermercado${item.id}">${item.nome}</span>
                     </h3>
@@ -310,19 +260,14 @@
                     </div>
                 </div>
             `
-
       obterDadosGrafico(item.id)
     });
 
     if (supermercados.length > 0) {
       exibirSupermercado(supermercados[0].id)
-    }}
-
-  function alterarTitulo(idSupermercado) {
-    var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
-    var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
-    tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
+    }
   }
+
   function alterarTitulo(idSupermercado) {
     var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
     var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
@@ -330,17 +275,18 @@
   }
 
   function exibirSupermercado(idSupermercado) {
-    idSupermercadoAtual = idSupermercado
     let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
 
-    for (i = 0; i < todosOsGraficos.length; i++) {
+    for (let i = 0; i < todosOsGraficos.length; i++) {
       // exibindo - ou não - o gráfico
       if (todosOsGraficos[i].id != idSupermercado) {
+        console.log(todosOsGraficos[i].id + "AQUI")
         let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
         if (elementoAtual.classList.contains("display-block")) {
           elementoAtual.classList.remove("display-block")
         }
         elementoAtual.classList.add("display-none")
+
         // alterando estilo do botão
         let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
         if (btnAtual.classList.contains("btn-pink")) {
@@ -351,6 +297,8 @@
     }
 
     // exibindo - ou não - o gráfico
+
+
     let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
     graficoExibir.classList.remove("display-none")
     graficoExibir.classList.add("display-block")
@@ -361,7 +309,9 @@
     btnExibir.classList.add("btn-pink")
   }
 
+
   function obterDadosGrafico(idSupermercado) {
+
     alterarTitulo(idSupermercado)
 
 
@@ -370,7 +320,7 @@
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-          plotarGrafico(resposta, idSupermercado);
+
           plotarGrafico(resposta, idSupermercado);
 
         });
@@ -383,11 +333,6 @@
       });
   }
 
-  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-
-  function plotarGrafico(resposta, idSupermercado) {
   // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
   // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
@@ -409,7 +354,7 @@
     }
 
     // Estrutura de dados para o gráfico
-    const dados = {
+    let dados = {
       labels: labels,
       datasets: [{
         label: 'Fluxo de Pessoas',
@@ -449,34 +394,6 @@
             text: 'Fluxo de Pessoas por Corredor'
           }
         }
-      },
-      type: 'bar',
-      data: dados,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Quantidade de Pessoas'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Corredores'
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: true
-          },
-          title: {
-            display: true,
-            text: 'Fluxo de Pessoas por Corredor'
-          }
-        }
       }
     };
 
@@ -486,8 +403,6 @@
       config
     );
   }
-  }
-
 
 
 
@@ -519,8 +434,86 @@
       }
     }
   });
+  // const calendarDays = document.getElementById("calendarDays");
+  // const monthYear = document.getElementById("monthYear");
+  // const prev = document.getElementById("prev");
+  // const next = document.getElementById("next");
+  // const selectionDisplay = document.getElementById("selectionDisplay");
 
+  // let date = new Date();
+  // let selectedStart = null;
+  // let selectedEnd = null;
 
+  // function renderCalendar() {
+  //   const year = date.getFullYear();
+  //   const month = date.getMonth();
+  //   const firstDay = new Date(year, month, 1).getDay();
+  //   const lastDate = new Date(year, month + 1, 0).getDate();
+
+  //   monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+  //   calendarDays.innerHTML = "";
+
+  //   for (let i = 0; i < firstDay; i++) {
+  //     calendarDays.innerHTML += `<div></div>`;
+  //   }
+
+  //   for (let i = 1; i <= lastDate; i++) {
+  //     const currentDate = new Date(year, month, i);
+  //     const today = new Date();
+  //     const isToday =
+  //       i === today.getDate() &&
+  //       month === today.getMonth() &&
+  //       year === today.getFullYear();
+
+  //     const isSelected =
+  //       selectedStart &&
+  //       selectedEnd &&
+  //       currentDate >= selectedStart &&
+  //       currentDate <= selectedEnd;
+
+  //     const div = document.createElement("div");
+  //     div.textContent = i;
+  //     div.className = `${isToday ? "today" : ""} ${isSelected ? "selected" : ""}`;
+
+  //     div.onclick = () => handleDateSelection(currentDate);
+  //     calendarDays.appendChild(div);
+  //   }
+
+  //   updateSelectionDisplay();
+  // }
+
+  // function handleDateSelection(clickedDate) {
+  //   if (!selectedStart || (selectedStart && selectedEnd)) {
+  //     selectedStart = clickedDate;
+  //     selectedEnd = null;
+  //   } else if (clickedDate >= selectedStart) {
+  //     selectedEnd = clickedDate;
+  //   } else {
+  //     selectedStart = clickedDate;
+  //     selectedEnd = null;
+  //   }
+  //   renderCalendar();
+  // }
+
+  // function updateSelectionDisplay() {
+  //   if (selectedStart && selectedEnd) {
+  //     selectionDisplay.textContent = `${selectedStart.toDateString()} → ${selectedEnd.toDateString()}`;
+  //   } else if (selectedStart) {
+  //     selectionDisplay.textContent = `${selectedStart.toDateString()} (Start)`;
+  //   } else {
+  //     selectionDisplay.textContent = "None";
+  //   }
+  // }
+
+  // prev.onclick = () => {
+  //   date.setMonth(date.getMonth() - 1);
+  //   renderCalendar();
+  // };
+
+  // next.onclick = () => {
+  //   date.setMonth(date.getMonth() + 1);
+  //   renderCalendar();
+  // };
 
   const heatmapInstance = h337.create({
     container: document.getElementById('heatmapContainer'),
@@ -580,10 +573,10 @@
   const grafico3 = new Chart(ctx3, {
     type: 'bar',
     data: {
-      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro'],
       datasets: [{
         label: 'Pessoas',
-        data: data,
+        data: [10, 22, 43, 32, 11, 54, 43, 21, 55, 53],
         borderWidth: 1,
         borderColor: '#115e59',
         backgroundColor: '#115e59'
@@ -609,6 +602,25 @@
     }
   });
 
+  var valores =
+  {
+    'a': [1, 2, 3, 4, 5, 6, 7, 10, 4, 1],
+    'b': [7, 6, 5, 4, 3, 2, 1, 1, 10, 7],
+    'c': [2, 4, 6, 8, 10, 12, 14, 4, 7, 7],
+    'd': [14, 12, 10, 8, 4, 6, 2, 4, 6, 6],
+    'e': [1, 3, 6, 9, 12, 18, 24, 9, 9, 10],
+    'f': [9, 8, 3, 2, 5, 3, 61, 9, 9, 8]
+  }
+
+  function corredor(item) {
+
+    const grafico = document.getElementById('conteudoGrafico')
+    grafico.style.display = 'block'
+
+    grafico3.data.datasets[0].data = valores[item]
+    grafico3.update()
+  }
+
   function exibirCorredores() {
     JSON.parse(sessionStorage.CORREDORES).forEach(item => {
       document.getElementById("corredores").innerHTML += `
@@ -623,28 +635,5 @@
     });
   }
 
-  function obterDados(idCorredor) {
 
-    var ano = ano_g3.value
-
-    fetch(`/dashboard/dadosCorredor/${idSupermercadoAtual}/${idCorredor}/${ano}`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          resposta.reverse();
-        });
-        console.log(idSupermercadoAtual, idCorredor, ano)
-          const grafico = document.getElementById('conteudoGrafico')
-          grafico.style.display = 'block'
-          grafico3.data.datasets[0].data = resposta
-          grafico3.update()
-
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
-    })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-  }
 </script>
