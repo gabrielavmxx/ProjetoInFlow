@@ -184,6 +184,7 @@ ORDER BY ano DESC, mes DESC, sm.nome, c.posicao;
 CREATE DATABASE inflow;
 USE inflow;
 
+
 -- Tabela endereco
 CREATE TABLE endereco(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -196,24 +197,22 @@ CREATE TABLE endereco(
     numero VARCHAR(10)
 );
 
--- Tabela empresa
-CREATE TABLE empresa(
+-- Retirei tabela empresa
+/*CREATE TABLE empresa(
     id INT PRIMARY KEY AUTO_INCREMENT,
     razao_social VARCHAR(50),
     cnpj CHAR(14),
     codigo_ativacao VARCHAR(20),
     fkEndereco INT,
     CONSTRAINT fk_end_em FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
-);
+);*/
 
 -- Tabela supermercado
 CREATE TABLE supermercado(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     cnpj CHAR(14),
-    fkempresa INT,
     fkEndereco INT,
-    CONSTRAINT fk_em_sup FOREIGN KEY (fkempresa) REFERENCES empresa(id),
     CONSTRAINT fk_end_sup FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
 );
 
@@ -227,14 +226,14 @@ CREATE TABLE usuario(
     senha VARCHAR(20) NOT NULL,
     fotoPerfil VARCHAR(255),
     acesso VARCHAR(10),
-    fkempresa INT,
-    FOREIGN KEY(fkempresa) REFERENCES empresa(id),
+    fksupermercado INT,
+    FOREIGN KEY(fksupermercado) REFERENCES supermercado(id),
 	UNIQUE ix_email (email),
     UNIQUE ix_cpf (cpf),
     CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
 );
 
--- Tabela areas (mantive plural)
+-- Tabela areas 
 CREATE TABLE areas(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50)
@@ -276,121 +275,111 @@ CREATE TABLE registros(
     presenca INT,
     FOREIGN KEY(fksensor) REFERENCES sensor(id)
 );
--- Inserindo endereços
-INSERT INTO endereco (cidade, estado, bairro, logradouro, cep, complemento, numero)
-VALUES 
-('São Paulo', 'SP', 'Centro', 'Rua das Flores', '01001-000', 'Próximo ao metrô', '100'),
-('Campinas', 'SP', 'Jardim Brasil', 'Avenida Brasil', '13000-000', NULL, '500');
 
--- Inserindo empresas
-INSERT INTO empresa (razao_social, cnpj, codigo_ativacao, fkEndereco)
-VALUES 
-('Supermercados ABC LTDA', '12345678000199', 'ABC123', 1),
-('Hipermercado XPTO SA', '98765432000188', 'XPTO456', 2);
 
--- Inserindo supermercados
-INSERT INTO supermercado (nome, cnpj, fkempresa, fkEndereco)
-VALUES 
-('ABC Supermercado - Unidade Centro', '12345678000101', 1, 1),
-('XPTO Hipermercado - Campinas', '98765432000102', 2, 2);
 
--- Inserindo usuários
-INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fkempresa)
-VALUES 
-('João Silva', '12345678900', '11999999999', 'joao@abc.com', 'senha123', 'Admin', 1),
-('Maria Souza', '98765432100', '11988888888', 'maria@xpto.com', 'senha123', 'Gestor', 2);
+INSERT INTO endereco (cidade, estado, bairro, logradouro, cep, complemento, numero) VALUES 
+('São Paulo', 'SP', 'Guaianazes', 'Estrada Itaquera guaianazes', '01310-000', 'Conjunto 1001', '1500'), 
+('São Paulo', 'SP', 'São Matheus', 'Rua joão velho do rego', '04010-000', 'Loja 1', '1000');
 
--- Inserindo áreas
-INSERT INTO areas (nome)
-VALUES 
+
+
+INSERT INTO supermercado (nome, cnpj,fkEndereco) VALUES 
+('Supermercado Leticia', '45678912000777',  1),
+('Supermercado Isabella', '45678912000888', 2);
+
+
+-- 🔹 ÁREAS
+INSERT INTO areas (nome) VALUES 
 ('Padaria'),
 ('Hortifruti'),
 ('Açougue'),
-('Bebidas');
+('Bebidas'),
+('Limpeza');
 
--- Relacionando áreas com supermercados
-INSERT INTO areas_supermercado (fkareas, fksupermercados)
-VALUES 
-(1, 1), (2, 1), (3, 1), (4, 1), -- Áreas do supermercado ABC
-(1, 2), (2, 2), (3, 2), (4, 2); -- Áreas do supermercado XPTO
+-- 🔹 ÁREAS_SUPERMERCADO
+-- Supermercado Leticia
+INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
+(1,1 ), (2, 1), (3, 1), (4, 1), (5, 1);
 
--- Inserindo corredores
-INSERT INTO corredor (fkarea, fksupermercado, posicao)
-VALUES 
-(1, 1, '1'), -- Padaria do ABC
-(2, 1, '2'), -- Hortifruti do ABC
-(3, 1, '3'), -- Açougue do ABC
-(4, 1, '4'), -- Bebidas do ABC
+-- Supermercado Isabella
+INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
+(1, 2), (2, 2), (3, 2), (4, 2), (5, 2);
 
-(1, 2, '1'), -- Padaria do XPTO
-(2, 2, '2'), -- Hortifruti do XPTO
-(3, 2, '3'), -- Açougue do XPTO
-(4, 2, '4'); -- Bebidas do XPTO
+-- 🔹 CORREDORES
+-- Mercado isabella
+INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES 
+(1, 2,'Corredor 1' ),       
+(2, 2, 'Corredor 2'),         
+(3, 2, 'Corrqedor 3'),         
+(4, 2, 'Corredor 4'),   
+(5, 2, 'Corredor 5');
+select * from corredor;
+-- Supercado leticia
+INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES 
+(1, 1,'Corredor 1' ),       
+(2, 1, 'Corredor 2'),         
+(3, 1, 'Corrqedor 3'),         
+(4, 1, 'Corredor 4'),   
+(5, 1, 'Corredor 5');
+-- 🔹 SENSORES
+select * from corredor;
+update  corredor set  posicao="Corredor 3" where id=8;
+select* from registros;
+-- SENSORES LETICIA
+INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
+('Ativo', 1, 'SENeVM01'),
+('Ativo',2, 'SENVrM02'),
+('Ativo', 3, 'SENVwM03'),
+('Ativo', 4, 'SENqVM04'),
+('Ativo', 5, 'SENqVM05');
+-- SENSSORES ISABELLA
+-- Moema
+INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
+('Ativo', 6, 'SENMO01'),
+('Ativo', 7, 'SENMO02'),
+('Ativo', 8, 'SENMO03'),
+('Ativo', 9, 'SENMO04'),
+('Ativo', 10, 'SENMO05');
+select* from corredor;
+-- 🔹 REGISTROS DE PRESENÇA
+-- Supermercado leticia (sensores 1 a 5)
+INSERT INTO registros (fksensor, presenca,datahora) VALUES 
+(1,1,"2024-07-29"),(1,1,"2024-07-29"),(2,1,"2024-07-29"),(1,1,"2024-07-29"),(1,1,"2024-07-29"),(3,1,"2024-07-29"),
+(3,1,"2024-07-29"),(3,1,"2024-07-29"),(3,1,"2024-07-29"),(1,1,"2024-07-29"),(1,1,"2024-07-29");
 
--- Inserindo sensores nos corredores
-INSERT INTO sensor (statuses, fkcorredor, numero_serie)
-VALUES 
-('Ativo', 1, 'SENS0001'),
-('Ativo', 2, 'SENS0002'),
-('Ativo', 3, 'SENS0003'),
-('Ativo', 4, 'SENS0004'),
-('Ativo', 5, 'SENS0005'),
-('Ativo', 6, 'SENS0006'),
-('Ativo', 7, 'SENS0007'),
-('Ativo', 8, 'SENS0008');
+select* from registros;
 
--- Inserindo registros de fluxo (presença detectada)
--- Supermercado ABC - Simulando fluxo
-INSERT INTO registros (fksensor, presenca, datahora) VALUES
-(1, 1, '2025-05-27 10:00:00'),
-(1, 1, '2025-05-27 10:05:00'),
-(1, 1, '2025-05-27 10:10:00'),
 
-(2, 1, '2025-05-27 10:00:00'),
-(2, 1, '2025-05-27 10:03:00'),
-(2, 1, '2025-05-27 10:06:00'),
-(2, 1, '2025-05-27 10:09:00'),
-(2, 1, '2025-05-27 10:12:00'),
+-- Supermercado isabella (sensores 6 a 10)
+INSERT INTO registros (fksensor, presenca) VALUES 
+(6,1),(6,1),(6,1),(6,1),(6,1),
+(7,1),(7,1),(7,1),(7,1),(7,1),
+(8,1),(8,1),(8,1),(8,1),(8,1);
+select* from registros;
 
-(3, 1, '2025-05-27 10:00:00'),
-(3, 1, '2025-05-27 10:08:00'),
-
-(4, 1, '2025-05-27 10:00:00'),
-(4, 1, '2025-05-27 10:02:00'),
-(4, 1, '2025-05-27 10:04:00'),
-(4, 1, '2025-05-27 10:06:00'),
-(4, 1, '2025-05-27 10:08:00'),
-(4, 1, '2025-05-27 10:10:00'),
-
--- Supermercado XPTO - Simulando fluxo
-(5, 1, '2025-05-27 10:00:00'),
-(5, 1, '2025-05-27 10:07:00'),
-
-(6, 1, '2025-05-27 10:00:00'),
-(6, 1, '2025-05-27 10:05:00'),
-(6, 1, '2025-05-27 10:10:00'),
-
-(7, 1, '2025-05-27 10:00:00'),
-
-(8, 1, '2025-05-27 10:00:00'),
-(8, 1, '2025-05-27 10:03:00'),
-(8, 1, '2025-05-27 10:06:00');
+-- Usuarios do supermercado
+INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fksupermercado) VALUES 
+('Carlos Lima', '11122233344', '11999990001', 'leticia.com', 'senha123', 'Admin', 1),
+('Fernanda Alves', '55566677788', '11999990002', 'isabella.com', 'senha123', 'Gestor', 2);
+select* from usuario;
 SELECT 
-    corredor.id AS id_corredor,
-    corredor.posicao AS corredor,
-    COUNT(registros.id) AS fluxo_pessoas
-FROM registros
-JOIN sensor ON registros.fksensor = sensor.id
-JOIN corredor ON sensor.fkcorredor = corredor.id
-WHERE corredor.fksupermercado = 1 -- ou 2, para o supermercado específico
-GROUP BY corredor.id, corredor.posicao;
-  SELECT 
+    *
+FROM
+    supermercado
+WHERE
+    id = 4;
+    SELECT 
             corredor.id AS idCorredor,
             corredor.posicao AS corredor,
             COUNT(registros.id) AS fluxoPessoas
         FROM registros
         JOIN sensor ON registros.fksensor = sensor.id
         JOIN corredor ON sensor.fkcorredor = corredor.id
-        WHERE corredor.fksupermercado = 1
+        WHERE corredor.fksupermercado = 1 and month(datahora)=5 and year(datahora)=2025
         GROUP BY corredor.id, corredor.posicao
-        ORDER BY idCorredor ;
+        ORDER BY idCorredor;
+        select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where fksupermercado=2;
+        
+
+
