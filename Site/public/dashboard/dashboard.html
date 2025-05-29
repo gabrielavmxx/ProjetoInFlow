@@ -569,8 +569,8 @@
       }
     }
   })
-  const ctx3 = document.getElementById('grafico3').getContext('2d');
-  const grafico3 = new Chart(ctx3, {
+  const ctx3 = document.getElementById('grafico33').getContext('2d');
+  const grafico33 = new Chart(ctx3, {
     type: 'bar',
     data: {
       labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro'],
@@ -617,8 +617,8 @@
     const grafico = document.getElementById('conteudoGrafico')
     grafico.style.display = 'block'
 
-    grafico3.data.datasets[0].data = valores[item]
-    grafico3.update()
+    grafico33.data.datasets[0].data = valores[item]
+    grafico33.update()
   }
 
   function exibirCorredores() {
