@@ -24,10 +24,12 @@ function buscarUltimasMedidas(req, res) {
 
 function buscarFluxoPorCorredor(req, res) {
     var idSupermercado = req.params.idSupermercado;
+    var mes= req.params.mes;
+    var ano = req.params.ano;
 
     console.log(`Recuperando fluxo de pessoas por corredor do supermercado ${idSupermercado}`);
 
-    medidaModel.buscarFluxoPorCorredor(idSupermercado)
+    medidaModel.buscarFluxoPorCorredor(idSupermercado,mes,ano)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);

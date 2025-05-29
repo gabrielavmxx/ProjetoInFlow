@@ -71,25 +71,25 @@
           <h1>In<span>Flow</span></h1>
         </div>
         <div class="select">
-          <label for="mes">Escolha o mês:</label>
+          <label for="select_mes">Escolha o mês:</label>
           <br>
-          <select id="mes">
-            <option value="janeiro">Janeiro</option>
-            <option value="fevereiro">Fevereiro</option>
-            <option value="marco">Março</option>
-            <option value="abril">Abril</option>
-            <option value="maio">Maio</option>
-            <option value="junho">Junho</option>
-            <option value="julho">Julho</option>
-            <option value="agosto">Agosto</option>
-            <option value="setembro">Setembro</option>
-            <option value="outubro">Outubro</option>
-            <option value="novembro">Novembro</option>
-            <option value="dezembro">Dezembro</option>
+          <select id="select_mes">
+            <option value="1">Janeiro</option>
+            <option value="2">Fevereiro</option>
+            <option value="3">Março</option>
+            <option value="4">Abril</option>
+            <option value="5">Maio</option>
+            <option value="6">Junho</option>
+            <option value="7">Julho</option>
+            <option value="8">Agosto</option>
+            <option value="9">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
           </select>
-          <label for="ano">Escolha o ano:</label>
+          <label for="select_ano">Escolha o ano:</label>
           <br>
-          <select id="ano">
+          <select id="select_ano">
             <option value="2023">2023</option>
             <option value="2024">2024</option>
             <option value="2025">2025</option>
@@ -100,9 +100,16 @@
             <option value="2030">2030</option>
           </select>
 
-          <button id="btn"> Buscar</button>
+          <button onclick=" obterDadosGrafico(sessionStorage.SUPERMERCADO)" > Buscar</button>
         </div>
 
+        <script>
+         /* var select_mes = document.getElementById("select_mes");
+          var select_ano = document.getElementById("select_ano");
+
+          select_mes.value = new Date().getMonth() + 1; // Mês atual (1-12)
+          select_ano.value = new Date().getFullYear(); // Ano atual
+        </script>
       </div>
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
@@ -163,8 +170,8 @@
         <div class="grafico ">
           <canvas id="graficoPizza"></canvas>
         </div>
-        <div class="grafico ">
-          <canvas id="grafico22"></canvas>
+        <div class="graficoBarra ">
+          <canvas id="graficoBarra"></canvas>
         </div>
       </div>
       <div class="corredores">
@@ -239,8 +246,10 @@
 
 </html>
 <script>
-  window.onload = exibirSupermercadosDoUsuario();
-  function exibirSupermercadosDoUsuario() {
+
+  //window.onload = exibirSupermercadosDoUsuario();
+
+  /*function exibirSupermercadosDoUsuario() {
     var supermercados = JSON.parse(sessionStorage.SUPERMERCADO);
     supermercados.forEach(item => {
       document.getElementById("btnSupermercado").innerHTML += `
@@ -266,15 +275,11 @@
     if (supermercados.length > 0) {
       exibirSupermercado(supermercados[0].id)
     }
-  }
+  }*/
 
-  function alterarTitulo(idSupermercado) {
-    var tituloSupermercado = document.getElementById(`tituloSupermercado${idSupermercado}`)
-    var descricao = JSON.parse(sessionStorage.SUPERMERCADO).find(item => item.id == idSupermercado).descricao;
-    tituloSupermercado.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
-  }
 
-  function exibirSupermercado(idSupermercado) {
+
+  /*function exibirSupermercado(idSupermercado) {
     let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
 
     for (let i = 0; i < todosOsGraficos.length; i++) {
@@ -308,20 +313,23 @@
     btnExibir.classList.remove("btn-white")
     btnExibir.classList.add("btn-pink")
   }
-
-
+*/ 
+let myChartBarra=null
   function obterDadosGrafico(idSupermercado) {
+  let mes=Number(select_mes.value);
+  
 
-    alterarTitulo(idSupermercado)
+  let ano=Number(select_ano.value);
+  console.log(sessionStorage.SUPERMERCADO)
 
 
-    fetch(`/medidas/fluxo/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/medidas/fluxo/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-
-          plotarGrafico(resposta, idSupermercado);
+          
+          plotarGraficoBarras(resposta, idSupermercado);
 
         });
       } else {
@@ -337,9 +345,11 @@
   // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
 
-  function plotarGrafico(resposta, idSupermercado) {
+  function plotarGraficoBarras(resposta, idSupermercado) {
     console.log('Iniciando plotagem do gráfico de barras...');
-
+ if (myChartBarra) {
+      myChartBarra.destroy(); // Destrói o gráfico anterior, se existir
+    }
     // Labels dinâmicas - nomes dos corredores
     let labels = [];
 
@@ -397,9 +407,8 @@
       }
     };
 
-    // Renderizando o gráfico na tela
-    const myChart = new Chart(
-      document.getElementById(`myChartCanvas${idSupermercado}`),
+     myChartBarra = new Chart(
+      document.getElementById(`graficoBarra`),
       config
     );
   }

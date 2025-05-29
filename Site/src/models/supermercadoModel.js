@@ -1,6 +1,6 @@
 var database = require("../database/config");
 
-function buscarSupermercadoPorEmpresa(empresaId) {
+function buscarSupermercadoPorUsuario(empresaId) {
 
   var instrucaoSql = `SELECT * FROM supermercado WHERE fkempresa = ${empresaId}`;
 

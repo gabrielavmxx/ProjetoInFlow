@@ -16,7 +16,7 @@ function buscarUltimasMedidas(idAquario, limite_linhas) {
 }
 
 
-function buscarFluxoPorCorredor(idSupermercado) {
+function buscarFluxoPorCorredor(idSupermercado, mes, ano) {
     console.log("Acessando o Model para buscar fluxo por corredor...");
 
     var instrucaoSql = `
@@ -27,7 +27,7 @@ function buscarFluxoPorCorredor(idSupermercado) {
         FROM registros
         JOIN sensor ON registros.fksensor = sensor.id
         JOIN corredor ON sensor.fkcorredor = corredor.id
-        WHERE corredor.fksupermercado = ${idSupermercado}
+    WHERE corredor.fksupermercado = ${idSupermercado} and month(datahora)=${mes} and year(datahora)=${ano}
         GROUP BY corredor.id, corredor.posicao
         ORDER BY idCorredor;
     `;
