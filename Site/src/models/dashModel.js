@@ -22,11 +22,18 @@ function buscarDadosDashBoard() {
 
 function dadosPorCorredor(idSupermercado, idCorredor, ano){
   var instrucaoSql = `
-    select COUNT(r.id) AS fluxoPessoas
-    from registros r
-    inner join sensor s on r.fksensor = s.id
-    inner join corredor c on s.fkcorredor = c.id
-    where c.fksupermercado = ${idSupermercado} and c.id = ${idCorredor} and year(r.datahora) = '${ano}' group by month(r.datahora);
+   SELECT
+    MONTH(r.datahora) AS mes,
+    COUNT(r.presenca) AS total_movimentacoes
+    FROM registros r
+    INNER JOIN sensor s ON r.fksensor = s.id
+    INNER JOIN corredor c ON s.fkcorredor = c.id
+    INNER JOIN supermercado sm ON c.fksupermercado = sm.id
+    WHERE sm.id = '${idSupermercado}'
+      AND c.id = '${idCorredor}'
+      AND YEAR(r.datahora) = '${ano}'
+    GROUP BY MONTH(r.datahora)
+    ORDER BY mes;
   `
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);

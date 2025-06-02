@@ -99,13 +99,13 @@
         </div>
 
         <script>
-         /*
-          var select_mes = document.getElementById("select_mes");
-          var select_ano = document.getElementById("select_ano");
-
-          select_mes.value = new Date().getMonth() + 1; // Mês atual (1-12)
-          select_ano.value = new Date().getFullYear(); // Ano atual
-        */
+          /*
+           var select_mes = document.getElementById("select_mes");
+           var select_ano = document.getElementById("select_ano");
+ 
+           select_mes.value = new Date().getMonth() + 1; // Mês atual (1-12)
+           select_ano.value = new Date().getFullYear(); // Ano atual
+         */
         </script>
       </div>
       <div id="div_mes_escolhido"> </div>
@@ -249,8 +249,9 @@
 </html>
 <script>
   let idSupermercadoAtual = 0
+  console.log(sessionStorage)
 
-  function exibirSupermercado(idSupermercado) {
+  async function exibirSupermercado(idSupermercado) {
     idSupermercadoAtual = idSupermercado
     let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
 
@@ -283,13 +284,13 @@
     btnExibir.classList.add("btn-pink")
   }
 
-  let myChartBarra=null
+  let myChartBarra = null
   function obterDadosGrafico(idSupermercado) {
-  let mes=Number(select_mes.value);
-  
+    let mes = Number(select_mes.value);
 
-  let ano=Number(select_ano.value);
-  console.log(sessionStorage.SUPERMERCADO)
+
+    let ano = Number(select_ano.value);
+    console.log(sessionStorage.SUPERMERCADO)
 
 
     fetch(`/medidas/fluxo/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
@@ -297,7 +298,7 @@
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-          
+
           plotarGraficoBarras(resposta, idSupermercado);
 
         });
@@ -401,7 +402,7 @@ function obterDadosPizza(idSupermercado){
       }
     };
 
-     myChartBarra = new Chart(
+    myChartBarra = new Chart(
       document.getElementById(`graficoBarra`),
       config
     );
@@ -556,28 +557,46 @@ function plotarGraficoPizza(resposta,idSupermercado){
     });
   }
 
-  function obterDados(idCorredor) {
+  async function obterDados(idCorredor) {
 
     var ano = ano_g3.value
+    var idSupermercado = sessionStorage.SUPERMERCADO;
 
-    fetch(`/dashboard/dadosCorredor/${idSupermercadoAtual}/${idCorredor}/${ano}`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          resposta.reverse();
-        });
-        console.log(idSupermercadoAtual, idCorredor, ano)
-          const grafico = document.getElementById('conteudoGrafico')
-          grafico.style.display = 'block'
-          grafico33.data.datasets[0].data = resposta
-          grafico33.update()
+    // fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`, { cache: 'no-store' })
+    //   .then(function (response) {
+    //     if (response.ok) {
+    //       response.json().then(function (resposta) {
+    //         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    //         resposta.reverse();
+    //       });
+    //       console.log('AAAAAAA '+idSupermercado, idCorredor, ano, resposta)
+    // const grafico = document.getElementById('conteudoGrafico')
+    // grafico.style.display = 'block'
+    // grafico33.data.datasets[0].data = resposta
+    // grafico33.update()
+    
+    //     } else {
+    //       console.error('Nenhum dado encontrado ou erro na API');
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    //   });
 
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
-    })
-      .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-  });
-}
+    try {
+      const res = await fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`);
+      console.log(res)
+      const dados = await res.json();
+      console.log(dados)
+
+      const grafico = document.getElementById('conteudoGrafico');
+      grafico.style.display = 'block';
+      grafico33.data.datasets[0].data = dados.map(item => item.total_movimentacoes);
+      grafico33.update();
+
+    } catch (erro) {
+      console.error('Erro ao buscar dados do usuário logado:', erro);
+    }
+
+  }
 </script>
