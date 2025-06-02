@@ -3,8 +3,8 @@ var router = express.Router();
 
 var supermercadoController = require("../controllers/supermercadoController");
 
-router.get("/:empresaId", function (req, res) {
-  supermercadoController.buscarSupermercadoPorEmpresa(req, res);
+router.get("/buscar/:id", function (req, res) {
+  supermercadoController.buscarSupermercadoPorId(req, res);
 });
 
 router.post("/cadastrar", function (req, res) {
