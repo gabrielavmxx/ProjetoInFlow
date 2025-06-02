@@ -329,7 +329,7 @@ select * from corredor;
 update  corredor set  posicao="Corredor 3" where id=8;
 select* from registros;
 -- SENSORES LETICIA
-INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
+INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES 
 ('Ativo', 4, 680, 700, 'SENS0001'),
 ('Ativo', 3, 680, 420, 'SENS0002'),
 ('Ativo', 2, 680, 120, 'SENS0003'),
