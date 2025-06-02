@@ -263,6 +263,8 @@ CREATE TABLE sensor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     statuses VARCHAR(10) DEFAULT 'Ativo',
     CONSTRAINT chk_status CHECK(statuses IN ('Ativo','Inativo')),
+    x INT,
+    y INT,
     fkcorredor INT,
     numero_serie CHAR(8),
     UNIQUE ix_ns (numero_serie),
