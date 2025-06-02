@@ -1,9 +1,9 @@
 var supermercadoModel = require("../models/supermercadoModel");
 
-function buscarSupermercadoPorEmpresa(req, res) {
-  var idUsuario = req.params.idUsuario;
+function buscarSupermercadoPorId(req, res) {
+  var id = req.params.id;
 
-  supermercadoModel.buscarSupermercadoPorEmpresa(idUsuario).then((resultado) => {
+  supermercadoModel.buscarSupermercadoPorId(id).then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -27,23 +27,10 @@ function cadastrar(req, res) {
     res.status(400).send("idUsuario está undefined!");
   } else {
 
-
-    aquarioModel.cadastrar(nome, idUsuario)
-      .then((resultado) => {
-        res.status(201).json(resultado);
-      }
-      ).catch((erro) => {
-        console.log(erro);
-        console.log(
-          "\nHouve um erro ao realizar o cadastro! Erro: ",
-          erro.sqlMessage
-        );
-        res.status(500).json(erro.sqlMessage);
-      });
   }
 }
 
 module.exports = {
-  buscarSupermercadoPorEmpresa,
+  buscarSupermercadoPorId,
   cadastrar
 }

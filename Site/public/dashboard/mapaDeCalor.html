@@ -64,12 +64,12 @@
         <div class="hello">
           <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
         </div>
-        <div id="mercadosGeral">
+        <!-- <div id="mercadosGeral">
           <select id="select_mercadosGeral" class="btn-chart"
             onchange="exibirSupermercado(this.options[this.selectedIndex].value)">
 
           </select>
-        </div>
+        </div> -->
         <div class="elementosKPI">
           <div class="kpi k1">
             <p class="titulo">Corredor com Menor fluxo</p>
@@ -119,72 +119,75 @@
 
   let proximaAtualizacao;
 
-  window.onload = exibirSupermercadosDoUsuario();
+  var supermercado = sessionStorage.SUPERMERCADO;
+  window.onload = buscarSupermercadoPorId();
 
   var instanciaHeatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
     radius: 120
   });
 
-  function exibirSupermercadosDoUsuario() {
-    var supermercado = JSON.parse(sessionStorage.SUPERMERCADO);
-    supermercado.forEach(item => {
-      document.getElementById("select_mercadosGeral").innerHTML += `
-        <option id="${item.id}" value="${item.id}">${item.nome}</option>
-        `
+  function buscarSupermercadoPorId() {
+    console.log(supermercado)
+    // supermercado.forEach(item => {
+      // document.getElementById("select_mercadosGeral").innerHTML += `
+      //   <option id="${item.id}" value="${item.id}">${item.nome}</option>
+      //   `
 
-      document.getElementById("heatmapareas").innerHTML += `
-          <div id="heatmaparea${item.id}" class="display-none">
+      
+    // });
+
+    document.getElementById("heatmapareas").innerHTML += `
+          <div id="heatmaparea${supermercado}" class="display">
             <h1>Mapa de calor</h1>
             <p>Acompanhe em tempo real a movimentação</p>
-            <div class="heatmap${item.id}">
+            <div class="heatmap${supermercado}">
               <div id="heatmapContainer"></div>
             </div>
             <div class="label-captura">
-              <p id="avisoCaptura${item.id}" style="color: white"></p>
+              <p id="avisoCaptura${supermercado}" style="color: white"></p>
             </div>
           </div>
         `
 
-      obterDadosGrafico(item.id)
-    });
+      obterDadosGrafico(supermercado)
 
-    if (supermercado.length > 0) {
-      exibirSupermercado(supermercado[0].id)
-    }
+    // if (supermercado.length > 0) {
+    //   exibirSupermercado(supermercado[0].id)
+    // }
   }
 
-  function exibirSupermercado(idSupermercado) {
-    let todosMapasDeCalor = JSON.parse(sessionStorage.SUPERMERCADO);
+  // function exibirSupermercado(idSupermercado) {
+  //   let todosMapasDeCalor = JSON.parse(sessionStorage.SUPERMERCADO);
 
-    for (i = 0; i < todosMapasDeCalor.length; i++) {
-      // exibindo - ou não - o gráfico
-      if (todosMapasDeCalor[i].id != idSupermercado) {
-        let elementoAtual = document.getElementById(`heatmaparea${todosMapasDeCalor[i].id}`)
-        if (elementoAtual.classList.contains("display-block")) {
-          elementoAtual.classList.remove("display-block")
-        }
-        elementoAtual.classList.add("display-none")
+  //   for (i = 0; i < todosMapasDeCalor.length; i++) {
+  //     // exibindo - ou não - o gráfico
+  //     if (todosMapasDeCalor[i].id != idSupermercado) {
+  //       let elementoAtual = document.getElementById(`heatmaparea${todosMapasDeCalor[i].id}`)
+  //       if (elementoAtual.classList.contains("display-block")) {
+  //         elementoAtual.classList.remove("display-block")
+  //       }
+  //       elementoAtual.classList.add("display-none")
 
-        // alterando estilo do botão
-        let btnAtual = document.getElementById(`select_mercadosGeral${todosMapasDeCalor[i].id}`)
-        // if (btnAtual.classList.contains("btn-pink")) {
-        //   btnAtual.classList.remove("btn-pink")
-        // }
-        // btnAtual.classList.add("btn-white")
-      }
-    }
+  //       // alterando estilo do botão
+  //       //let btnAtual = document.getElementById(`select_mercadosGeral${todosMapasDeCalor[i].id}`)
+  //       // if (btnAtual.classList.contains("btn-pink")) {
+  //       //   btnAtual.classList.remove("btn-pink")
+  //       // }
+  //       // btnAtual.classList.add("btn-white")
+  //     }
+  //   }
 
-    // exibindo - ou não - o gráfico
-    let graficoExibir = document.getElementById(`heatmaparea${idSupermercado}`)
-    graficoExibir.classList.remove("display-none")
-    graficoExibir.classList.add("display-block")
+  //   // exibindo - ou não - o gráfico
+  //   let graficoExibir = document.getElementById(`heatmaparea${idSupermercado}`)
+  //   graficoExibir.classList.remove("display-none")
+  //   graficoExibir.classList.add("display-block")
 
-    // alterando estilo do botão
-    // let btnExibir = document.getElementById(`btnAquario${idAquario}`)
-    // btnExibir.classList.remove("btn-white")
-    // btnExibir.classList.add("btn-pink")
-  }
+  //   // alterando estilo do botão
+  //   // let btnExibir = document.getElementById(`btnAquario${idAquario}`)
+  //   // btnExibir.classList.remove("btn-white")
+  //   // btnExibir.classList.add("btn-pink")
+  // }
 
   // O gráfico é construído com três funções:
   // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
@@ -197,19 +200,19 @@
 
   //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
   //     Para ajustar o "select", ajuste o comando sql em src/models
-  function obterDadosGrafico(idSupermercado) {
+  function obterDadosGrafico() {
 
     if (proximaAtualizacao != undefined) {
       clearTimeout(proximaAtualizacao);
     }
 
-    fetch(`/mapa/ultimos5Min/${idSupermercado}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/mapa/ultimos5Min/${supermercado}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
-          plotarGrafico(resposta, idSupermercado);
+          plotarGrafico(resposta, supermercado);
 
         });
       } else {
@@ -227,10 +230,9 @@
   function plotarGrafico(resposta, idSupermercado) {
 
     console.log('iniciando plotagem do gráfico...');
-    let dados = 0;
 
     // Estrutura de dados separada por locais, cada local tem várias capturas de dados com datas e horários
-    var dadosPorLocal = [resposta];
+    var dadosPorLocal = resposta;
 
     console.log('----------------------------------------------')
     console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
@@ -238,8 +240,9 @@
 
     console.log('----------------------------------------------')
     console.log('O gráfico será plotado com os respectivos valores:')
-    console.log('Labels:')
-    console.log(dados)
+    console.log(resposta)
+
+    // console.log(dados)
     console.log('Dados:')
     console.log(dadosPorLocal)
     console.log('----------------------------------------------')
@@ -248,7 +251,7 @@
     // Criar uma instância do heatmap.js
 
 
-    // setTimeout(() => atualizarGrafico(idSupermercado, dadosPorLocal, instanciaHeatmap), 2000);
+    // setTimeout(() => atualizarGrafico(dadosPorLocal, instanciaHeatmap), 2000);
   }
 
 

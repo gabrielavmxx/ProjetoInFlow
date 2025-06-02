@@ -26,6 +26,8 @@ var dashRouter = require('./src/routes/dashboard');
 var uploadUser = require('./src/middleware/uploadImage');
 var corredoresRouter = require("./src/routes/corredores");
 var mapaRouter = require("./src/routes/mapa");
+var supermercadoRouter = require("./src/routes/supermercado");
+
 
 var medidasRouter = require("./src/routes/medidas");
 
@@ -41,6 +43,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/corredores", corredoresRouter);
 app.use("/dashboard", dashRouter);
 app.use("/mapa", mapaRouter);
+app.use("/supermercado", supermercadoRouter);
 
 app.use("/medidas", medidasRouter);
 
