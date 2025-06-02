@@ -122,7 +122,8 @@
   window.onload = exibirSupermercadosDoUsuario();
 
   var instanciaHeatmap = h337.create({
-    container: document.getElementById('heatmapContainer')
+    container: document.getElementById('heatmapContainer'),
+    radius: 120
   });
 
   function exibirSupermercadosDoUsuario() {
@@ -229,44 +230,7 @@
     let dados = 0;
 
     // Estrutura de dados separada por locais, cada local tem várias capturas de dados com datas e horários
-    var dadosPorLocal = {
-      'AABBCCD1': [
-        { x: 95, y: 175, value: dados, radius: 90 },
-      ],
-      'AABBCCD2': [
-        { x: 310, y: 225, value: dados, radius: 90 },
-      ],
-      'AABBCCD5': [
-        { x: 545, y: 190, value: dados, radius: 90 },
-      ]//,
-      // local4: [
-      //   { x: 190, y: 364, value: 50, radius: 130, dataHora: '2024-10-02T11:00' },
-      // ],
-      // local5: [
-      //   { x: 400, y: 365, value: 80, radius: 130, dataHora: '2024-10-03T11:05' },
-      // ]
-    };
-    console.log(resposta)
-
-    // Percorrer todos os locais
-    for (var local in dadosPorLocal) {
-      var dadosDoLocal = dadosPorLocal[local];
-
-      // Percorrer cada ponto de dados dentro de um local
-      for (var i = 0; i < dadosDoLocal.length; i++) {
-
-          dados = resposta[i];
-          console.log(dados);
-          var ponto = dadosDoLocal[i];
-          ponto.value = dados.presenca;
-
-          console.log(ponto);
-          // Usando addData para adicionar os pontos ao heatmap
-          instanciaHeatmap.addData(ponto);
-        
-
-      }
-    }
+    var dadosPorLocal = [resposta];
 
     console.log('----------------------------------------------')
     console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
