@@ -35,6 +35,35 @@ function buscarFluxoPorCorredor(idSupermercado, mes, ano) {
     console.log("Executando a SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function buscarFluxoPorPeriodo(idSupermercado, ano, mes) {
+    console.log("Acessando o Model para buscar fluxo por corredor...");
+
+    var instrucaoSql = `
+       
+SELECT 
+
+    c.fksupermercado AS Supermercado,
+    CASE 
+        WHEN TIME(datahora) >= '07:00:00' AND TIME(datahora) < '12:00:00' THEN 'Manhã'
+        WHEN TIME(datahora) >= '12:00:00' AND TIME(datahora) < '18:00:00' THEN 'Tarde'
+        WHEN TIME(datahora) >= '18:00:00' AND TIME(datahora) < '22:00:00' THEN 'Noite'
+        ELSE 'Fechado'
+    END AS Horarios_SuperMercado,
+    COUNT(*) AS Total_Registros
+FROM registros r 
+INNER JOIN sensor s ON s.id = r.fksensor
+INNER JOIN corredor c ON c.id = s.fkcorredor
+where fksupermercado = ${idSupermercado} and year(datahora) =${ano} and month(datahora) = ${mes}
+GROUP BY 
+
+    c.fksupermercado,
+    Horarios_SuperMercado
+order by Horarios_SuperMercado;
+    `;
+
+    console.log("Executando a SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 
 function buscarMedidasEmTempoReal(idAquario) {
@@ -54,5 +83,6 @@ function buscarMedidasEmTempoReal(idAquario) {
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
-    buscarFluxoPorCorredor
+    buscarFluxoPorCorredor, 
+    buscarFluxoPorPeriodo
 }

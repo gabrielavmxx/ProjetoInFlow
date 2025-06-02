@@ -172,6 +172,7 @@ width: fit-content;
   display: flex;
   flex-direction: row;
   margin: 10px 40px;
+  border: #a8a8a8 solid 3px;
 }
 
 .conteudoGrafico1 {

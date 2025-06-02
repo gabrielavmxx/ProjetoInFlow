@@ -95,7 +95,7 @@
             <option value="2025">2025</option>
           </select>
 
-          <button onclick=" obterDadosGrafico(sessionStorage.SUPERMERCADO)" > Buscar</button>
+          <button onclick=" obterDadosGrafico(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO)" > Buscar</button>
         </div>
 
         <script>
@@ -164,7 +164,7 @@
       <div class="conteudoGrafico">
 
 
-        <div class="grafico ">
+        <div class="grafico">
           <canvas id="graficoPizza"></canvas>
         </div>
         <div class="graficoBarra ">
@@ -310,22 +310,47 @@
       });
   }
 
-  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+function obterDadosPizza(idSupermercado){
+    let mes=Number(select_mes.value);
+
+
+  let ano=Number(select_ano.value);
+  console.log(sessionStorage.SUPERMERCADO)
+
+
+    fetch(`/medidas/pizza/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          
+          plotarGraficoPizza(resposta, idSupermercado);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
 
   function plotarGraficoBarras(resposta, idSupermercado) {
     console.log('Iniciando plotagem do gráfico de barras...');
  if (myChartBarra) {
-      myChartBarra.destroy(); // Destrói o gráfico anterior, se existir
+      myChartBarra.destroy(); 
     }
-    // Labels dinâmicas - nomes dos corredores
+
     let labels = [];
 
-    // Dados do fluxo de pessoas por corredor
+
     let dadosFluxo = [];
 
-    // Preenchendo os dados a partir da resposta
+    
     for (let i = 0; i < resposta.length; i++) {
       let registro = resposta[i];
       labels.push(`Corredor ${registro.corredor}`);
@@ -381,17 +406,30 @@
       config
     );
   }
+let myChartPizza=null
+function plotarGraficoPizza(resposta,idSupermercado){
+      console.log('Iniciando plotagem do gráfico de pizza...');
+      console.log(resposta);
+   if (myChartPizza) {
+      myChartPizza.destroy(); 
+    }
+   let dados=[]
+  
+      for (let i = 0; i < resposta.length; i++) {
+      let registro = resposta[i];
+      dados.push (registro.Total_Registros);
 
+    }
 
-
-  const ctx = document.getElementById('graficoPizza').getContext('2d');
-  const graficoPizza = new Chart(ctx, {
+    const div_pizza= document.getElementById('graficoPizza').getContext('2d');
+    console.log(dados);
+   myChartPizza = new Chart(div_pizza, {
     type: 'pie',
     data: {
-      labels: ['Manhã', 'Tarde', 'Noite'],
+      labels: ['Manhã','Noite','Tarde'],
       datasets: [{
         label: 'Movimentação por período',
-        data: [35, 40, 25], // porcentagens ou valores absolutos
+        data: dados,
         backgroundColor: ['#0f766e', '#14b8a6', '#5eead4'],
         borderColor: '#fff',
         borderWidth: 1
@@ -412,6 +450,9 @@
       }
     }
   });
+}
+
+
 
   const heatmapInstance = h337.create({
     container: document.getElementById('heatmapContainer'),
