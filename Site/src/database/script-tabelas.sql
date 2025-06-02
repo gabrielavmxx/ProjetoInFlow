@@ -79,6 +79,8 @@ CREATE TABLE sensor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     statuses VARCHAR(10) DEFAULT 'Ativo',
     CONSTRAINT chk_status CHECK(statuses IN ('Ativo','Inativo')),
+    x INT,
+    y INT,
     fkcorredor INT,
     numero_serie CHAR(8),
     UNIQUE ix_ns (numero_serie),
@@ -328,11 +330,16 @@ update  corredor set  posicao="Corredor 3" where id=8;
 select* from registros;
 -- SENSORES LETICIA
 INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
-('Ativo', 1, 'SENeVM01'),
-('Ativo',2, 'SENVrM02'),
-('Ativo', 3, 'SENVwM03'),
-('Ativo', 4, 'SENqVM04'),
-('Ativo', 5, 'SENqVM05');
+('Ativo', 4, 680, 700, 'SENS0001'),
+('Ativo', 3, 680, 420, 'SENS0002'),
+('Ativo', 2, 680, 120, 'SENS0003'),
+('Ativo', 5, 380, 700, 'SENS0004'),
+('Ativo', 3, 380, 520, 'SENS0005'),
+('Ativo', 2, 380, 320, 'SENS0006'),
+('Ativo', 1, 380, 120, 'SENS0007'),
+('Ativo', 4, 80, 700, 'SENS0008'),
+('Ativo', 3, 80, 420, 'SENS0009'),
+('Ativo', 2, 80, 120, 'SENS0010');
 -- SENSSORES ISABELLA
 -- Moema
 INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
