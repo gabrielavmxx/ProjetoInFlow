@@ -46,6 +46,12 @@
         </div>
         <p class="titulo">Configurações</p>
       </div>
+      <div class="box" onclick="sair()">
+        <div class="icon">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+        <p class="titulo">Sair</p>
+      </div>
     </div>
     <div class="dadosPerfil">
       <div class="fotoPerfil conteudo">
@@ -171,31 +177,8 @@
           <canvas id="graficoBarra"></canvas>
         </div>
       </div>
-      <div class="corredores">
-        <div onclick="obterDados(1)" class="corredor">
-          <h3>Corredor 1</h3>
-          <p>Movimentação: 10</p>
-        </div>
-        <div onclick="obterDados(2)" class="corredor">
-          <h3>Corredor 2</h3>
-          <p>Movimentação: 10</p>
-        </div>
-        <div onclick="obterDados(3)" class="corredor">
-          <h3>Corredor 3</h3>
-          <p>Movimentação: 10</p>
-        </div>
-        <div onclick="obterDados(4)" class="corredor">
-          <h3>Corredor 4</h3>
-          <p>Movimentação: 10</p>
-        </div>
-        <div onclick="obterDados(5)" class="corredor">
-          <h3>Corredor 5</h3>
-          <p>Movimentação: 10</p>
-        </div>
-        <div onclick="obterDados(6)" class="corredor">
-          <h3>Corredor 6</h3>
-          <p>Movimentação: 10</p>
-        </div>
+      <div class="corredores" id="corredores">
+        
       </div>
       <div id="container-corredor" class="container-corredor">
         <select id="ano_g3">
@@ -599,4 +582,29 @@ function plotarGraficoPizza(resposta,idSupermercado){
     }
 
   }
+
+  function verificarCorredores() {
+
+      var qtd_corredores = JSON.parse(sessionStorage.CORREDORES)
+      var tamanho = qtd_corredores.map(item => item.id).length
+      console.log(tamanho)
+
+      for(let i = 0; i < tamanho; i++) {
+        
+        corredores.innerHTML += `
+          <div onclick="obterDados(${i+1})" class="corredor">
+            <h3>Corredor ${i+1}</h3>
+            <p>Movimentação: 10</p>
+          </div>
+        `
+
+      }
+  }
+
+  function sair(){
+    sessionStorage.clear()
+    window.location.href = "../login.html";
+  }
+
+  verificarCorredores()
 </script>
