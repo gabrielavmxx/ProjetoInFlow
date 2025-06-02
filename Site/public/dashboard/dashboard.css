@@ -171,8 +171,7 @@ width: fit-content;
 .conteudoGrafico {
   display: flex;
   flex-direction: row;
-  margin: 10px 40px;
-  border: #a8a8a8 solid 3px;
+  margin: 10px 40px;c
 }
 
 .conteudoGrafico1 {
@@ -263,7 +262,6 @@ width: fit-content;
 .conteudoGrafico{
   display: flex;
   flex-direction: row;
-
 }
 
 .grafico {
