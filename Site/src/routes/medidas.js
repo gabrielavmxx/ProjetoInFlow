@@ -13,5 +13,8 @@ router.get("/tempo-real/:idAquario", function (req, res) {
 router.get("/fluxo/:idSupermercado/:mes/:ano", function (req, res) {
     medidaController.buscarFluxoPorCorredor(req, res);
 });
+router.get("/pizza/:idSupermercado/:mes/:ano", function (req, res) {
+    medidaController.buscarFluxoPorPeriodo(req, res);
+});
 
 module.exports = router;

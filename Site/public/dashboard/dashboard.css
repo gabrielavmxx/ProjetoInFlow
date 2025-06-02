@@ -262,7 +262,6 @@ width: fit-content;
 .conteudoGrafico{
   display: flex;
   flex-direction: row;
-
 }
 
 .grafico {
