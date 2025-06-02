@@ -1,8 +1,8 @@
 var database = require("../database/config");
 
-function buscarCorredoresPorEmpresa(empresaId) {
+function buscarCorredoresPorSupermercado(IdSupermercado) {
 
-  var instrucaoSql = `  select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where ${empresaId}`;
+  var instrucaoSql = `  select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where fksupermercado = ${IdSupermercado}`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
@@ -18,6 +18,6 @@ function cadastrar(empresaId, descricao) {
 
 
 module.exports = {
-  buscarCorredoresPorEmpresa,
+  buscarCorredoresPorSupermercado,
   cadastrar
 }

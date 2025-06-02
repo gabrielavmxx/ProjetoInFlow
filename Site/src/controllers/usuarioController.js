@@ -1,6 +1,7 @@
 var usuarioModel = require("../models/usuarioModel");
 var corredorModel = require("../models/corredorModel");
-var supermercadoModel = require("../models/supermercadoModel");
+const { json } = require("express");
+
 
 
 function autenticar(req, res) {
@@ -23,9 +24,8 @@ function autenticar(req, res) {
                       if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        supermercadoModel.buscarSupermercadoPorEmpresa(resultadoAutenticar[0].empresaId)
-                        .then((resultadoSupermercados) => {
-                            corredorModel.buscarCorredoresPorEmpresa(resultadoAutenticar[0].empresaId)
+
+                            corredorModel.buscarCorredoresPorSupermercado(resultadoAutenticar[0].IdSupermercado)
                             .then((resultadoCorredores) => {
                                 if (resultadoCorredores.length > 0 && resultadoCorredores.length > 0) {
                                     res.json({
@@ -33,15 +33,15 @@ function autenticar(req, res) {
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
                                         senha: resultadoAutenticar[0].senha,
-                                        supermercado: resultadoSupermercados,
+                                        supermercado: resultadoAutenticar[0].IdSupermercado,
                                         corredores: resultadoCorredores
-                                    });
+                                    }); 
                                 } else {
                                     res.status(204).json({ corredores: [] });
-                                    res.status(204).json({ supermercado: [] });
+                                   
                                 }
                             })
-                        })
+                        
 
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
