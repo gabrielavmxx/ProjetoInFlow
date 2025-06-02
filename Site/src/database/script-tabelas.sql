@@ -293,7 +293,7 @@ INSERT INTO supermercado (nome, cnpj,fkEndereco) VALUES
 ('Supermercado Isabella', '45678912000888', 2);
 
 
--- 🔹 ÁREAS
+-- ÁREAS
 INSERT INTO areas (nome) VALUES 
 ('Padaria'),
 ('Hortifruti'),
@@ -301,7 +301,7 @@ INSERT INTO areas (nome) VALUES
 ('Bebidas'),
 ('Limpeza');
 
--- 🔹 ÁREAS_SUPERMERCADO
+-- ÁREAS_SUPERMERCADO
 -- Supermercado Leticia
 INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
 (1,1 ), (2, 1), (3, 1), (4, 1), (5, 1);
@@ -310,7 +310,7 @@ INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES
 INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
 (1, 2), (2, 2), (3, 2), (4, 2), (5, 2);
 
--- 🔹 CORREDORES
+-- CORREDORES
 -- Mercado isabella
 INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES 
 (1, 2,'Corredor 1' ),       
@@ -326,7 +326,7 @@ INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES
 (3, 1, 'Corrqedor 3'),         
 (4, 1, 'Corredor 4'),   
 (5, 1, 'Corredor 5');
--- 🔹 SENSORES
+-- SENSORES
 select * from corredor;
 update  corredor set  posicao="Corredor 3" where id=8;
 select* from registros;
@@ -351,7 +351,7 @@ INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES
 ('Ativo', 9, 'SENMO04'),
 ('Ativo', 10, 'SENMO05');
 select* from corredor;
--- 🔹 REGISTROS DE PRESENÇA
+-- REGISTROS DE PRESENÇA
 -- Supermercado leticia (sensores 1 a 5)
 INSERT INTO registros (fksensor, presenca,datahora) VALUES 
 (1,1,"2024-07-29"),(1,1,"2024-07-29"),(2,1,"2024-07-29"),(1,1,"2024-07-29"),(1,1,"2024-07-29"),(3,1,"2024-07-29"),
@@ -372,12 +372,9 @@ INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fksupermercado) 
 ('Carlos Lima', '11122233344', '11999990001', 'leticia.com', 'senha123', 'Admin', 1),
 ('Fernanda Alves', '55566677788', '11999990002', 'isabella.com', 'senha123', 'Gestor', 2);
 select* from usuario;
-SELECT 
-    *
-FROM
-    supermercado
-WHERE
-    id = 4;
+SELECT *
+FROM supermercado
+WHERE id = 4;
     SELECT 
             corredor.id AS idCorredor,
             corredor.posicao AS corredor,
