@@ -179,31 +179,36 @@ width: fit-content;
   flex-direction: row; 
   width: 100%;
 }
+
 .corredores{
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: 0 40px;
 }
+
 .corredor{
   display: flex;
   flex-direction: column;
-  border: #a8a8a8 solid 3px;
+  border: gray solid 3px;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 150px;
   margin: 20px;
   width: 100%;
+  border-radius: 10px;
 }
+
 .container-corredor{
   display: flex;
-  width: 80%;
-  border: #a8a8a8 solid 3px;
+  width: 90%;
+  border: gray solid 3px;
   justify-content:start;
   align-items: center;
   flex-direction: column;
   height: 700px;
   align-self: center;
+  border-radius: 10px;
 }
 
 /* .calendar {
@@ -663,4 +668,86 @@ canvas {
   padding: 10px 15px;
   margin-bottom: 100px;
   cursor: pointer;
+}
+
+#ano_g3
+{
+  padding: 20px 60px;
+  background-color:  aliceblue;
+  border-radius: 10px;
+  color: teal;
+  font-weight: bold;
+}
+
+.container-cards-grafico
+{
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 150px;
+  gap: 20%;
+  border-bottom: 2px solid gray;
+  width: 100%;
+  background-color: teal;
+}
+
+.fluxo-paragrafo
+{
+  background-color: aliceblue;
+  border-radius: 10px;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.texto-card
+{
+  color: teal;
+  font-weight: bold;
+}
+
+.paragrafo-texto
+{
+  color: teal;
+  width: 80%;
+}
+
+.card-fluxo
+{
+  margin-top: 20px;
+}
+
+.nome-mercado
+{
+  color: aliceblue;
+}
+
+.card-mes
+{
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px 25px;
+}
+
+.botao-escolher-mes
+{
+  width: 30%;
+  font-weight: bold;
+}
+
+.container-conteudo-mes
+{
+  display: flex;
+  border-bottom: 2px solid gray;
+  width: 100%;
+}
+
+.div_escolhermes
+{
+  padding-bottom: 30px;
+  border-bottom: 2px solid gray;
 }
