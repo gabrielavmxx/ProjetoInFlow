@@ -211,7 +211,9 @@
               </div>
             </div>
           </div>
+          <div class="grafico33_teste">
           <canvas id="grafico33" height="100"></canvas>
+          </div>
           <!-- </div> -->
         </div>
       </div>
@@ -582,7 +584,7 @@
       console.log(dados)
 
       const grafico = document.getElementById('conteudoGrafico');
-      grafico.style.display = 'block';
+      grafico.style.display = 'flex';
       grafico33.data.datasets[0].data = dados.map(item => item.total_movimentacoes);
       grafico33.update();
 
