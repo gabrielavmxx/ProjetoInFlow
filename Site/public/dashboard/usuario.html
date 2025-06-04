@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários | Dashboard</title>
+    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styledash.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="menu">
+            <div class="logo">
+                <h1>In<span>Flow</span></h1>
+            </div>
+            <div class="escolha">
+                <div class="box">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-columns"></i>
+                    </div>
+                    <a href="dashboard.html" class="titulo">Dashboard Analítica</a>
+                </div>
+                <div class="box agora">
+                    <div class="icon">
+                        <i class="fa-solid fa-gauge"></i>
+                    </div>
+                    <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
+                </div>
+                <div class="box">
+                    <div class="icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <a href="cadastro.html" class="titulo">Adicionar usuários</a>
+                </div>
+                <div class="box">
+                    <div class="icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <p class="titulo">Configurações</p>
+                </div>
+                <div class="box" onclick="sair()">
+                    <div class="icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <p class="titulo">Sair</p>
+                </div>
+            </div>
+            <div class="dadosPerfil">
+                <div class="fotoPerfil conteudo">
+                    <img src="../assets/img/homem1.jpg" alt="">
+                </div>
+                <div class="infoPerfil conteudo">
+                    <p class="nome">Renato</p>
+                    <p class="email">renato.silva@gmail.com</p>
+                </div>
+                <div class="maisInfo conteudo">
+                    <i class="fa-solid fa-angle-right"></i>
+                </div>
+            </div>
+        </div>
+        <main id="main">
+            <div class="conteudoDashboard">
+                <div class="adicionarUsuario">
+                    <a href="">Adicion</a>
+                </div>
+                <div class="mostrarUsuarios">
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td class="nomeUsuario">Letícia da Silva Santos</td>
+                            <td class="emailUsuario">leticia.ssantos@sptech.school</td>
+                            <td class="editUsuario">
+                                <button>
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </td>
+                            <td class="deleteUsuario">
+                                <button>
+                                    <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

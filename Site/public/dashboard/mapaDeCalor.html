@@ -67,9 +67,6 @@
     <!-- FIM DO MENU LATERAL -->
     <div id="main">
       <div class="conteudoDashboard">
-        <div class="hello">
-          <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-        </div>
         <!-- <div id="mercadosGeral">
           <select id="select_mercadosGeral" class="btn-chart"
             onchange="exibirSupermercado(this.options[this.selectedIndex].value)">
@@ -121,8 +118,6 @@
 
 </html>
 <script>
-  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-
   let proximaAtualizacao;
 
   var supermercado = sessionStorage.SUPERMERCADO;
@@ -261,7 +256,7 @@
     // Criar uma instância do heatmap.js
     //instanciaHeatmap.addData(resposta)
 
-    atualizarGrafico();
+    setTimeout(() => atualizarGrafico(resposta), 2000);
   }
 
   // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
