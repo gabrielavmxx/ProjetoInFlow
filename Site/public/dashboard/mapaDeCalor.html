@@ -122,7 +122,7 @@
 
   var supermercado = sessionStorage.SUPERMERCADO;
   window.onload = buscarSupermercadoPorId();
-
+  
   var instanciaHeatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
     radius: 120,
@@ -271,12 +271,14 @@
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-          instanciaHeatmap.addData(resposta)
 
+          instanciaHeatmap.setData({ max: 0, data: [] });
+          instanciaHeatmap.addData(resposta)
         });
       } else {
         console.error('Nenhum dado encontrado ou erro na API');
       }
+      setTimeout(() => atualizarGrafico(resposta), 2000);
     })
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
