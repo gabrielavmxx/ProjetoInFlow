@@ -130,17 +130,17 @@
 
   var instanciaHeatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
-    radius: 120
+    radius: 120,
   });
 
   function buscarSupermercadoPorId() {
     console.log(supermercado)
     // supermercado.forEach(item => {
-      // document.getElementById("select_mercadosGeral").innerHTML += `
-      //   <option id="${item.id}" value="${item.id}">${item.nome}</option>
-      //   `
+    // document.getElementById("select_mercadosGeral").innerHTML += `
+    //   <option id="${item.id}" value="${item.id}">${item.nome}</option>
+    //   `
 
-      
+
     // });
 
     document.getElementById("heatmapareas").innerHTML += `
@@ -156,7 +156,7 @@
           </div>
         `
 
-      obterDadosGrafico(supermercado)
+    obterDadosGrafico(supermercado)
 
     // if (supermercado.length > 0) {
     //   exibirSupermercado(supermercado[0].id)
@@ -237,8 +237,12 @@
 
     console.log('iniciando plotagem do gráfico...');
 
+
     // Estrutura de dados separada por locais, cada local tem várias capturas de dados com datas e horários
-    var dadosPorLocal = {data: resposta};
+    var dadosPorLocal = { data: resposta };
+
+    // Limpar o heatmap antes de adicionar novos dados
+    instanciaHeatmap.setData({ max: 0, data: [] });
 
     console.log('----------------------------------------------')
     console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
@@ -255,39 +259,36 @@
 
     // Adicionando gráfico criado em div na tela
     // Criar uma instância do heatmap.js
-    instanciaHeatmap.setData(dadosPorLocal)
+    //instanciaHeatmap.addData(resposta)
 
-
-    // atualizarGrafico();
+    atualizarGrafico();
   }
-
 
   // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
   // buscando a última medida inserida em tabela contendo as capturas, 
 
   //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
   //     Para ajustar o "select", ajuste o comando sql em src/models
-  // function atualizarGrafico() {
+  function atualizarGrafico(resposta) {
 
+    fetch(`/mapa/ultimos5Min/${supermercado}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          instanciaHeatmap.addData(resposta)
 
-  //   fetch(`/mapa/ultimos5Min/${supermercado}`, { cache: 'no-store' }).then(function (response) {
-  //     if (response.ok) {
-  //       response.json().then(function (resposta) {
-  //         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-  //         resposta.reverse();
-  //         instanciaHeatmap.setData(dadosPorLocal)
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
 
-  //       });
-  //     } else {
-  //       console.error('Nenhum dado encontrado ou erro na API');
-  //     }
-  //   })
-  //     .catch(function (error) {
-  //       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-  //     });
-  // }
-
-  function sair(){
+  function sair() {
     sessionStorage.clear()
     window.location.href = "../login.html";
   }

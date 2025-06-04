@@ -344,12 +344,17 @@ INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES
 ('Ativo', 2, 80, 120, 'SENS0010');
 -- SENSSORES ISABELLA
 -- Moema
-INSERT INTO sensor (statuses, fkcorredor, numero_serie) VALUES 
-('Ativo', 6, 'SENMO01'),
-('Ativo', 7, 'SENMO02'),
-('Ativo', 8, 'SENMO03'),
-('Ativo', 9, 'SENMO04'),
-('Ativo', 10, 'SENMO05');
+INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES 
+('Ativo', 6, 680, 700, 'SENMO01'),
+('Ativo', 7, 680, 420, 'SENMO02'),
+('Ativo', 8, 680, 120, 'SENMO03'),
+('Ativo', 6, 380, 700, 'SENMO04'),
+('Ativo', 9, 380, 520, 'SENMO05'),
+('Ativo', 10, 380, 320, 'SENMO06'),
+('Ativo', 8, 380, 120, 'SENMO07'),
+('Ativo', 6, 80, 700, 'SENMO08'),
+('Ativo', 7, 80, 420, 'SENMO09'),
+('Ativo', 8, 80, 120, 'SENMO10');
 select* from corredor;
 -- REGISTROS DE PRESENÇA
 -- Supermercado leticia (sensores 1 a 5)
