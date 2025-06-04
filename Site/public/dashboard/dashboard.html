@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.0/heatmap.min.js"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
-  <script src="js/sessao"></script>
+  <script src="C:\Users\isafa\Documents\SPTECH\PROJETO AGORA VAI\ProjetoInFlow\Site\public\js\sessao.js"></script>
 </head>
 
 <body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
@@ -96,12 +96,14 @@
           <label for="select_ano">Escolha o ano:</label>
           <br>
           <select id="select_ano">
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
             <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
           </select>
 
-          <button onclick=" obterDadosGrafico(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO)" > Buscar</button>
+          <button
+            onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO)">
+            Buscar</button>
         </div>
 
         <script>
@@ -178,34 +180,22 @@
         </div>
       </div>
       <div class="corredores" id="corredores">
-        
+ <div id="btnCorredor" class="btns-dash">
+</div>
       </div>
-      <div id="container-corredor" class="container-corredor">
-        <select id="ano_g3">
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-        </select>
-        <div class="conteudoGrafico1" id="conteudoGrafico" style="display: none;">
-          <!-- <div class="grafico"> -->
-          <div class="elementosKPI">
-            <div class="kpi k1">
-              <p class="titulo">Melhor periodo para promoções</p>
-              <div class="dados">
-                <p>Manhã</p>
-              </div>
-            </div>
-            <div class="kpi k2">
-              <p class="titulo">Melhor dia do mês</p>
-              <div class="dados">
-                <p>21</p>
-              </div>
-            </div>
-          </div>
-          <canvas id="grafico33" height="100"></canvas>
-          <!-- </div> -->
+      <div class="graficocorredores">
+        <div class="selectano">
+          
         </div>
-      </div>
+                 <select id="ano_g3">
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+        </select>
+
+<div id="graficos" class="graficos"></div>
+</div>
+
 
 
       <div class="heatmaparea">
@@ -223,24 +213,58 @@
 </div>
 </div>
 </body>
-<div id="btnSupermercado" class="btns-dash">
-</div>
-<div id="graficos" class="graficos">
-</div>
+
 
 
 </html>
 <script>
-  let idSupermercadoAtual = 0
-  console.log(sessionStorage)
+  window.onload = exibirCorredorDoUsuario()
+  window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
+  window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
 
-  async function exibirSupermercado(idSupermercado) {
-    idSupermercadoAtual = idSupermercado
-    let todosOsGraficos = JSON.parse(sessionStorage.SUPERMERCADO);
+  function exibirCorredorDoUsuario() {
+    var corredores = JSON.parse(sessionStorage.CORREDORES)
+    console.log(corredores.id)
+    var anocorredor = document.getElementById("ano_g3").value
+    corredores.forEach(item => {
+      document.getElementById("btnCorredor").innerHTML += `
+            <button class="btn-chart" onclick="exibirCorredor(${item.id})" id="btnCorredor${item.id}">${item.posicao}</button>
+            `
 
-    for (i = 0; i < todosOsGraficos.length; i++) {
+      document.getElementById("graficos").innerHTML += `
+                <div id="grafico${item.id}" class="display-none">
+                    <h3 class="tituloGraficos">
+                        <span id="tituloCorredor${item.id}">${item.posicao}</span>
+                    </h3>
+                    <div class="graph">
+                        <canvas id="myChartCanvas${item.id}"></canvas>
+                    </div>
+                    <div class="label-captura">
+                        <p id="avisoCaptura${item.id}" style="color: white"></p>
+                    </div>
+                </div>
+            `
+
+      obterDadosGraficoCorredores(item.id, item.fksupermercado, anocorredor)
+    });
+
+    if (corredores.length > 0) {
+      exibirCorredor(corredores[0].id)
+    }
+  }
+
+  function alterarTitulo(idCorredor) {
+    var tituloCorredor = document.getElementById(`tituloCorredor${idCorredor}`)
+    var descricao = JSON.parse(sessionStorage.CORREDORES).find(item => item.id == idCorredor).posicao;
+    tituloCorredor.innerHTML = " Fluxo por mês no <span style='color: #008080'>" + descricao + "</span>"
+  }
+
+  function exibirCorredor(idCorredor) {
+    let todosOsGraficos = JSON.parse(sessionStorage.CORREDORES);
+
+    for (let i = 0; i < todosOsGraficos.length; i++) {
       // exibindo - ou não - o gráfico
-      if (todosOsGraficos[i].id != idSupermercado) {
+      if (todosOsGraficos[i].id != idCorredor) {
         let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
         if (elementoAtual.classList.contains("display-block")) {
           elementoAtual.classList.remove("display-block")
@@ -248,7 +272,7 @@
         elementoAtual.classList.add("display-none")
 
         // alterando estilo do botão
-        let btnAtual = document.getElementById(`btnSupermercado${todosOsGraficos[i].id}`)
+        let btnAtual = document.getElementById(`btnCorredor${todosOsGraficos[i].id}`)
         if (btnAtual.classList.contains("btn-pink")) {
           btnAtual.classList.remove("btn-pink")
         }
@@ -257,32 +281,38 @@
     }
 
     // exibindo - ou não - o gráfico
-    let graficoExibir = document.getElementById(`grafico${idSupermercado}`)
+    let graficoExibir = document.getElementById(`grafico${idCorredor}`)
     graficoExibir.classList.remove("display-none")
     graficoExibir.classList.add("display-block")
 
     // alterando estilo do botão
-    let btnExibir = document.getElementById(`btnSupermercado${idSupermercado}`)
+    let btnExibir = document.getElementById(`btnCorredor${idCorredor}`)
     btnExibir.classList.remove("btn-white")
     btnExibir.classList.add("btn-pink")
   }
 
-  let myChartBarra = null
-  function obterDadosGrafico(idSupermercado) {
-    let mes = Number(select_mes.value);
+  // O gráfico é construído com três funções:
+  // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+  // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+  // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
 
+  // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
+  // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
+  // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
 
-    let ano = Number(select_ano.value);
-    console.log(sessionStorage.SUPERMERCADO)
+  //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+  //     Para ajustar o "select", ajuste o comando sql em src/models
+  function obterDadosGraficoCorredores(idCorredor, idSupermercado, ano) {
 
+    alterarTitulo(idCorredor);
 
-    fetch(`/medidas/fluxo/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
-          plotarGraficoBarras(resposta, idSupermercado);
+          plotarGrafico(resposta, idCorredor);
 
         });
       } else {
@@ -294,20 +324,117 @@
       });
   }
 
-function obterDadosPizza(idSupermercado){
-    let mes=Number(select_mes.value);
+  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+  function plotarGrafico(resposta, idCorredor) {
+
+    console.log('iniciando plotagem do gráfico...');
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+
+    // Criando estrutura para plotar gráfico - dados
+    let dados = {
+      labels: labels,
+      datasets: [{
+        label: 'Fluxo',
+        data: [],
+        fill: false,
+        backgroundColor: '#008080',
+        borderColor: '#008080',
+        tension: 0.1
+      }]
+    };
+
+    console.log('----------------------------------------------')
+    console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+    console.log(resposta)
+
+    let nomeMeses = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto', 
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro'
+    ]
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+    for (i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      var mes = registro.mes;
+
+      labels.push(nomeMeses[mes - 1])
+      dados.datasets[0].data.push(registro.total_movimentacoes);
+
+    }
+
+    console.log('----------------------------------------------')
+    console.log('O gráfico será plotado com os respectivos valores:')
+    console.log('Labels:')
+    console.log(labels)
+    console.log('Dados:')
+    console.log(dados.datasets)
+    console.log('----------------------------------------------')
+
+    // Criando estrutura para plotar gráfico - config
+    const config = {
+      type: 'bar',
+      data: dados,
+    };
+
+    // Adicionando gráfico criado em div na tela
+    let myChart = new Chart(
+      document.getElementById(`myChartCanvas${idCorredor}`),
+      config
+    );
+
+  }
+
+  /////////////////////////////////////////////////////////////////
+
+  let myChartBarra = null
+  function obterDadosGraficoMedidas(idSupermercado) {
+    let mes = Number(select_mes.value)
+    let ano = Number(select_ano.value)
+    console.log(sessionStorage.SUPERMERCADO)
 
 
-  let ano=Number(select_ano.value);
-  console.log(sessionStorage.SUPERMERCADO)
+    fetch(`/medidas/fluxo/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
 
+          plotarGraficoBarras(resposta, idSupermercado);
 
+        })
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API')
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  function obterDadosPizza(idSupermercado) {
+    let mes = Number(select_mes.value);
+    let ano = Number(select_ano.value);
+    console.log(sessionStorage.SUPERMERCADO)
     fetch(`/medidas/pizza/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
-          
+
           plotarGraficoPizza(resposta, idSupermercado);
 
         });
@@ -325,8 +452,8 @@ function obterDadosPizza(idSupermercado){
 
   function plotarGraficoBarras(resposta, idSupermercado) {
     console.log('Iniciando plotagem do gráfico de barras...');
- if (myChartBarra) {
-      myChartBarra.destroy(); 
+    if (myChartBarra) {
+      myChartBarra.destroy();
     }
 
     let labels = [];
@@ -334,7 +461,7 @@ function obterDadosPizza(idSupermercado){
 
     let dadosFluxo = [];
 
-    
+
     for (let i = 0; i < resposta.length; i++) {
       let registro = resposta[i];
       labels.push(`Corredor ${registro.corredor}`);
@@ -361,9 +488,11 @@ function obterDadosPizza(idSupermercado){
         scales: {
           y: {
             beginAtZero: true,
+            max:100,
             title: {
               display: true,
-              text: 'Quantidade de Pessoas'
+              text: 'Fluxo de Pessoas',
+              
             }
           },
           x: {
@@ -390,51 +519,51 @@ function obterDadosPizza(idSupermercado){
       config
     );
   }
-let myChartPizza=null
-function plotarGraficoPizza(resposta,idSupermercado){
-      console.log('Iniciando plotagem do gráfico de pizza...');
-      console.log(resposta);
-   if (myChartPizza) {
-      myChartPizza.destroy(); 
+  let myChartPizza = null
+  function plotarGraficoPizza(resposta, idSupermercado) {
+    console.log('Iniciando plotagem do gráfico de pizza...');
+    console.log(resposta);
+    if (myChartPizza) {
+      myChartPizza.destroy();
     }
-   let dados=[]
-  
-      for (let i = 0; i < resposta.length; i++) {
+    let dados = []
+
+    for (let i = 0; i < resposta.length; i++) {
       let registro = resposta[i];
-      dados.push (registro.Total_Registros);
+      dados.push(registro.Total_Registros);
 
     }
 
-    const div_pizza= document.getElementById('graficoPizza').getContext('2d');
+    const div_pizza = document.getElementById('graficoPizza').getContext('2d');
     console.log(dados);
-   myChartPizza = new Chart(div_pizza, {
-    type: 'pie',
-    data: {
-      labels: ['Manhã','Noite','Tarde'],
-      datasets: [{
-        label: 'Movimentação por período',
-        data: dados,
-        backgroundColor: ['#0f766e', '#14b8a6', '#5eead4'],
-        borderColor: '#fff',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Distribuição de Movimento por Período do Dia',
-          font: {
-            size: 18
+    myChartPizza = new Chart(div_pizza, {
+      type: 'pie',
+      data: {
+        labels: ['Manhã', 'Noite', 'Tarde'],
+        datasets: [{
+          label: 'Movimentação por período',
+          data: dados,
+          backgroundColor: ['#0f766e', '#14b8a6', '#5eead4'],
+          borderColor: '#fff',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Distribuição de Movimento por Período do Dia',
+            font: {
+              size: 18
+            }
+          },
+          legend: {
+            position: 'bottom'
           }
-        },
-        legend: {
-          position: 'bottom'
         }
       }
-    }
-  });
-}
+    });
+  }
 
 
 
@@ -460,71 +589,6 @@ function plotarGraficoPizza(resposta,idSupermercado){
   heatmapInstance.setData(data);
 
 
-  const ctx2 = document.getElementById('grafico2');
-  const grafico2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: ['Corredor 1', 'Corredor 2', 'Corredor 3', 'Corredor 4', 'Corredor 5', 'Corredor 6', 'Corredor 7', 'Corredor 8', 'Corredor 9', 'Corredor 10'],
-      datasets: [{
-        label: 'Pessoas', //<- legenda da tabela
-        data: [10, 22, 43, 32, 11, 54, 43, 21, 55, 53], //<- muda o valor dos dados no grafico para adicionar mais valores é necessario adicionar mais corredores acima
-        borderWidth: 1,
-        borderColor: '#115e59',
-        backgroundColor: '#115e59'
-      }]
-    },
-    options: {
-      tension: 0.5,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Movimentação por corredor',
-          font: {
-            size: 24
-          },
-          color: '#333' // (opcional) cor do título
-        }
-      }
-    }
-  })
-
-  const ctx3 = document.getElementById('grafico33').getContext('2d');
-  const grafico33 = new Chart(ctx3, {
-    type: 'bar',
-    data: {
-      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-      datasets: [{
-        label: 'Pessoas',
-        data: data,
-        borderWidth: 1,
-        borderColor: '#115e59',
-        backgroundColor: '#115e59'
-      }]
-    },
-    options: {
-      tension: 0.5,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Movimentação por mês',
-          font: {
-            size: 24
-          },
-          color: '#333'
-        }
-      }
-    }
-  });
 
   function exibirCorredores() {
     JSON.parse(sessionStorage.CORREDORES).forEach(item => {
@@ -540,71 +604,9 @@ function plotarGraficoPizza(resposta,idSupermercado){
     });
   }
 
-  async function obterDados(idCorredor) {
 
-    var ano = ano_g3.value
-    var idSupermercado = sessionStorage.SUPERMERCADO;
-
-    // fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`, { cache: 'no-store' })
-    //   .then(function (response) {
-    //     if (response.ok) {
-    //       response.json().then(function (resposta) {
-    //         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //         resposta.reverse();
-    //       });
-    //       console.log('AAAAAAA '+idSupermercado, idCorredor, ano, resposta)
-    // const grafico = document.getElementById('conteudoGrafico')
-    // grafico.style.display = 'block'
-    // grafico33.data.datasets[0].data = resposta
-    // grafico33.update()
-    
-    //     } else {
-    //       console.error('Nenhum dado encontrado ou erro na API');
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    //   });
-
-    try {
-      const res = await fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`);
-      console.log(res)
-      const dados = await res.json();
-      console.log(dados)
-
-      const grafico = document.getElementById('conteudoGrafico');
-      grafico.style.display = 'block';
-      grafico33.data.datasets[0].data = dados.map(item => item.total_movimentacoes);
-      grafico33.update();
-
-    } catch (erro) {
-      console.error('Erro ao buscar dados do usuário logado:', erro);
-    }
-
-  }
-
-  function verificarCorredores() {
-
-      var qtd_corredores = JSON.parse(sessionStorage.CORREDORES)
-      var tamanho = qtd_corredores.map(item => item.id).length
-      console.log(tamanho)
-
-      for(let i = 0; i < tamanho; i++) {
-        
-        corredores.innerHTML += `
-          <div onclick="obterDados(${i+1})" class="corredor">
-            <h3>Corredor ${i+1}</h3>
-            <p>Movimentação: 10</p>
-          </div>
-        `
-
-      }
-  }
-
-  function sair(){
+  function sair() {
     sessionStorage.clear()
     window.location.href = "../login.html";
   }
-
-  verificarCorredores()
 </script>
