@@ -44,6 +44,12 @@
           </div>
           <p class="titulo">Configurações</p>
         </div>
+        <div class="box" onclick="sair()">
+          <div class="icon">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </div>
+          <p class="titulo">Sair</p>
+        </div>
       </div>
       <div class="dadosPerfil">
         <div class="fotoPerfil conteudo">
@@ -280,5 +286,10 @@
   //       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
   //     });
   // }
+
+  function sair(){
+    sessionStorage.clear()
+    window.location.href = "../login.html";
+  }
 
 </script>

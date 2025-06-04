@@ -21,26 +21,33 @@ body {
 }
 /* MENU LATERAL */
 #menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #F4F5F7;
+  height: 100vh;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  width: 20%;
-  margin-left: 20px;
-  border-right: 1px solid #008080;
+  width: 15%;
+  /*border-right: 1px solid #008080;*/
 }
 
- .logo {
+#menu .logo {
   width: 100%;
   text-align: center;
   margin-top: 20px;
 }
 
- .logo h1 {
+#menu .logo h1 {
   font: 400 48px 'Belanosima', sans-serif;
   margin-bottom: 20px;
 }
 
- .logo h1 span {
+#menu .logo h1 span {
   color: #008080;
 }
 
@@ -51,19 +58,30 @@ body {
   width: 100%;
 }
 
-#menu .box {
-  display: flex;
-  margin: 10px 0;
-  align-items: center;
+#menu .agora .icon i,
+#menu .agora a{
+  color: #ffffff;
 }
 
-#menu .box a {
+#menu .agora {
+  background-color: #008080;
+  border-radius: 20px;
+}
+
+#menu .box {
+  display: flex;
+  align-items: center;
+  padding: 10px 5px;
+}
+
+#menu a {
   color: black;
 }
 
 #menu .box .icon {
   width: 50px;
   margin-right: 10px;
+  text-align: center;
 }
 #menu .box i {
   color: #008080;
@@ -76,8 +94,8 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 10px 3px;
-  border-radius: 10px;
-  
+  border-radius: 10px; 
+  width: 100%;
 }
 
 .dadosPerfil .conteudo {
@@ -112,7 +130,11 @@ body {
 /* DASHBOARD */
 #main {
   display: flex;
-  width: 100%;
+  width: 85%;
+  height: fit-content;
+  position: relative;
+  top: 0;
+  left: 15%;
 }
 .div_titulo_mercado{
   display: flex;

@@ -8,7 +8,7 @@ function buscarValoresDosUltimos5minPorSensor(idSupermercado) {
     INNER JOIN corredor c ON s.fkcorredor = c.id
     INNER JOIN supermercado sm ON c.fksupermercado = sm.id
     WHERE sm.id = ${idSupermercado} AND 
-    datahora > DATE_SUB(('2025-06-02 10:45:00'), INTERVAL 2 MINUTE)
+    datahora > DATE_SUB(('2025-06-02 12:14:00'), INTERVAL 5 MINUTE)
     GROUP BY s.x, s.y;
     `;
 
