@@ -278,7 +278,7 @@
       } else {
         console.error('Nenhum dado encontrado ou erro na API');
       }
-      setTimeout(() => atualizarGrafico(resposta), 2000);
+      proximaAtualizacao = setTimeout(() => atualizarGrafico(resposta), 2000);
     })
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);

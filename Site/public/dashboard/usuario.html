@@ -22,17 +22,17 @@
                     </div>
                     <a href="dashboard.html" class="titulo">Dashboard Analítica</a>
                 </div>
-                <div class="box agora">
+                <div class="box">
                     <div class="icon">
                         <i class="fa-solid fa-gauge"></i>
                     </div>
                     <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
                 </div>
-                <div class="box">
+                <div class="box agora">
                     <div class="icon">
                         <i class="fa-solid fa-users"></i>
                     </div>
-                    <a href="cadastro.html" class="titulo">Adicionar usuários</a>
+                    <a href="cadastro.html" class="titulo">Controle de Usuários</a>
                 </div>
                 <div class="box">
                     <div class="icon">
@@ -62,28 +62,32 @@
         </div>
         <main id="main">
             <div class="conteudoDashboard">
+                <div class="div_titulo">
+                    <h1>Controle de Usuários</h1>
+                </div>
+                <div class="conteudoUsuarios"></div>
                 <div class="adicionarUsuario">
-                    <a href="">Adicion</a>
+                    <a href="">Adicionar Usuário</a>
                 </div>
                 <div class="mostrarUsuarios">
                     <table>
-                        <tr>
+                        <tr class="nomeColuna">
                             <th>ID</th>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th class="colunaUsuario">Nome</th>
+                            <th class="colunaEmail">E-mail</th>
+                            <th class="colunaEdit">Edit</th>
+                            <th class="colunaDelete">Delete</th>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td class="nomeUsuario">Letícia da Silva Santos</td>
-                            <td class="emailUsuario">leticia.ssantos@sptech.school</td>
-                            <td class="editUsuario">
+                            <td class="colunaUsuario">Letícia da Silva Santos</td>
+                            <td class="colunaEmail">leticia.ssantos@sptech.school</td>
+                            <td class="colunaEdit">
                                 <button>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </td>
-                            <td class="deleteUsuario">
+                            <td class="colunaDelete">
                                 <button>
                                     <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
                                 </button>

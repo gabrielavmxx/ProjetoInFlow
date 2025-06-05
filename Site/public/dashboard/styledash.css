@@ -229,7 +229,6 @@ body {
   color: white;
 }
 
-
 /* FIM DASHBOARD */
 .btns-dash {
   display: flex;
@@ -293,8 +292,8 @@ body {
 }
 
 canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 100%;
+  height: 100%;
 }
 .btns-dash {
   display: flex;
@@ -315,4 +314,44 @@ canvas {
   margin: 5px;
   border-radius: 3px;
   cursor: pointer
+}
+
+/* USUÁRIOS */
+.div_titulo {
+  margin-top: 20px;
+}
+
+.div_titulo h1 {
+  font: 400 34px 'Poppins', sans-serif;
+}
+
+.conteudoUsuarios {
+  margin-top: 100px;
+}
+
+.adicionarUsuario {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+
+.adicionarUsuario a {
+  padding: 15px 30px;
+  background-color: #008080;
+  color: #F4F5F7;
+  border-radius: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+}
+
+.nomeColuna {
+  border: 2px solid #008080;
 }
