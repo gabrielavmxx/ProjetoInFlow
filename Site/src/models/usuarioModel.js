@@ -30,8 +30,24 @@ function alterarDados(fotoPerfil, id){
     return database.executar(instrucaoSql);
 }
 
+function listar(idSupermercado) {
+    console.log("ACESSEI O ADMIN  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar():", idSupermercado);
+    var instrucaoSql = `SELECT id, nome, email, acesso FROM usuario WHERE fksupermercado = ${idSupermercado};`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function deletar(idUsuario) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():", idUsuario);
+    var instrucaoSql = `DELETE FROM usuario WHERE id = ${idUsuario}`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    alterarDados
+    alterarDados,
+    deletar,
+    listar
 };

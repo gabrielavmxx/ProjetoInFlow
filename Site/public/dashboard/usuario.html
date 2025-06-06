@@ -75,18 +75,14 @@
                             <th>ID</th>
                             <th class="colunaUsuario">Nome</th>
                             <th class="colunaEmail">E-mail</th>
-                            <th class="colunaEdit">Edit</th>
+                            <th class="colunaAcesso">Acesso</th>
                             <th class="colunaDelete">Delete</th>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td class="colunaUsuario">Letícia da Silva Santos</td>
                             <td class="colunaEmail">leticia.ssantos@sptech.school</td>
-                            <td class="colunaEdit">
-                                <button>
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                            </td>
+                            <td class="colunaAcesso">Admin</td>
                             <td class="colunaDelete">
                                 <button>
                                     <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
@@ -99,5 +95,13 @@
         </main>
     </div>
 </body>
-
 </html>
+<script>
+    function listarUsuarios(){
+        var idSupermercado = sessionStorage.SUPERMERCADO;
+
+        // fetch(`usuario/listar/${idSupermercado}` {
+            
+        // })
+    }
+</script>

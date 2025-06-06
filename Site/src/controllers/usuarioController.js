@@ -120,8 +120,41 @@ function alterarDados(req, res){
     }
 }
 
+function listar(req, res) {
+    var idSupermercado = req.params.idSupermercado;
+
+    usuarioModel.listar(idSupermercado)
+        .then(function (resultado) {
+            if(resultado.length > 0){
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado")
+            }
+        }
+    )
+    .catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os usuários: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
+function deletar(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.deletar(idUsuario).then(function (resultado) {
+        res.json(resultado);
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao deletar usuário: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    alterarDados
+    alterarDados,
+    listar,
+    deletar
 }
