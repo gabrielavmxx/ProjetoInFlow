@@ -14,7 +14,7 @@
   <script src="C:\Users\isafa\Documents\SPTECH\PROJETO AGORA VAI\ProjetoInFlow\Site\public\js\sessao.js"></script>
 </head>
 
-<body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica()"></body>
+<body onload="validarSessao(), exibirCorredores(),  atualizacaoPeriodica(), atualizarKPIs();"></body>
 <div class="container">
   <!-- MENU LATERAL -->
   <div id="menu">
@@ -102,7 +102,7 @@
           </select>
 
           <button
-            onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO)">
+            onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO), atualizarKPIs();">
             Buscar</button>
         </div>
 
@@ -123,14 +123,14 @@
           <div class="dados">
             <p>40000</p>
 
-            <p>10% Maior que o mes passado</p>
+            <!--<p>10% Maior que o mes passado</p>-->
           </div>
         </div>
         <div class="kpi k2">
           <p class="titulo">Corredor com maior fluxo</p>
           <div class="dados">
             <p>6</p>
-            <p>Com picos a sexta no periodo da tarde</p>
+            <!--<p>Com picos a sexta no periodo da tarde</p>-->
           </div>
         </div>
         <div class="kpi k3">
@@ -221,7 +221,23 @@
   window.onload = exibirCorredorDoUsuario()
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
-
+  window.onload = atualizarKPIs();
+  
+  function atualizarKPIs() {
+  const idSupermercado = sessionStorage.SUPERMERCADO;
+  const mes = document.getElementById('select_mes').value;
+  const ano = document.getElementById('select_ano').value;
+  console.log(`datas:${idSupermercado}, ${mes}, ${ano}`);
+  fetch(`/kpi/kpis/${idSupermercado}?mes=${mes}&ano=${ano}`)
+    .then(response => response.json())
+    .then(data => {
+      document.querySelector('.kpi.k1 .dados p:first-child').textContent = data.totalAtivacoes;
+      document.querySelector('.kpi.k2 .dados p:first-child').textContent = data.corredorMaiorFluxo;
+      document.querySelector('.kpi.k3 .dados p:first-child').textContent = data.diaMaiorFluxo;
+      document.querySelector('.kpi.k4 .dados p:first-child').textContent = data.corredorMenorFluxo;
+    })
+    .catch(err => console.error('Erro ao buscar KPIs:', err));
+}
   function exibirCorredorDoUsuario() {
     var corredores = JSON.parse(sessionStorage.CORREDORES)
     console.log(corredores.id)
