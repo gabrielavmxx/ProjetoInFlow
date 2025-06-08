@@ -20,12 +20,12 @@ function autenticar(req, res) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
 
-                    
-                      if (resultadoAutenticar.length == 1) {
+
+                    if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
 
-                            corredorModel.buscarCorredoresPorSupermercado(resultadoAutenticar[0].IdSupermercado)
+                        corredorModel.buscarCorredoresPorSupermercado(resultadoAutenticar[0].IdSupermercado)
                             .then((resultadoCorredores) => {
                                 if (resultadoCorredores.length > 0 && resultadoCorredores.length > 0) {
                                     res.json({
@@ -35,13 +35,13 @@ function autenticar(req, res) {
                                         senha: resultadoAutenticar[0].senha,
                                         supermercado: resultadoAutenticar[0].IdSupermercado,
                                         corredores: resultadoCorredores
-                                    }); 
+                                    });
                                 } else {
                                     res.status(204).json({ corredores: [] });
-                                   
+
                                 }
                             })
-                        
+
 
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
@@ -49,7 +49,7 @@ function autenticar(req, res) {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");
                     }
                 }
-                
+
             ).catch(
                 function (erro) {
                     console.log(erro);
@@ -74,7 +74,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    }else {
+    } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
         usuarioModel.cadastrar(nome, email, senha)
@@ -95,13 +95,13 @@ function cadastrar(req, res) {
     }
 }
 
-function alterarDados(req, res){
+function alterarDados(req, res) {
     var fotoPerfil = req.body.fotoPerfilServer;
     var id = req.body.idServer;
 
     if (fotoPerfil == undefined) {
         res.status(400).send("Seu nome está undefined!");
-    }else{
+    } else {
         usuarioModel.alterarDados(fotoPerfil, id)
             .then(
                 function (resultado) {
@@ -123,16 +123,13 @@ function alterarDados(req, res){
 function listar(req, res) {
     var idSupermercado = req.params.idSupermercado;
 
-    usuarioModel.listar(idSupermercado)
-        .then(function (resultado) {
-            if(resultado.length > 0){
-                res.status(200).json(resultado);
-            } else {
-                res.status(204).send("Nenhum resultado encontrado")
-            }
+    usuarioModel.listar(idSupermercado).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado")
         }
-    )
-    .catch(function (erro) {
+    }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar os usuários: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);

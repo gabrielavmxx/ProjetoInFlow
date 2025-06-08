@@ -16,11 +16,11 @@ router.post("/alterarDados", function (req, res) {
     usuarioController.alterarDados(req, res);
 });
 
-router.get("/listar/:idSupermercado", function (res, req) {
+router.get("/listar/:idSupermercado", function (req, res) {
     usuarioController.listar(req, res);
 })
 
-router.delete("/deletar/:idUsuario", function (res, req) {
+router.delete("/deletar/:idUsuario", function (req, res) {
     usuarioController.deletar(req, res);
 })
 

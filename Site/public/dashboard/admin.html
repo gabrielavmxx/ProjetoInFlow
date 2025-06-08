@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styledash.css">
 </head>
 
-<body>
+<body onload="listarUsuarios()">
     <div class="container">
         <div id="menu">
             <div class="logo">
@@ -71,37 +71,76 @@
                 </div>
                 <div class="mostrarUsuarios">
                     <table>
-                        <tr class="nomeColuna">
-                            <th>ID</th>
-                            <th class="colunaUsuario">Nome</th>
-                            <th class="colunaEmail">E-mail</th>
-                            <th class="colunaAcesso">Acesso</th>
-                            <th class="colunaDelete">Delete</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td class="colunaUsuario">Letícia da Silva Santos</td>
-                            <td class="colunaEmail">leticia.ssantos@sptech.school</td>
-                            <td class="colunaAcesso">Admin</td>
-                            <td class="colunaDelete">
-                                <button>
-                                    <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <thead>
+                            <tr class="nomeColuna">
+                                <th>ID</th>
+                                <th class="colunaUsuario">Nome</th>
+                                <th class="colunaEmail">E-mail</th>
+                                <th class="colunaAcesso">Acesso</th>
+                                <th class="colunaDelete">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_usuarios">
+                        </tbody>
                     </table>
                 </div>
             </div>
         </main>
     </div>
 </body>
+
 </html>
 <script>
-    function listarUsuarios(){
-        var idSupermercado = sessionStorage.SUPERMERCADO;
+    function listarUsuarios() {
+        var supermercado = sessionStorage.SUPERMERCADO;
+        console.log(supermercado);
 
-        // fetch(`usuario/listar/${idSupermercado}` {
-            
-        // })
+        fetch(`/usuarios/listar/${supermercado}`, { cache: 'no-store' }).then(function (resposta) {
+            console.log(resposta);
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var listaUsuarios = document.getElementsByClassName(".mostrarUsuarios");
+                    var mensagem = document.createElement("span");
+                    mensagem.innerHTML = "Nenhum resultado encontrado."
+                    listaUsuarios.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado!!";
+                }
+                resposta.json().then(function (resposta) {
+                    console.log(resposta);
+
+                    console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                    var tbody = document.querySelector("tbody")
+
+                    tbody.innerHTML = "";
+                    for (let i = 0; i < resposta.length; i++) {
+                        var usuario = resposta[i];
+                        console.log(usuario)
+
+                        var tr = document.createElement("tr");
+
+                        tr.innerHTML = `
+                            <td>${usuario.id}</td>
+                            <td class="colunaUsuario">${usuario.nome}</td>
+                            <td class="colunaEmail">${usuario.email}</td>
+                            <td class="colunaAcesso">${usuario.acesso}</td>
+                            <td class="colunaDelete">
+                                <button>
+                                    <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
+                                </button>
+                            </td>
+                        `;
+
+                        tbody.appendChild(tr);
+                    }
+                })
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+        });
+
+
     }
 </script>
