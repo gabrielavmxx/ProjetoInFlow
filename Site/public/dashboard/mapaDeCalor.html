@@ -79,7 +79,7 @@
             <div class="dados">
               <p>Corredor 5</p>
               <p>:</p>
-              <p>Tranquilo</p>
+              <p><span class="status">Tranquilo</span></p>
             </div>
           </div>
           <div class="kpi k2">
@@ -87,7 +87,7 @@
             <div class="dados">
               <p>Corredor 1</p>
               <p>:</p>
-              <p><b>ATENÇÃO</b></p>
+              <p><b><span class="status">ATENÇÃO</span></b></p>
             </div>
           </div>
           <div class="kpi k3">
@@ -95,7 +95,7 @@
             <div class="dados">
               <p>Agora</p>
               <p>:</p>
-              <p>10 pessoas</p>
+              <p><span class="pessoas">10 pessoas</span></p>
             </div>
           </div>
           <div class="kpi k4">
@@ -103,7 +103,7 @@
             <div class="dados">
               <p>Agora</p>
               <p>:</p>
-              <p>80 pessoas</p>
+              <p><span class="pessoas">80 pessoas</span></p>
             </div>
           </div>
         </div>
@@ -122,6 +122,7 @@
 
   var supermercado = sessionStorage.SUPERMERCADO;
   window.onload = buscarSupermercadoPorId();
+  window.onload = atualizarKPIsTempoReal();
   
   var instanciaHeatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
@@ -284,6 +285,34 @@
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
+
+  function atualizarKPIsTempoReal() {
+    fetch(`/kpi/kpisTempoReal/${supermercado}`)
+      .then(response => response.json())
+      .then(data => {
+      // Maior fluxo
+      const kpiMaior = document.querySelector('.kpi.k1 .dados');
+      kpiMaior.querySelector('.status').textContent = data.statusMenor;
+
+      // Menor fluxo
+      const kpiMenor = document.querySelector('.kpi.k2 .dados');
+      kpiMenor.querySelector('.status').textContent = data.statusMaior;
+
+      const kpiMenorAgora = document.querySelector('.kpi.k3 .dados');
+      kpiMenorAgora.querySelector('.pessoas').textContent = `${data.pessoasMenor} pessoas`;
+
+      // Maior fluxo (Agora)
+      const kpiMaiorAgora = document.querySelector('.kpi.k4 .dados');
+      kpiMaiorAgora.querySelector('.pessoas').textContent = `${data.pessoasMaior} pessoas`;
+    })
+      .catch(err => console.error('Erro ao buscar KPIs tempo real:', err));
+    
+  }
+
+// Atualizar a cada 2 segundos
+setInterval(atualizarKPIsTempoReal, 2000);
+
+
 
   function sair() {
     sessionStorage.clear()

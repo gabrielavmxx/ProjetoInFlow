@@ -22,4 +22,37 @@ async function buscarKPIs(req, res) {
   }
 }
 
-module.exports = { buscarKPIs };
+async function buscarKPIsTempoReal(req, res) {
+  const idSupermercado = req.params.idSupermercado;
+  try {
+    const [maior, menor] = await Promise.all([
+      kpiModel.corredorMaiorFluxoAgora(idSupermercado),
+      kpiModel.corredorMenorFluxoAgora(idSupermercado)
+    ]);
+
+    
+    const threshold = 5;
+
+    const pessoasMaior = maior[0]?.pessoas || 0;
+    const pessoasMenor = menor[0]?.pessoas || 0;
+    
+    const statusMaior = pessoasMaior >= threshold ? "ATENÇÃO" : "Tranquilo";
+    const statusMenor = "Tranquilo";
+
+    res.json({
+      corredorMaior: maior[0]?.corredor || '-',
+      pessoasMaior,
+      statusMaior,
+      corredorMenor: menor[0]?.corredor || '-',
+      pessoasMenor,
+      statusMenor
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+module.exports = { 
+    buscarKPIsTempoReal,
+    buscarKPIs
+ };
+
