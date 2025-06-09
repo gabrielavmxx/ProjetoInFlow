@@ -88,6 +88,11 @@ body {
   font-size: 30px;
 }
 
+.box
+{
+  cursor: pointer;
+}
+
 .dadosPerfil {
   background-color: #008080;
   display: flex;
