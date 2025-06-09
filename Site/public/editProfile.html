@@ -30,7 +30,7 @@
         </a>
     </div>
 
-    <form class="container-todo-perfil" id="uploadForm" action="/profile" method="post" enctype="multipart/form-data">
+    <form class="container-todo-perfil" id="uploadForm" enctype="multipart/form-data">
         <div class="container-perfil">
             <div class="container-foto">
                 <p class="paragrafo-foto">Alterar foto de perfil</p>
@@ -54,7 +54,7 @@
                     <input class="ipt-container-foto" type="password">
                 </div>
             </div>
-            <button type="submit" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
+            <button type="button" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
         </div>
     </form>
 
@@ -112,6 +112,8 @@
             const form = document.getElementById("uploadForm");
             const formData = new FormData(form);
 
+            console.log("oi")
+
             fetch("/profile", {
                 method: "POST",
                 body: formData
@@ -124,6 +126,7 @@
 
                         alert("Upload realizado com sucesso!");
 
+                        console.log("oi")
                         fetch("/usuarios/alterarDados", {
                             method: "POST",
                             headers: {
@@ -138,6 +141,7 @@
                                 if (res.ok) {
                                     alert("Dados alterados com sucesso!");
                                     setTimeout(() => {
+                                        console.log("oi");
                                         window.location = "dashboard/dashboard.html";
                                     }, 2000);
                                 } else {
@@ -165,11 +169,9 @@
             if (sessionStorage.NOME_USUARIO == null) {
                 divBotoes.style.display = 'flex';
                 iconEscondido.style.display = 'none'
-                console.log('to aqui')
             } else {
                 divBotoes.style.display = 'none';
                 iconEscondido.style.display = 'block'
-                console.log('funcionou!!!!!')
             }
         }
 
