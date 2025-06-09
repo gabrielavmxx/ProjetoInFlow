@@ -52,7 +52,7 @@
         </div>
         <p class="titulo">Sair</p>
       </div>
-      
+
     </div>
     <div class="dadosPerfil" onclick="mudarPagina()" style="cursor: pointer;">
       <div class="fotoPerfil conteudo" id="fotoPerfil">
@@ -237,7 +237,6 @@
 
 
   function perfil() {
-    console.log("oi");
     infoPerfil.innerHTML = `
       <p class="nome">${sessionStorage.NOME_USUARIO}</p>
       <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
@@ -262,7 +261,6 @@
     const idSupermercado = sessionStorage.SUPERMERCADO;
     const mes = document.getElementById('select_mes').value;
     const ano = document.getElementById('select_ano').value;
-    console.log(`datas:${idSupermercado}, ${mes}, ${ano}`);
     fetch(`/kpi/kpis/${idSupermercado}?mes=${mes}&ano=${ano}`)
       .then(response => response.json())
       .then(data => {
@@ -275,7 +273,6 @@
   }
   function exibirCorredorDoUsuario() {
     var corredores = JSON.parse(sessionStorage.CORREDORES)
-    console.log(corredores.id)
     var anocorredor = document.getElementById("ano_g3").value
     corredores.forEach(item => {
       document.getElementById("btnCorredor").innerHTML += `
@@ -360,7 +357,6 @@
     fetch(`/dashboard/dadosCorredor/${idSupermercado}/${idCorredor}/${ano}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
           plotarGrafico(resposta, idCorredor);
@@ -380,8 +376,6 @@
   // A função *plotarGrafico* também invoca a função *atualizarGrafico*
   function plotarGrafico(resposta, idCorredor) {
 
-    console.log('iniciando plotagem do gráfico...');
-
     // Criando estrutura para plotar gráfico - labels
     let labels = [];
 
@@ -397,10 +391,6 @@
         tension: 0.1
       }]
     };
-
-    console.log('----------------------------------------------')
-    console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-    console.log(resposta)
 
     let nomeMeses = [
       'Janeiro',
@@ -427,14 +417,6 @@
 
     }
 
-    console.log('----------------------------------------------')
-    console.log('O gráfico será plotado com os respectivos valores:')
-    console.log('Labels:')
-    console.log(labels)
-    console.log('Dados:')
-    console.log(dados.datasets)
-    console.log('----------------------------------------------')
-
     // Criando estrutura para plotar gráfico - config
     const config = {
       type: 'bar',
@@ -453,13 +435,10 @@
   function obterDadosGraficoMedidas(idSupermercado) {
     let mes = Number(select_mes.value)
     let ano = Number(select_ano.value)
-    console.log(sessionStorage.SUPERMERCADO)
-
 
     fetch(`/medidas/fluxo/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
           plotarGraficoBarras(resposta, idSupermercado);
@@ -477,11 +456,9 @@
   function obterDadosPizza(idSupermercado) {
     let mes = Number(select_mes.value);
     let ano = Number(select_ano.value);
-    console.log(sessionStorage.SUPERMERCADO)
     fetch(`/medidas/pizza/${idSupermercado}/${mes}/${ano}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
           plotarGraficoPizza(resposta, idSupermercado);
@@ -500,7 +477,6 @@
 
 
   function plotarGraficoBarras(resposta, idSupermercado) {
-    console.log('Iniciando plotagem do gráfico de barras...');
     if (myChartBarra) {
       myChartBarra.destroy();
     }
@@ -570,8 +546,6 @@
   }
   let myChartPizza = null
   function plotarGraficoPizza(resposta, idSupermercado) {
-    console.log('Iniciando plotagem do gráfico de pizza...');
-    console.log(resposta);
     if (myChartPizza) {
       myChartPizza.destroy();
     }
@@ -584,7 +558,6 @@
     }
 
     const div_pizza = document.getElementById('graficoPizza').getContext('2d');
-    console.log(dados);
     myChartPizza = new Chart(div_pizza, {
       type: 'pie',
       data: {
