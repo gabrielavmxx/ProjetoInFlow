@@ -23,7 +23,11 @@
             <a href="index.html#comofunciona" class="nav_item">Como funciona</a>
             <a href="index.html#contato" class="nav_item">Contato</a>
         </div>
-        <a href="login.html" class="botao_login">
+        <div id="icon_escondido">
+            <a href="dashboard/dashboard.html" class="icon-nav"><i
+                    class="fa-solid fa-circle-user icone-escondido"></i></a>
+        </div>
+        <a href="login.html" class="botao_login" id="botao_login">
             <p>Login</p><i class="fa-solid fa-user icone_usuario"></i>
         </a>
     </div>
@@ -181,7 +185,8 @@
         <div class="bloco2">
             <div class="texto-quebra-linha">
                 <h1 class="titulo-quebra-sessao">Avaliações</h1>
-                <p class="paragrafo-quebra-sessao">Veja como nossa tecnologia ajudou supermercados a tomarem decisões mais inteligentes e melhorar seu faturamento</p>
+                <p class="paragrafo-quebra-sessao">Veja como nossa tecnologia ajudou supermercados a tomarem decisões
+                    mais inteligentes e melhorar seu faturamento</p>
             </div>
             <div class="blocos_quebra_linha">
                 <div class="quadrado quad1">
@@ -189,7 +194,8 @@
                         <div class="imagem-avaliacao img1"></div>
                         <p class="nome-avaliacao">Adão</p>
                     </div>
-                    <p>A tecnologia da InFlow nos ajudou a entender melhor o fluxo de clientes, permitindo decisões estratégicas para aumentar as vendas. Excelente solução!</p>
+                    <p>A tecnologia da InFlow nos ajudou a entender melhor o fluxo de clientes, permitindo decisões
+                        estratégicas para aumentar as vendas. Excelente solução!</p>
                 </div>
                 <div class="quadrado quad2">
                     <div class="img-nome">
@@ -310,8 +316,22 @@
         if (div_resultado.innerHTML.trim() != "") {
             div_resultado.className = "resultado"
         }
-
-
     }
+
+    function VerificarConta() {
+        const divBotoes = document.getElementById('botao_login')
+        const iconEscondido = document.getElementById('icon_escondido')
+        console.log(iconEscondido)
+
+        if (sessionStorage.NOME_USUARIO == null) {
+            divBotoes.style.display = 'flex';
+            iconEscondido.style.display = 'none'
+        } else {
+            divBotoes.style.display = 'none';
+            iconEscondido.style.display = 'block'
+        }
+    }
+
+    VerificarConta()
 
 </script>
