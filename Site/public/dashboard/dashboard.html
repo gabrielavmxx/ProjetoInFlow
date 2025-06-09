@@ -42,9 +42,9 @@
       </div>
       <div class="box">
         <div class="icon">
-          <i class="fa-solid fa-gear"></i>
+          <i  class="fa-solid fa-circle-question"></i>
         </div>
-        <p class="titulo">Configurações</p>
+        <a href="https://inflowcompany.atlassian.net/servicedesk/customer/portals" class="titulo">Suporte</a>
       </div>
       <div class="box" onclick="sair()">
         <div class="icon">
@@ -129,7 +129,7 @@
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
         <div class="kpi k1">
-          <p class="titulo">Ativações totais</p>
+          <p class="titulo">fluxo total</p>
           <div class="dados">
             <p>40000</p>
 
@@ -232,6 +232,7 @@
 
 </html>
 <script>
+  
   window.onload = exibirCorredorDoUsuario()
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)

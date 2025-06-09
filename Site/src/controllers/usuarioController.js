@@ -34,7 +34,8 @@ function autenticar(req, res) {
                                         nome: resultadoAutenticar[0].nome,
                                         senha: resultadoAutenticar[0].senha,
                                         supermercado: resultadoAutenticar[0].IdSupermercado,
-                                        corredores: resultadoCorredores
+                                        corredores: resultadoCorredores,
+                                        nomeSupermercado: resultadoAutenticar[0].nomeSupermercado
                                     });
                                 } else {
                                     res.status(204).json({ corredores: [] });
@@ -66,6 +67,8 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
+    var supermercado = req.body.supermercadoServer;
+    var acesso = req.body.acessoServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -77,7 +80,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha)
+        usuarioModel.cadastrar(nome, email, senha, acesso, supermercado)
             .then(
                 function (resultado) {
                     res.json(resultado);

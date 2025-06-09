@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS inflow;
 CREATE DATABASE inflow;
 USE inflow;
 
@@ -13,209 +14,13 @@ CREATE TABLE endereco(
     numero VARCHAR(10)
 );
 
--- Tabela empresa
-CREATE TABLE empresa(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    razao_social VARCHAR(50),
-    cnpj CHAR(14),
-    codigo_ativacao VARCHAR(20),
-    fkEndereco INT,
-    CONSTRAINT fk_end_em FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
-);
-
--- Tabela supermercado
-CREATE TABLE supermercado(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50),
-    cnpj CHAR(14),
-    fkempresa INT,
-    fkEndereco INT,
-    CONSTRAINT fk_em_sup FOREIGN KEY (fkempresa) REFERENCES empresa(id),
-    CONSTRAINT fk_end_sup FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
-);
-
--- Tabela usuario
-CREATE TABLE usuario(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50),
-    cpf VARCHAR(100),
-    telefone VARCHAR(20),
-    email VARCHAR(100) NOT NULL,
-    senha VARCHAR(20) NOT NULL,
-    fotoPerfil VARCHAR(255),
-    acesso VARCHAR(10),
-    fkempresa INT,
-    FOREIGN KEY(fkempresa) REFERENCES empresa(id),
-	UNIQUE ix_email (email),
-    UNIQUE ix_cpf (cpf),
-    CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
-);
-
--- Tabela areas (mantive plural)
-CREATE TABLE areas(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50)
-);
-
-CREATE TABLE areas_supermercado(
-	fkareas INT,
-    fksupermercados INT,
-    PRIMARY KEY(fkareas, fksupermercados),
-    CONSTRAINT fk_a_as FOREIGN KEY (fkareas) REFERENCES areas(id),
-    CONSTRAINT fk_s_as FOREIGN KEY (fksupermercados) REFERENCES supermercado(id)
-);
-
--- Tabela corredor
-CREATE TABLE corredor(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    fkarea INT,
-    fksupermercado INT,
-    posicao VARCHAR(20),
-    FOREIGN KEY(fkarea, fksupermercado) REFERENCES areas_supermercado(fkareas, fksupermercados)
-);
-
--- Tabela sensor
-CREATE TABLE sensor(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    statuses VARCHAR(10) DEFAULT 'Ativo',
-    CONSTRAINT chk_status CHECK(statuses IN ('Ativo','Inativo')),
-    x INT,
-    y INT,
-    fkcorredor INT,
-    numero_serie CHAR(8),
-    UNIQUE ix_ns (numero_serie),
-    FOREIGN KEY(fkcorredor) REFERENCES corredor(id)
-);
-
--- Tabela registros
-CREATE TABLE registros(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    datahora DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fksensor INT,
-    presenca INT,
-    FOREIGN KEY(fksensor) REFERENCES sensor(id)
-);
-
-
-INSERT INTO endereco (cidade, estado, bairro, logradouro, cep, complemento, numero)
-VALUES ('Barueri', 'São Paulo', 'Tamboré', 'Avenida Tucunare', '06460020', 'Bloco C Sala 1 C101', '125'),
-('São Paulo', 'São Paulo', 'Vila Guilherme', 'Avenida Morvan Dias de Figueiredo', '02063002', null, '3177'),
-('Santo André', 'São Paulo', 'Vila Humalta', 'Avenida Pedro Américo', '09110560', null, '23'),
-('Porto Alegre', 'Rio Grande do Sul', 'Higienopolis', 'Avenida Plinio Brasil Milano', '90520000', null, '1000'),
-('São Paulo', 'São Paulo', 'Vila Andrade', 'Avenida Giovanni Gronchi', '05724002', null, '5930');
-
-INSERT INTO empresa (razao_social, cnpj, codigo_ativacao, fkEndereco)
-VALUES('CARREFOUR COMERCIO E INDUSTRIA LTDA', '45543915000181', 'C04RRIS', 1),
-('COMPANHIA ZAFFARI COMERCIO E INDUSTRIA', '93015006000113', 'ZAFF895', 4);
-
-INSERT INTO supermercado (nome, cnpj, fkEmpresa, fkEndereco)
-VALUES ('Carrefour Hypermarket Tietê', '45543915002125', 1, 2),
-('Carrefour Hipermercado', '45543915072689', 1, 3),
-('Hipermercado Zaffari Morumbi Town', '93015006003309', 2, 5);
-
--- Inserir usuários
-INSERT INTO usuario (nome, cpf, telefone, email, senha, fotoPerfil, acesso, fkempresa)
-VALUES 
-('João Silva', '12345678901', '11999998888', 'joao.silva@email.com', 'senha123', null, 'Admin', 1),
-('Maria Oliveira', '98765432100', '11999997777', 'maria.oliveira@email.com', 'senha456', null, 'Analista', 1),
-('Carlos Souza', '11223344556', '11988887777', 'carlos.souza@email.com', 'senha789', null, 'Gestor', 1);
-
--- Inserir áreas
-INSERT INTO areas (nome)
-VALUES 
-('Padaria'),
-('Hortifruti'),
-('Açougue'),
-('Laticínios');
-
--- Vincular áreas aos supermercados
-INSERT INTO areas_supermercado (fkareas, fksupermercados)
-VALUES 
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 3);
-
-INSERT INTO corredor (fkarea, fksupermercado, posicao)
-VALUES 
-(1, 1, 'Corredor 1'),
-(2, 1, 'Corredor 2'),
-(3, 2, 'Corredor 1'),
-(4, 3, 'Corredor 1');
-
-INSERT INTO sensor (statuses, fkcorredor, numero_serie)
-VALUES
-('Ativo', 1, 'AABBCCD1'),
-('Ativo', 2, 'AABBCCD2'),
-('Ativo', 3, 'AABBCCD3'),
-('Ativo', 4, 'AABBCCD4'),
-('Ativo', 1, 'AABBCCD5');
-
-SELECT * FROM areas;
-SELECT * FROM corredor;
-SELECT * FROM empresa;
-SELECT * FROM endereco;
-SELECT * FROM registros ORDER BY id DESC;
-SELECT * FROM sensor;
-SELECT * FROM supermercado;
-SELECT * FROM usuario;
-
-SELECT fksensor, COUNT(presenca) FROM registros r
-INNER JOIN sensor s ON r.fksensor = s.id
-INNER JOIN corredor c ON s.fkcorredor = c.id
-INNER JOIN supermercado sm ON c.fksupermercado = sm.id
-INNER JOIN empresa em ON sm.fkempresa = em.id
-WHERE sm.id = 1 AND datahora > DATE_SUB(('2025-05-19 08:11:00'), INTERVAL 5 MINUTE)
-AND s.numero_serie = 'AABBCCD1'
-GROUP BY fksensor;
-select * from registros where month(datahora) = 'May'
-
-SELECT 
-    sm.nome AS supermercado,
-    c.posicao AS corredor,
-    MONTH(r.datahora) AS mes,
-    YEAR(r.datahora) AS ano,
-    COUNT(r.presenca) AS total_movimentacoes
-FROM registros r
-INNER JOIN sensor s ON r.fksensor = s.id
-INNER JOIN corredor c ON s.fkcorredor = c.id
-INNER JOIN supermercado sm ON c.fksupermercado = sm.id
-GROUP BY sm.nome, c.posicao, mes, ano
-ORDER BY ano DESC, mes DESC, sm.nome, c.posicao;
---OUTRO BANCO DE TESTE INSERTS CORRETOS
-CREATE DATABASE inflow;
-USE inflow;
-
-
--- Tabela endereco
-CREATE TABLE endereco(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    cidade VARCHAR(30),
-    estado VARCHAR(20),
-    bairro VARCHAR(30),
-    logradouro VARCHAR(100),
-    cep CHAR(10),
-    complemento VARCHAR(60),
-    numero VARCHAR(10)
-);
-
--- Retirei tabela empresa
-/*CREATE TABLE empresa(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    razao_social VARCHAR(50),
-    cnpj CHAR(14),
-    codigo_ativacao VARCHAR(20),
-    fkEndereco INT,
-    CONSTRAINT fk_end_em FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
-);*/
-
 -- Tabela supermercado
 CREATE TABLE supermercado(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     cnpj CHAR(14),
     fkEndereco INT,
-    CONSTRAINT fk_end_sup FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
+    FOREIGN KEY (fkEndereco) REFERENCES endereco(id)
 );
 
 -- Tabela usuario
@@ -230,9 +35,9 @@ CREATE TABLE usuario(
     acesso VARCHAR(10),
     fksupermercado INT,
     FOREIGN KEY(fksupermercado) REFERENCES supermercado(id),
-	UNIQUE ix_email (email),
-    UNIQUE ix_cpf (cpf),
-    CONSTRAINT ck_acesso CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
+	UNIQUE (email),
+    UNIQUE (cpf),
+    CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
 );
 
 -- Tabela areas 
@@ -245,8 +50,8 @@ CREATE TABLE areas_supermercado(
 	fkareas INT,
     fksupermercados INT,
     PRIMARY KEY(fkareas, fksupermercados),
-    CONSTRAINT fk_a_as FOREIGN KEY (fkareas) REFERENCES areas(id),
-    CONSTRAINT fk_s_as FOREIGN KEY (fksupermercados) REFERENCES supermercado(id)
+    FOREIGN KEY (fkareas) REFERENCES areas(id),
+    FOREIGN KEY (fksupermercados) REFERENCES supermercado(id)
 );
 
 -- Tabela corredor
@@ -262,12 +67,12 @@ CREATE TABLE corredor(
 CREATE TABLE sensor(
     id INT PRIMARY KEY AUTO_INCREMENT,
     statuses VARCHAR(10) DEFAULT 'Ativo',
-    CONSTRAINT chk_status CHECK(statuses IN ('Ativo','Inativo')),
+    CHECK(statuses IN ('Ativo','Inativo')),
     x INT,
     y INT,
     fkcorredor INT,
     numero_serie CHAR(8),
-    UNIQUE ix_ns (numero_serie),
+    UNIQUE(numero_serie),
     FOREIGN KEY(fkcorredor) REFERENCES corredor(id)
 );
 
@@ -280,118 +85,412 @@ CREATE TABLE registros(
     FOREIGN KEY(fksensor) REFERENCES sensor(id)
 );
 
-
-
+-- ENDEREÇOS
 INSERT INTO endereco (cidade, estado, bairro, logradouro, cep, complemento, numero) VALUES 
-('São Paulo', 'SP', 'Guaianazes', 'Estrada Itaquera guaianazes', '01310-000', 'Conjunto 1001', '1500'), 
-('São Paulo', 'SP', 'São Matheus', 'Rua joão velho do rego', '04010-000', 'Loja 1', '1000');
+('Campinas', 'SP', 'Centro', 'Av. Andrade Neves', '13013-000', 'Loja A', '100'),
+('Santos', 'SP', 'Boqueirão', 'Rua Goiás', '11055-200', 'Frente ao canal 3', '456');
 
+-- SUPERMERCADOS
+INSERT INTO supermercado (nome, cnpj, fkEndereco) VALUES 
+('Mercado Sol', '12345678900001', 1),
+('Mercado Mar Azul', '98765432100002', 2);
 
+-- USUÁRIOS
+INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fksupermercado) VALUES 
+('Joana Prado', '11111111111', '11991234567', 'joana@sol.com', 'senha123', 'Admin', 1),
+('Carlos Nunes', '22222222222', '11998765432', 'carlos@marazul.com', 'senha123', 'Gestor', 2);
 
-INSERT INTO supermercado (nome, cnpj,fkEndereco) VALUES 
-('Supermercado Leticia', '45678912000777',  1),
-('Supermercado Isabella', '45678912000888', 2);
-
+select * from usuario;
 
 -- ÁREAS
 INSERT INTO areas (nome) VALUES 
-('Padaria'),
-('Hortifruti'),
-('Açougue'),
-('Bebidas'),
-('Limpeza');
+('Padaria'), ('Hortifruti'), ('Açougue'), ('Bebidas'), ('Limpeza');
 
 -- ÁREAS_SUPERMERCADO
--- Supermercado Leticia
 INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
-(1,1 ), (2, 1), (3, 1), (4, 1), (5, 1);
+(1,1), (2,1), (3,1), (4,1), (5,1),
+(1,2), (2,2), (3,2), (4,2), (5,2);
 
--- Supermercado Isabella
-INSERT INTO areas_supermercado (fkareas, fksupermercados) VALUES 
-(1, 2), (2, 2), (3, 2), (4, 2), (5, 2);
-
--- CORREDORES
--- Mercado isabella
+-- CORREDORES (5 para cada mercado)
 INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES 
-(1, 2,'Corredor 1' ),       
-(2, 2, 'Corredor 2'),         
-(3, 2, 'Corrqedor 3'),         
-(4, 2, 'Corredor 4'),   
-(5, 2, 'Corredor 5');
-select * from corredor;
--- Supercado leticia
-INSERT INTO corredor (fkarea, fksupermercado, posicao) VALUES 
-(1, 1,'Corredor 1' ),       
-(2, 1, 'Corredor 2'),         
-(3, 1, 'Corrqedor 3'),         
-(4, 1, 'Corredor 4'),   
-(5, 1, 'Corredor 5');
--- SENSORES
-select * from corredor;
-update  corredor set  posicao="Corredor 3" where id=8;
-select* from registros;
--- SENSORES LETICIA
+(1,1,'Corredor 1'),(2,1,'Corredor 2'),(3,1,'Corredor 3'),(4,1,'Corredor 4'),(5,1,'Corredor 5'),
+(1,2,'Corredor 1'),(2,2,'Corredor 2'),(3,2,'Corredor 3'),(4,2,'Corredor 4'),(5,2,'Corredor 5');
+
+-- SENSORES (10 total, 5 por mercado)
 INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES 
-('Ativo', 4, 680, 700, 'SENS0001'),
-('Ativo', 3, 680, 420, 'SENS0002'),
-('Ativo', 2, 680, 120, 'SENS0003'),
-('Ativo', 5, 380, 700, 'SENS0004'),
-('Ativo', 3, 380, 520, 'SENS0005'),
-('Ativo', 2, 380, 320, 'SENS0006'),
-('Ativo', 1, 380, 120, 'SENS0007'),
-('Ativo', 4, 80, 700, 'SENS0008'),
-('Ativo', 3, 80, 420, 'SENS0009'),
-('Ativo', 2, 80, 120, 'SENS0010');
--- SENSSORES ISABELLA
--- Moema
-INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES 
-('Ativo', 6, 680, 700, 'SENMO01'),
-('Ativo', 7, 680, 420, 'SENMO02'),
-('Ativo', 8, 680, 120, 'SENMO03'),
-('Ativo', 6, 380, 700, 'SENMO04'),
-('Ativo', 9, 380, 520, 'SENMO05'),
-('Ativo', 10, 380, 320, 'SENMO06'),
-('Ativo', 8, 380, 120, 'SENMO07'),
-('Ativo', 6, 80, 700, 'SENMO08'),
-('Ativo', 7, 80, 420, 'SENMO09'),
-('Ativo', 8, 80, 120, 'SENMO10');
-select* from corredor;
--- REGISTROS DE PRESENÇA
--- Supermercado leticia (sensores 1 a 5)
-INSERT INTO registros (fksensor, presenca,datahora) VALUES 
-(1,1,"2024-07-29"),(1,1,"2024-07-29"),(2,1,"2024-07-29"),(1,1,"2024-07-29"),(1,1,"2024-07-29"),(3,1,"2024-07-29"),
-(3,1,"2024-07-29"),(3,1,"2024-07-29"),(3,1,"2024-07-29"),(1,1,"2024-07-29"),(1,1,"2024-07-29");
+('Ativo', 1, 100, 100, 'SEN00001'),
+('Ativo', 2, 200, 200, 'SEN00002'),
+('Ativo', 3, 300, 300, 'SEN00003'),
+('Ativo', 4, 400, 400, 'SEN00004'),
+('Ativo', 5, 500, 500, 'SEN00005'),
+('Ativo', 6, 150, 150, 'SEN00006'),
+('Ativo', 7, 250, 250, 'SEN00007'),
+('Ativo', 8, 350, 350, 'SEN00008'),
+('Ativo', 9, 450, 450, 'SEN00009'),
+('Ativo', 10, 550, 550, 'SEN00010');
 
-select* from registros;
+-- REGISTROS MASSIVOS DE 2023 A 2025 (600 registros como exemplo):
+-- (Você pode replicar esse padrão para mais)
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+(1, 1, '2023-01-10 10:10:10'), (2, 1, '2023-01-15 12:00:00'),
+(3, 1, '2023-02-05 14:30:00'), (4, 1, '2023-02-25 16:00:00'),
+(5, 1, '2023-03-01 08:45:00'), (6, 1, '2023-03-10 11:30:00'),
+(7, 1, '2023-04-05 17:20:00'), (8, 1, '2023-04-15 19:15:00'),
+(9, 1, '2023-05-02 09:10:00'), (10, 1, '2023-05-25 20:00:00'),
+(1, 1, '2024-06-01 10:10:10'), (2, 1, '2024-06-15 12:00:00'),
+(3, 1, '2024-07-05 14:30:00'), (4, 1, '2024-07-25 16:00:00'),
+(5, 1, '2024-08-01 08:45:00'), (6, 1, '2024-08-10 11:30:00'),
+(7, 1, '2024-09-05 17:20:00'), (8, 1, '2024-09-15 19:15:00'),
+(9, 1, '2024-10-02 09:10:00'), (10, 1, '2024-10-25 20:00:00'),
+(1, 1, '2025-03-05 08:00:00'), (2, 1, '2025-03-05 08:30:00'),
+(3, 1, '2025-03-05 09:00:00'), (4, 1, '2025-03-05 09:30:00'),
+(5, 1, '2025-03-05 10:00:00'), (6, 1, '2025-03-05 10:30:00'),
+(7, 1, '2025-03-05 11:00:00'), (8, 1, '2025-03-05 11:30:00'),
+(9, 1, '2025-03-05 12:00:00'), (10, 1, '2025-03-05 12:30:00');
+
+-- Inserções para maio/2025, supermercado 1, sensores 1 a 10 (5 corredores, 2 sensores por corredor)
+
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+-- Sensor 1 (Corredor 1)
+(1, 1, '2025-05-01 08:10:00'),
+(1, 1, '2025-05-02 09:20:00'),
+(1, 1, '2025-05-03 10:35:00'),
+(1, 1, '2025-05-04 11:40:00'),
+(1, 1, '2025-05-05 12:50:00'),
+(1, 1, '2025-05-06 13:55:00'),
+(1, 1, '2025-05-07 14:15:00'),
+(1, 1, '2025-05-08 15:05:00'),
+(1, 1, '2025-05-09 16:10:00'),
+(1, 1, '2025-05-10 17:20:00'),
+(1, 1, '2025-05-11 18:25:00'),
+(1, 1, '2025-05-12 19:30:00'),
+(1, 1, '2025-05-13 20:35:00'),
+(1, 1, '2025-05-14 21:40:00'),
+(1, 1, '2025-05-15 22:45:00'),
+(1, 1, '2025-05-16 23:50:00'),
+(1, 1, '2025-05-17 08:05:00'),
+(1, 1, '2025-05-18 09:15:00'),
+(1, 1, '2025-05-19 10:20:00'),
+(1, 1, '2025-05-20 11:25:00'),
+(1, 1, '2025-05-21 12:30:00'),
+(1, 1, '2025-05-22 13:35:00'),
+(1, 1, '2025-05-23 14:40:00'),
+(1, 1, '2025-05-24 15:45:00'),
+(1, 1, '2025-05-25 16:50:00'),
+
+-- Sensor 2 (Corredor 1)
+(2, 1, '2025-05-01 07:55:00'),
+(2, 1, '2025-05-02 09:05:00'),
+(2, 1, '2025-05-03 10:10:00'),
+(2, 1, '2025-05-04 11:15:00'),
+(2, 1, '2025-05-05 12:20:00'),
+(2, 1, '2025-05-06 13:25:00'),
+(2, 1, '2025-05-07 14:30:00'),
+(2, 1, '2025-05-08 15:35:00'),
+(2, 1, '2025-05-09 16:40:00'),
+(2, 1, '2025-05-10 17:45:00'),
+(2, 1, '2025-05-11 18:50:00'),
+(2, 1, '2025-05-12 19:55:00'),
+(2, 1, '2025-05-13 20:00:00'),
+(2, 1, '2025-05-14 21:05:00'),
+(2, 1, '2025-05-15 22:10:00'),
+(2, 1, '2025-05-16 23:15:00'),
+(2, 1, '2025-05-17 08:20:00'),
+(2, 1, '2025-05-18 09:25:00'),
+(2, 1, '2025-05-19 10:30:00'),
+(2, 1, '2025-05-20 11:35:00'),
+(2, 1, '2025-05-21 12:40:00'),
+(2, 1, '2025-05-22 13:45:00'),
+(2, 1, '2025-05-23 14:50:00'),
+(2, 1, '2025-05-24 15:55:00'),
+(2, 1, '2025-05-25 16:00:00'),
+
+-- Sensor 3 (Corredor 2)
+(3, 1, '2025-05-01 08:00:00'),
+(3, 1, '2025-05-02 09:10:00'),
+(3, 1, '2025-05-03 10:15:00'),
+(3, 1, '2025-05-04 11:20:00'),
+(3, 1, '2025-05-05 12:25:00'),
+(3, 1, '2025-05-06 13:30:00'),
+(3, 1, '2025-05-07 14:35:00'),
+(3, 1, '2025-05-08 15:40:00'),
+(3, 1, '2025-05-09 16:45:00'),
+(3, 1, '2025-05-10 17:50:00'),
+(3, 1, '2025-05-11 18:55:00'),
+(3, 1, '2025-05-12 19:00:00'),
+(3, 1, '2025-05-13 20:05:00'),
+(3, 1, '2025-05-14 21:10:00'),
+(3, 1, '2025-05-15 22:15:00'),
+(3, 1, '2025-05-16 23:20:00'),
+(3, 1, '2025-05-17 08:25:00'),
+(3, 1, '2025-05-18 09:30:00'),
+(3, 1, '2025-05-19 10:35:00'),
+(3, 1, '2025-05-20 11:40:00'),
+(3, 1, '2025-05-21 12:45:00'),
+(3, 1, '2025-05-22 13:50:00'),
+(3, 1, '2025-05-23 14:55:00'),
+(3, 1, '2025-05-24 15:00:00'),
+(3, 1, '2025-05-25 16:05:00'),
+
+-- Sensor 4 (Corredor 2)
+(4, 1, '2025-05-01 07:50:00'),
+(4, 1, '2025-05-02 08:55:00'),
+(4, 1, '2025-05-03 10:00:00'),
+(4, 1, '2025-05-04 11:05:00'),
+(4, 1, '2025-05-05 12:10:00'),
+(4, 1, '2025-05-06 13:15:00'),
+(4, 1, '2025-05-07 14:20:00'),
+(4, 1, '2025-05-08 15:25:00'),
+(4, 1, '2025-05-09 16:30:00'),
+(4, 1, '2025-05-10 17:35:00'),
+(4, 1, '2025-05-11 18:40:00'),
+(4, 1, '2025-05-12 19:45:00'),
+(4, 1, '2025-05-13 20:50:00'),
+(4, 1, '2025-05-14 21:55:00'),
+(4, 1, '2025-05-15 22:00:00'),
+(4, 1, '2025-05-16 23:05:00'),
+(4, 1, '2025-05-17 08:10:00'),
+(4, 1, '2025-05-18 09:15:00'),
+(4, 1, '2025-05-19 10:20:00'),
+(4, 1, '2025-05-20 11:25:00'),
+(4, 1, '2025-05-21 12:30:00'),
+(4, 1, '2025-05-22 13:35:00'),
+(4, 1, '2025-05-23 14:40:00'),
+(4, 1, '2025-05-24 15:45:00'),
+(4, 1, '2025-05-25 16:50:00'),
+
+-- Sensor 5 (Corredor 3)
+(5, 1, '2025-05-01 08:05:00'),
+(5, 1, '2025-05-02 09:10:00'),
+(5, 1, '2025-05-03 10:15:00'),
+(5, 1, '2025-05-04 11:20:00'),
+(5, 1, '2025-05-05 12:25:00'),
+(5, 1, '2025-05-06 13:30:00'),
+(5, 1, '2025-05-07 14:35:00'),
+(5, 1, '2025-05-08 15:40:00'),
+(5, 1, '2025-05-09 16:45:00'),
+(5, 1, '2025-05-10 17:50:00'),
+(5, 1, '2025-05-11 18:55:00'),
+(5, 1, '2025-05-12 19:00:00'),
+(5, 1, '2025-05-13 20:05:00'),
+(5, 1, '2025-05-14 21:10:00'),
+(5, 1, '2025-05-15 22:15:00'),
+(5, 1, '2025-05-16 23:20:00'),
+(5, 1, '2025-05-17 08:25:00'),
+(5, 1, '2025-05-18 09:30:00'),
+(5, 1, '2025-05-19 10:35:00'),
+(5, 1, '2025-05-20 11:40:00'),
+(5, 1, '2025-05-21 12:45:00'),
+(5, 1, '2025-05-22 13:50:00'),
+(5, 1, '2025-05-23 14:55:00'),
+(5, 1, '2025-05-24 15:00:00'),
+(5, 1, '2025-05-25 16:05:00'),
+
+-- Sensor 6 (Corredor 3)
+(6, 1, '2025-05-01 07:50:00'),
+(6, 1, '2025-05-02 08:55:00'),
+(6, 1, '2025-05-03 10:00:00'),
+(6, 1, '2025-05-04 11:05:00'),
+(6, 1, '2025-05-05 12:10:00'),
+(6, 1, '2025-05-06 13:15:00'),
+(6, 1, '2025-05-07 14:20:00'),
+(6, 1, '2025-05-08 15:25:00'),
+(6, 1, '2025-05-09 16:30:00'),
+(6, 1, '2025-05-10 17:35:00'),
+(6, 1, '2025-05-11 18:40:00'),
+(6, 1, '2025-05-12 19:45:00'),
+(6, 1, '2025-05-13 20:50:00'),
+(6, 1, '2025-05-14 21:55:00'),
+(6, 1, '2025-05-15 22:00:00'),
+(6, 1, '2025-05-16 23:05:00'),
+(6, 1, '2025-05-17 08:10:00'),
+(6, 1, '2025-05-18 09:15:00'),
+(6, 1, '2025-05-19 10:20:00'),
+(6, 1, '2025-05-20 11:25:00'),
+(6, 1, '2025-05-21 12:30:00'),
+(6, 1, '2025-05-22 13:35:00'),
+(6, 1, '2025-05-23 14:40:00'),
+(6, 1, '2025-05-24 15:45:00'),
+(6, 1, '2025-05-25 16:50:00'),
+
+-- Sensor 7 (Corredor 4)
+(7, 1, '2025-05-01 08:05:00'),
+(7, 1, '2025-05-02 09:10:00'),
+(7, 1, '2025-05-03 10:15:00'),
+(7, 1, '2025-05-04 11:20:00'),
+(7, 1, '2025-05-05 12:25:00'),
+(7, 1, '2025-05-06 13:30:00'),
+(7, 1, '2025-05-07 14:35:00'),
+(7, 1, '2025-05-08 15:40:00'),
+(7, 1, '2025-05-09 16:45:00'),
+(7, 1, '2025-05-10 17:50:00'),
+(7, 1, '2025-05-11 18:55:00'),
+(7, 1, '2025-05-12 19:00:00'),
+(7, 1, '2025-05-13 20:05:00'),
+(7, 1, '2025-05-14 21:10:00'),
+(7, 1, '2025-05-15 22:15:00'),
+(7, 1, '2025-05-16 23:20:00'),
+(7, 1, '2025-05-17 08:25:00'),
+(7, 1, '2025-05-18 09:30:00'),
+(7, 1, '2025-05-19 10:35:00'),
+(7, 1, '2025-05-20 11:40:00'),
+(7, 1, '2025-05-21 12:45:00'),
+(7, 1, '2025-05-22 13:50:00'),
+(7, 1, '2025-05-23 14:55:00'),
+(7, 1, '2025-05-24 15:00:00'),
+(7, 1, '2025-05-25 16:05:00'),
+
+-- Sensor 8 (Corredor 4)
+(8, 1, '2025-05-01 07:50:00'),
+(8, 1, '2025-05-02 08:55:00'),
+(8, 1, '2025-05-03 10:00:00'),
+(8, 1, '2025-05-04 11:05:00'),
+(8, 1, '2025-05-05 12:10:00'),
+(8, 1, '2025-05-06 13:15:00'),
+(8, 1, '2025-05-07 14:20:00'),
+(8, 1, '2025-05-08 15:25:00'),
+(8, 1, '2025-05-09 16:30:00'),
+(8, 1, '2025-05-10 17:35:00'),
+(8, 1, '2025-05-11 18:40:00'),
+(8, 1, '2025-05-12 19:45:00'),
+(8, 1, '2025-05-13 20:50:00'),
+(8, 1, '2025-05-14 21:55:00'),
+(8, 1, '2025-05-15 22:00:00'),
+(8, 1, '2025-05-16 23:05:00'),
+(8, 1, '2025-05-17 08:10:00'),
+(8, 1, '2025-05-18 09:15:00'),
+(8, 1, '2025-05-19 10:20:00'),
+(8, 1, '2025-05-20 11:25:00'),
+(8, 1, '2025-05-21 12:30:00'),
+(8, 1, '2025-05-22 13:35:00'),
+(8, 1, '2025-05-23 14:40:00'),
+(8, 1, '2025-05-24 15:45:00'),
+(8, 1, '2025-05-25 16:50:00'),
+
+-- Sensor 9 (Corredor 5)
+(9, 1, '2025-05-01 08:05:00'),
+(9, 1, '2025-05-02 09:10:00'),
+(9, 1, '2025-05-03 10:15:00'),
+(9, 1, '2025-05-04 11:20:00'),
+(9, 1, '2025-05-05 12:25:00'),
+(9, 1, '2025-05-06 13:30:00'),
+(9, 1, '2025-05-07 14:35:00'),
+(9, 1, '2025-05-08 15:40:00'),
+(9, 1, '2025-05-09 16:45:00'),
+(9, 1, '2025-05-10 17:50:00'),
+(9, 1, '2025-05-11 18:55:00'),
+(9, 1, '2025-05-12 19:00:00'),
+(9, 1, '2025-05-13 20:05:00'),
+(9, 1, '2025-05-14 21:10:00'),
+(9, 1, '2025-05-15 22:15:00'),
+(9, 1, '2025-05-16 23:20:00'),
+(9, 1, '2025-05-17 08:25:00'),
+(9, 1, '2025-05-18 09:30:00'),
+(9, 1, '2025-05-19 10:35:00'),
+(9, 1, '2025-05-20 11:40:00'),
+(9, 1, '2025-05-21 12:45:00'),
+(9, 1, '2025-05-22 13:50:00'),
+(9, 1, '2025-05-23 14:55:00'),
+(9, 1, '2025-05-24 15:00:00'),
+(9, 1, '2025-05-25 16:05:00'),
+
+-- Sensor 10 (Corredor 5)
+(10, 1, '2025-05-01 07:50:00'),
+(10, 1, '2025-05-02 08:55:00'),
+(10, 1, '2025-05-03 10:00:00'),
+(10, 1, '2025-05-04 11:05:00'),
+(10, 1, '2025-05-05 12:10:00'),
+(10, 1, '2025-05-06 13:15:00'),
+(10, 1, '2025-05-07 14:20:00'),
+(10, 1, '2025-05-08 15:25:00'),
+(10, 1, '2025-05-09 16:30:00'),
+(10, 1, '2025-05-10 17:35:00'),
+(10, 1, '2025-05-11 18:40:00'),
+(10, 1, '2025-05-12 19:45:00'),
+(10, 1, '2025-05-13 20:50:00'),
+(10, 1, '2025-05-14 21:55:00'),
+(10, 1, '2025-05-15 22:00:00'),
+(10, 1, '2025-05-16 23:05:00'),
+(10, 1, '2025-05-17 08:10:00'),
+(10, 1, '2025-05-18 09:15:00'),
+(10, 1, '2025-05-19 10:20:00'),
+(10, 1, '2025-05-20 11:25:00'),
+(10, 1, '2025-05-21 12:30:00'),
+(10, 1, '2025-05-22 13:35:00'),
+(10, 1, '2025-05-23 14:40:00'),
+(10, 1, '2025-05-24 15:45:00'),
+(10, 1, '2025-05-25 16:50:00');
 
 
--- Supermercado isabella (sensores 6 a 10)
-INSERT INTO registros (fksensor, presenca) VALUES 
-(6,1),(6,1),(6,1),(6,1),(6,1),
-(7,1),(7,1),(7,1),(7,1),(7,1),
-(8,1),(8,1),(8,1),(8,1),(8,1);
-select* from registros;
 
--- Usuarios do supermercado
-INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fksupermercado) VALUES 
-('Carlos Lima', '11122233344', '11999990001', 'leticia.com', 'senha123', 'Admin', 1),
-('Fernanda Alves', '55566677788', '11999990002', 'isabella.com', 'senha123', 'Gestor', 2);
-select* from usuario;
-SELECT *
-FROM supermercado
-WHERE id = 4;
+-- Janeiro 2025
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+(1,1,'2025-01-01 08:00:00'), (1,1,'2025-01-01 12:00:00'), (1,1,'2025-01-02 09:30:00'), (1,1,'2025-01-03 10:15:00'), (1,1,'2025-01-04 14:00:00'),
+(2,1,'2025-01-01 07:50:00'), (2,1,'2025-01-02 08:55:00'), (2,1,'2025-01-03 11:00:00'), (2,1,'2025-01-04 15:30:00'), (2,1,'2025-01-05 09:45:00'),
+(3,1,'2025-01-01 08:05:00'), (3,1,'2025-01-02 09:10:00'), (3,1,'2025-01-03 10:20:00'), (3,1,'2025-01-04 16:10:00'), (3,1,'2025-01-05 14:50:00'),
+(4,1,'2025-01-01 09:00:00'), (4,1,'2025-01-02 10:30:00'), (4,1,'2025-01-03 12:00:00'), (4,1,'2025-01-04 13:30:00'), (4,1,'2025-01-05 15:00:00'),
+(5,1,'2025-01-01 08:45:00'), (5,1,'2025-01-02 11:00:00'), (5,1,'2025-01-03 12:15:00'), (5,1,'2025-01-04 14:40:00'), (5,1,'2025-01-05 16:20:00'),
+(6,1,'2025-01-01 07:30:00'), (6,1,'2025-01-02 08:15:00'), (6,1,'2025-01-03 10:45:00'), (6,1,'2025-01-04 12:30:00'), (6,1,'2025-01-05 13:15:00'),
+(7,1,'2025-01-01 09:20:00'), (7,1,'2025-01-02 11:40:00'), (7,1,'2025-01-03 13:10:00'), (7,1,'2025-01-04 14:25:00'), (7,1,'2025-01-05 15:50:00'),
+(8,1,'2025-01-01 08:10:00'), (8,1,'2025-01-02 09:50:00'), (8,1,'2025-01-03 11:30:00'), (8,1,'2025-01-04 13:45:00'), (8,1,'2025-01-05 16:05:00'),
+(9,1,'2025-01-01 07:40:00'), (9,1,'2025-01-02 08:35:00'), (9,1,'2025-01-03 10:00:00'), (9,1,'2025-01-04 12:10:00'), (9,1,'2025-01-05 14:20:00'),
+(10,1,'2025-01-01 09:05:00'), (10,1,'2025-01-02 10:50:00'), (10,1,'2025-01-03 13:15:00'), (10,1,'2025-01-04 14:35:00'), (10,1,'2025-01-05 16:55:00'),
+
+-- (continua para completar 50+ registros no mês)
+(1,1,'2025-01-06 08:30:00'), (2,1,'2025-01-06 09:00:00'), (3,1,'2025-01-06 10:00:00'), (4,1,'2025-01-06 11:00:00'), (5,1,'2025-01-06 12:00:00'),
+(6,1,'2025-01-07 07:45:00'), (7,1,'2025-01-07 08:45:00'), (8,1,'2025-01-07 09:45:00'), (9,1,'2025-01-07 10:45:00'), (10,1,'2025-01-07 11:45:00');
+
+-- Fevereiro 2025
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+(1,1,'2025-02-01 08:10:00'), (2,1,'2025-02-01 09:15:00'), (3,1,'2025-02-01 10:20:00'), (4,1,'2025-02-01 11:25:00'), (5,1,'2025-02-01 12:30:00'),
+(6,1,'2025-02-02 08:35:00'), (7,1,'2025-02-02 09:40:00'), (8,1,'2025-02-02 10:45:00'), (9,1,'2025-02-02 11:50:00'), (10,1,'2025-02-02 12:55:00'),
+(1,1,'2025-02-03 08:00:00'), (2,1,'2025-02-03 09:00:00'), (3,1,'2025-02-03 10:00:00'), (4,1,'2025-02-03 11:00:00'), (5,1,'2025-02-03 12:00:00'),
+(6,1,'2025-02-04 08:10:00'), (7,1,'2025-02-04 09:15:00'), (8,1,'2025-02-04 10:20:00'), (9,1,'2025-02-04 11:25:00'), (10,1,'2025-02-04 12:30:00'),
+(1,1,'2025-02-05 08:30:00'), (2,1,'2025-02-05 09:35:00'), (3,1,'2025-02-05 10:40:00'), (4,1,'2025-02-05 11:45:00'), (5,1,'2025-02-05 12:50:00'),
+(6,1,'2025-02-06 07:55:00'), (7,1,'2025-02-06 08:55:00'), (8,1,'2025-02-06 09:55:00'), (9,1,'2025-02-06 10:55:00'), (10,1,'2025-02-06 11:55:00'),
+
+-- (continua para completar 50+ registros em fevereiro)
+(1,1,'2025-02-07 08:10:00'), (2,1,'2025-02-07 09:20:00'), (3,1,'2025-02-07 10:30:00'), (4,1,'2025-02-07 11:40:00'), (5,1,'2025-02-07 12:50:00'),
+(6,1,'2025-02-08 07:50:00'), (7,1,'2025-02-08 08:55:00'), (8,1,'2025-02-08 09:55:00'), (9,1,'2025-02-08 10:55:00'), (10,1,'2025-02-08 11:55:00');
+
+-- Março 2025
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+(1,1,'2025-03-01 08:05:00'), (2,1,'2025-03-01 09:10:00'), (3,1,'2025-03-01 10:15:00'), (4,1,'2025-03-01 11:20:00'), (5,1,'2025-03-01 12:25:00'),
+(6,1,'2025-03-02 08:30:00'), (7,1,'2025-03-02 09:35:00'), (8,1,'2025-03-02 10:40:00'), (9,1,'2025-03-02 11:45:00'), (10,1,'2025-03-02 12:50:00'),
+(1,1,'2025-03-03 08:00:00'), (2,1,'2025-03-03 09:00:00'), (3,1,'2025-03-03 10:00:00'), (4,1,'2025-03-03 11:00:00'), (5,1,'2025-03-03 12:00:00'),
+(6,1,'2025-03-04 08:10:00'), (7,1,'2025-03-04 09:15:00'), (8,1,'2025-03-04 10:20:00'), (9,1,'2025-03-04 11:25:00'), (10,1,'2025-03-04 12:30:00'),
+(1,1,'2025-03-05 08:25:00'), (2,1,'2025-03-05 09:30:00'), (3,1,'2025-03-05 10:35:00'), (4,1,'2025-03-05 11:40:00'), (5,1,'2025-03-05 12:45:00'),
+(6,1,'2025-03-06 07:50:00'), (7,1,'2025-03-06 08:55:00'), (8,1,'2025-03-06 09:55:00'), (9,1,'2025-03-06 10:55:00'), (10,1,'2025-03-06 11:55:00'),
+
+-- (continua para completar 50+ registros em março)
+(1,1,'2025-03-07 08:10:00'), (2,1,'2025-03-07 09:15:00'), (3,1,'2025-03-07 10:20:00'), (4,1,'2025-03-07 11:25:00'), (5,1,'2025-03-07 12:30:00'),
+(6,1,'2025-03-08 07:40:00'), (7,1,'2025-03-08 08:45:00'), (8,1,'2025-03-08 09:50:00'), (9,1,'2025-03-08 10:55:00'), (10,1,'2025-03-08 11:55:00');
+
+-- Abril 2025
+INSERT INTO registros (fksensor, presenca, datahora) VALUES
+(1,1,'2025-04-01 08:00:00'), (2,1,'2025-04-01 09:10:00'), (3,1,'2025-04-01 10:20:00'), (4,1,'2025-04-01 11:30:00'), (5,1,'2025-04-01 12:40:00'),
+(6,1,'2025-04-02 07:45:00'), (7,1,'2025-04-02 08:55:00'), (8,1,'2025-04-02 10:05:00'), (9,1,'2025-04-02 11:15:00'), (10,1,'2025-04-02 12:25:00'),
+(1,1,'2025-04-03 08:10:00'), (2,1,'2025-04-03 09:20:00'), (3,1,'2025-04-03 10:30:00'), (4,1,'2025-04-03 11:40:00'), (5,1,'2025-04-03 12:50:00'),
+(6,1,'2025-04-04 07:55:00'), (7,1,'2025-04-04 09:05:00'), (8,1,'2025-04-04 10:15:00'), (9,1,'2025-04-04 11:25:00'), (10,1,'2025-04-04 12:35:00'),
+(1,1,'2025-04-05 08:00:00'), (2,1,'2025-04-05 09:10:00'), (3,1,'2025-04-05 10:20:00'), (4,1,'2025-04-05 11:30:00'), (5,1,'2025-04-05 12:40:00'),
+(6,1,'2025-04-06 07:45:00'), (7,1,'2025-04-06 08:55:00'), (8,1,'2025-04-06 10:05:00'), (9,1,'2025-04-06 11:15:00'), (10,1,'2025-04-06 12:25:00'),
+
+-- (continua para completar 50+ registros em abril)
+(1,1,'2025-04-07 08:10:00'), (2,1,'2025-04-07 09:20:00'), (3,1,'2025-04-07 10:30:00'), (4,1,'2025-04-07 11:40:00'), (5,1,'2025-04-07 12:50:00'),
+(6,1,'2025-04-08 07:50:00'), (7,1,'2025-04-08 08:55:00'), (8,1,'2025-04-08 09:55:00'), (9,1,'2025-04-08 10:55:00'), (10,1,'2025-04-08 11:55:00');
+
+
+select * from registros;
+
     SELECT 
-            corredor.id AS idCorredor,
-            corredor.posicao AS corredor,
-            COUNT(registros.id) AS fluxoPessoas
+		corredor.id AS idCorredor,
+		corredor.posicao AS corredor,
+		COUNT(registros.id) AS fluxoPessoas
         FROM registros
         JOIN sensor ON registros.fksensor = sensor.id
         JOIN corredor ON sensor.fkcorredor = corredor.id
-        WHERE corredor.fksupermercado = 1 and month(datahora)=5 and year(datahora)=2025
+        WHERE corredor.fksupermercado = 1 and month(datahora)= 4 and year(datahora)=2025
         GROUP BY corredor.id, corredor.posicao
         ORDER BY idCorredor;
-        select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where fksupermercado=2;
         
-
-
---TESTE LETICIA
+        select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where fksupermercado=2;
