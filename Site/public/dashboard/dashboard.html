@@ -70,42 +70,52 @@
   <div id="main">
     <div class="conteudoDashboard">
       <div class="div_titulo_mercado">
-        <h1> Carrefour 12312</h1>
+        <h1 class="nome-mercado"> Carrefour 12312</h1>
       </div>
-      <div class="div_escolhermes">
-        <div class="logo">
-          <h1>In<span>Flow</span></h1>
-        </div>
-        <div class="select">
-          <label for="select_mes">Escolha o mês:</label>
-          <br>
-          <select id="select_mes">
-            <option value="1">Janeiro</option>
-            <option value="2">Fevereiro</option>
-            <option value="3">Março</option>
-            <option value="4">Abril</option>
-            <option value="5">Maio</option>
-            <option value="6">Junho</option>
-            <option value="7">Julho</option>
-            <option value="8">Agosto</option>
-            <option value="9">Setembro</option>
-            <option value="10">Outubro</option>
-            <option value="11">Novembro</option>
-            <option value="12">Dezembro</option>
-          </select>
-          <label for="select_ano">Escolha o ano:</label>
-          <br>
-          <select id="select_ano">
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-          </select>
 
-          <button
+        <div class="container-mes-card">
+          <div class="card-fluxo">
+            <div class="fluxo-paragrafo">
+              <p class="texto-card">Fluxo:</p>
+              <p class="paragrafo-texto">É a quantidade de ativações de pessoas passando pelo sensor em um certo momento
+              </p>
+            </div>
+          </div>
+
+          <div class="select card-mes">
+            <div>
+              <label for="select_mes">Escolha o mês:</label>
+              <br>
+              <select id="select_mes">
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
+            </div>
+            <div>
+              <label for="select_ano">Escolha o ano:</label>
+              <br>
+              <select id="ano_g3">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
+
+          <button class="botao-escolher-mes"
             onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO), atualizarKPIs();">
             Buscar</button>
         </div>
-
+      </div>
         <script>
           /*
            var select_mes = document.getElementById("select_mes");
@@ -115,7 +125,7 @@
            select_ano.value = new Date().getFullYear(); // Ano atual
          */
         </script>
-      </div>
+
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
         <div class="kpi k1">
@@ -180,35 +190,39 @@
         </div>
       </div>
       <div class="corredores" id="corredores">
- <div id="btnCorredor" class="btns-dash">
-</div>
+        <div id="btnCorredor" class="btns-dash">
+        </div>
       </div>
       <div class="graficocorredores">
         <div class="selectano">
-          
+
         </div>
-                 <select id="ano_g3">
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-        </select>
-
-<div id="graficos" class="graficos"></div>
-</div>
-
-
-
-      <div class="heatmaparea">
-        <h1>Mapa de calor</h1>
-        <p>Acompanhe em tempo real a movimentação</p>
-        <div class="heatmap">
-          <div id="heatmapContainer"></div>
+        <div id="container-corredor" class="container-corredor">
+          <div class="container-cards-grafico">
+          <div class="select-ano">
+            <select id="ano_g3">
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+          <div id="graficos" class="graficos"></div>
         </div>
       </div>
 
+
+
+        <div class="heatmaparea">
+          <h1>Mapa de calor</h1>
+          <p>Acompanhe em tempo real a movimentação</p>
+          <div class="heatmap">
+            <div id="heatmapContainer"></div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 </div>
 </div>
 </div>
@@ -222,22 +236,22 @@
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
   window.onload = atualizarKPIs();
-  
+
   function atualizarKPIs() {
-  const idSupermercado = sessionStorage.SUPERMERCADO;
-  const mes = document.getElementById('select_mes').value;
-  const ano = document.getElementById('select_ano').value;
-  console.log(`datas:${idSupermercado}, ${mes}, ${ano}`);
-  fetch(`/kpi/kpis/${idSupermercado}?mes=${mes}&ano=${ano}`)
-    .then(response => response.json())
-    .then(data => {
-      document.querySelector('.kpi.k1 .dados p:first-child').textContent = data.totalAtivacoes;
-      document.querySelector('.kpi.k2 .dados p:first-child').textContent = data.corredorMaiorFluxo;
-      document.querySelector('.kpi.k3 .dados p:first-child').textContent = data.diaMaiorFluxo;
-      document.querySelector('.kpi.k4 .dados p:first-child').textContent = data.corredorMenorFluxo;
-    })
-    .catch(err => console.error('Erro ao buscar KPIs:', err));
-}
+    const idSupermercado = sessionStorage.SUPERMERCADO;
+    const mes = document.getElementById('select_mes').value;
+    const ano = document.getElementById('select_ano').value;
+    console.log(`datas:${idSupermercado}, ${mes}, ${ano}`);
+    fetch(`/kpi/kpis/${idSupermercado}?mes=${mes}&ano=${ano}`)
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector('.kpi.k1 .dados p:first-child').textContent = data.totalAtivacoes;
+        document.querySelector('.kpi.k2 .dados p:first-child').textContent = data.corredorMaiorFluxo;
+        document.querySelector('.kpi.k3 .dados p:first-child').textContent = data.diaMaiorFluxo;
+        document.querySelector('.kpi.k4 .dados p:first-child').textContent = data.corredorMenorFluxo;
+      })
+      .catch(err => console.error('Erro ao buscar KPIs:', err));
+  }
   function exibirCorredorDoUsuario() {
     var corredores = JSON.parse(sessionStorage.CORREDORES)
     console.log(corredores.id)
@@ -375,7 +389,7 @@
       'Maio',
       'Junho',
       'Julho',
-      'Agosto', 
+      'Agosto',
       'Setembro',
       'Outubro',
       'Novembro',
@@ -504,11 +518,11 @@
         scales: {
           y: {
             beginAtZero: true,
-            max:100,
+            max: 100,
             title: {
               display: true,
               text: 'Fluxo de Pessoas',
-              
+
             }
           },
           x: {

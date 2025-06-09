@@ -143,14 +143,13 @@ body {
   align-items: center;
   justify-content: center;
 }
-.div_escolhermes{
+
+.div_escolhermes
+{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  margin: 0 40px;
-
-
+  padding-bottom: 15px;
+  border-bottom: 2px solid gray;
 }
 .div_escolhermes .logo{
 width: fit-content;
@@ -226,6 +225,26 @@ width: fit-content;
   flex-direction: column;
   height: 700px;
   align-self: center;
+}
+
+.container-mes-card
+{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 40px 90px;
+  border-bottom: 2px solid teal;
+  align-items: center;
+}
+
+.container-cards-grafico
+{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: 2px solid gray;
+  width: 100%;
+  background-color: teal;
 }
 
 /* .calendar {
@@ -385,7 +404,7 @@ dash-header {
   overflow: auto;
 }
 
-.cards {
+.s {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -630,13 +649,74 @@ canvas {
   width: 100%;
 }
 
- #ano_g3{
+#ano_g3{
   width: 100px;
   align-self: center;
-  height: 30px;
+  height: 40px;
+  padding: 10px;
   border: #212124;
+  border-radius: 5px;
+}
+
+#select_mes {
+  width: 100px;
+  align-self: center;
+  height: 40px;
+  padding: 10px;
+  border: #212124;
+  border-radius: 5px;
 }
 .graficocorredores canvas {
   width: 500px;
   height:500px;
+}
+
+.card-fluxo
+{
+  margin-top: 20px;
+}
+
+.fluxo-paragrafo
+{
+  background-color: aliceblue;
+  border-radius: 10px;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.texto-card
+{
+  color: teal;
+  font-weight: bold;
+}
+
+.paragrafo-texto
+{
+  color: teal;
+  width: 80%;
+}
+
+.botao-escolher-mes
+{
+  width: 30%;
+  font-weight: bold;
+}
+
+.nome-mercado
+{
+  color: aliceblue;
+}
+
+.card-mes
+{
+  width: 500px;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px 25px;
 }
