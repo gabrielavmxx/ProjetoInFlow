@@ -81,34 +81,34 @@
           </div>
         </div>
 
-        <div class="select card-mes">
-          <div>
-            <label for="select_mes">Escolha o mês:</label>
-            <br>
-            <select id="select_mes">
-              <option value="1">Janeiro</option>
-              <option value="2">Fevereiro</option>
-              <option value="3">Março</option>
-              <option value="4">Abril</option>
-              <option value="5">Maio</option>
-              <option value="6">Junho</option>
-              <option value="7">Julho</option>
-              <option value="8">Agosto</option>
-              <option value="9">Setembro</option>
-              <option value="10">Outubro</option>
-              <option value="11">Novembro</option>
-              <option value="12">Dezembro</option>
-            </select>
-          </div>
-          <div>
-            <label for="select_ano">Escolha o ano:</label>
-            <br>
-            <select id="ano_g3">
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-            </select>
-          </div>
+          <div class="select card-mes">
+            <div>
+              <label for="select_mes">Escolha o mês:</label>
+              <br>
+              <select id="select_mes">
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
+            </div>
+            <div>
+              <label for="select_ano">Escolha o ano:</label>
+              <br>
+              <select id="select_ano">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
 
           <button class="botao-escolher-mes"
             onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO), atualizarKPIs();">
@@ -183,21 +183,21 @@
         </div>
       </div>
       <div class="graficocorredores">
-        <div class="selectano">
+        <div class="select-ano">
 
         </div>
         <div id="container-corredor" class="container-corredor">
           <div class="container-cards-grafico">
-            <div class="select-ano">
-              <select id="ano_g3">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-              </select>
-            </div>
-            <div id="graficos" class="graficos"></div>
+          <div class="select_ano">
+            <select id="ano_g3">
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
           </div>
+          <div id="graficos" class="graficos"></div>
         </div>
+      </div>
 
 
 
@@ -391,7 +391,7 @@
         label: 'Fluxo',
         data: [],
         fill: false,
-        backgroundColor: '#008080',
+        
         borderColor: '#008080',
         tension: 0.1
       }]

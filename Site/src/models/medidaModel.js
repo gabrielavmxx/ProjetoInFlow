@@ -47,7 +47,7 @@ SELECT
         WHEN TIME(datahora) >= '07:00:00' AND TIME(datahora) < '12:00:00' THEN 'Manhã'
         WHEN TIME(datahora) >= '12:00:00' AND TIME(datahora) < '18:00:00' THEN 'Tarde'
         WHEN TIME(datahora) >= '18:00:00' AND TIME(datahora) < '22:00:00' THEN 'Noite'
-        ELSE 'Fechado'
+        ELSE 'Noite'
     END AS Horarios_SuperMercado,
     COUNT(*) AS Total_Registros
 FROM registros r 
