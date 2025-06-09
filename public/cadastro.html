@@ -25,8 +25,8 @@
                 <div class="formulario-cadastro">
                     <div class="formulario-principal">
                         <label>Nome do usuário</label>
-                         <input type="text" placeholder="Insira seu nome*" id="ipt_nomeUsuario">
-                         <div id="nome"></div>
+                        <input type="text" placeholder="Insira seu nome*" id="ipt_nomeUsuario">
+                        <div id="nome"></div>
                         <label>Nome da empresa</label>
                         <input type="text" placeholder="Nome da empresa*" id="ipt_nomeEmpresa">
                         <div id="empresa"></div>
@@ -34,11 +34,11 @@
                         <input type="email" placeholder="email*" id="ipt_email">
                         <div id="output_email"></div>
                         <label>Confirme o email</label>
-                        <input type="email" placeholder="email*" id="ipt_emailConfirmar">
-                        <div id="output_confirmacao"></div>
-                        <label>Senha</label>
                         <input type="password" placeholder="senha*" id="ipt_senha">
                         <div id="output_senha"></div>
+                        <label>Senha</label>
+                        <input type="password" placeholder="confrimação de senha*" id="ipt_confirmarSenha">
+                        <div id="output_confirmação"></div>
                         <button onclick="cadastro()">Entrar</button>
                         <div id="div_mensagemImportante"></div>
                     </div>
@@ -50,19 +50,5 @@
 
 </html>
 <script>
-    function cadastrar() {
-        var nomeUsuario = ipt_nomeUsuario.value;
-        var nomeEmpresa = ipt_nomeEmpresa.value;
-        var email = ipt_email.value;
-        var emailCorfirmar = ipt_emailConfirmar.value;
-        var senha = ipt_senha.value;
-
-        var textoPreenchido = (nomeUsuario == '' || nomeEmpresa == '' || email == '' || emailCorfirmar == '' || senha == '');
-
-        while (textoPreenchido) {
-            div_mensagemImportante.innerHTML = `Preencha todos os campos`;
-        }
-
-
-    }
+   
 </script>
