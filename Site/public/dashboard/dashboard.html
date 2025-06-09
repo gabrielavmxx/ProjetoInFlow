@@ -53,13 +53,11 @@
         <p class="titulo">Sair</p>
       </div>
     </div>
-    <div class="dadosPerfil">
-      <div class="fotoPerfil conteudo">
-        <img src="../assets/img/homem1.jpg" alt="">
+    <div class="dadosPerfil" onclick="mudarPagina()">
+      <div class="fotoPerfil conteudo" id="fotoPerfil">
       </div>
-      <div class="infoPerfil conteudo">
-        <p class="nome">Renato</p>
-        <p class="email">renato.silva@gmail.com</p>
+      <div class="infoPerfil conteudo" id="infoPerfil">
+        
       </div>
       <div class="maisInfo conteudo">
         <i class="fa-solid fa-angle-right"></i>
@@ -116,16 +114,6 @@
             Buscar</button>
         </div>
       </div>
-        <script>
-          /*
-           var select_mes = document.getElementById("select_mes");
-           var select_ano = document.getElementById("select_ano");
- 
-           select_mes.value = new Date().getMonth() + 1; // Mês atual (1-12)
-           select_ano.value = new Date().getFullYear(); // Ano atual
-         */
-        </script>
-
       <div id="div_mes_escolhido"> </div>
       <div class="elementosKPI">
         <div class="kpi k1">
@@ -237,7 +225,13 @@
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
   window.onload = atualizarKPIs();
+  window.onload = perfil()
 
+  function mudarPagina()
+  {
+    window.location.href = "../editProfile.html";
+  }
+  
   function atualizarKPIs() {
     const idSupermercado = sessionStorage.SUPERMERCADO;
     const mes = document.getElementById('select_mes').value;
@@ -635,9 +629,20 @@
     });
   }
 
-
   function sair() {
     sessionStorage.clear()
     window.location.href = "../login.html";
+  }
+
+
+  function perfil(){
+    infoPerfil.innerHTML = `
+      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
+      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
+    `
+
+    fotoPerfil.innerHTML = `
+      <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="">
+    `
   }
 </script>

@@ -115,9 +115,8 @@
                     tbody.innerHTML = "";
                     for (let i = 0; i < resposta.length; i++) {
                         var usuario = resposta[i];
-                        console.log(usuario)
-
                         var tr = document.createElement("tr");
+                        var isSelf = usuario.id == sessionStorage.ID_USUARIO;
 
                         tr.innerHTML = `
                             <td>${i + 1}</td>
@@ -125,9 +124,13 @@
                             <td class="colunaEmail">${usuario.email}</td>
                             <td class="colunaAcesso">${usuario.acesso}</td>
                             <td class="colunaDelete">
-                                <button>
-                                    <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
-                                </button>
+                                ${
+                                    isSelf
+                                    ? '<span style="color:gray;opacity:0.5;cursor:not-allowed;"><i class="fa-solid fa-trash"></i></span>'
+                                    : `<button onclick="deletarUsuario(${usuario.id})">
+                                        <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
+                                    </button>`
+                        }
                             </td>
                         `;
 
@@ -142,5 +145,23 @@
         });
 
 
+    }
+    function deletarUsuario(idUsuario) {
+        if (confirm("Tem certeza que deseja deletar este usuário?")) {
+            fetch(`/usuarios/deletar/${idUsuario}`, {
+                method: "DELETE"
+            })
+            .then(response => {
+                if (response.ok) {
+                    listarUsuarios(); // Refresh the list
+                } else {
+                    console.log("Erro ao deletar usuário.");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                console.log("Erro ao deletar usuário.");
+            });
+        }
     }
 </script>

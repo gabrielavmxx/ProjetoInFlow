@@ -100,6 +100,8 @@
         .then(data => {
             if (!data.erro && data.nomeArquivo) {
                 sessionStorage.setItem("fotoPerfil", data.nomeArquivo);
+                sessionStorage.FOTO_PERFIL =  data.nomeArquivo
+                
                 alert("Upload realizado com sucesso!");
 
                 fetch("/usuarios/alterarDados", {
