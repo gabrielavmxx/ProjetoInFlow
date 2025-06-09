@@ -32,12 +32,18 @@
                         <label>Endereço de email</label>
                         <input type="email" placeholder="email*" id="ipt_email">
                         <div id="output_email"></div>
+                        <label>Tipo de acesso</label> 
+                        <select id="ipt_acesso">
+                            <option value="Admin">Admin</option>
+                            <option value="Analista" selected>Analista</option>
+                            <option value="Gestor">Gestor</option>
+                        </select>
                         <label>Senha</label>
                         <input type="password" placeholder="senha*" id="ipt_senha">
                         <div id="output_senha"></div>
                         <label>Confirme a senha</label>
                         <input type="password" placeholder="senha*" id="ipt_confirmarSenha">
-                        <div id="output_confirmacao"></div>
+                        <div id="output_confirmacao"></div>                                             
                         <a href="dashboard/admin.html"><button onclick="cadastrar()">Entrar</button></a>
                         <div id="div_mensagemImportante"></div>
                     </div>
@@ -53,8 +59,9 @@
     function cadastrar() {
         var emailVar = (ipt_email.value).toLowerCase();
         var senhaVar = ipt_senha.value;
-        var nomeVar = ipt_nomeUsuario.value
-        var confrimação_senha = ipt_confirmarSenha.value
+        var acessoVar = document.getElementById("ipt_acesso").value;
+        var nomeVar = ipt_nomeUsuario.value;
+        var confrimação_senha = ipt_confirmarSenha.value;
         output_email.innerHTML = "";
         output_senha.innerHTML = "";
         output_confirmacao.innerHTML = "";
@@ -143,7 +150,8 @@
             nomeServer: nomeVar,
             emailServer: emailVar,
             senhaServer: senhaVar,
-            supermercadoServer: supermercado
+            supermercadoServer: supermercado,
+            acessoServer: acessoVar
         }),
     })
         .then(function (resposta) {
