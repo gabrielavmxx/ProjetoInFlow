@@ -342,6 +342,7 @@ INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES
 ('Ativo', 4, 80, 700, 'SENS0008'),
 ('Ativo', 3, 80, 420, 'SENS0009'),
 ('Ativo', 2, 80, 120, 'SENS0010');
+
 -- SENSSORES ISABELLA
 -- Moema
 INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES 
@@ -356,6 +357,7 @@ INSERT INTO sensor (statuses, fkcorredor, x, y, numero_serie) VALUES
 ('Ativo', 7, 80, 420, 'SENMO09'),
 ('Ativo', 8, 80, 120, 'SENMO10');
 select* from corredor;
+
 -- REGISTROS DE PRESENÇA
 -- Supermercado leticia (sensores 1 a 5)
 INSERT INTO registros (fksensor, presenca,datahora) VALUES 
@@ -376,7 +378,9 @@ select* from registros;
 INSERT INTO usuario (nome, cpf, telefone, email, senha, acesso, fksupermercado) VALUES 
 ('Carlos Lima', '11122233344', '11999990001', 'leticia.com', 'senha123', 'Admin', 1),
 ('Fernanda Alves', '55566677788', '11999990002', 'isabella.com', 'senha123', 'Gestor', 2);
+
 select* from usuario;
+
 SELECT *
 FROM supermercado
 WHERE id = 4;
@@ -391,7 +395,3 @@ WHERE id = 4;
         GROUP BY corredor.id, corredor.posicao
         ORDER BY idCorredor;
         select cor.id, ar.nome from corredor cor inner join supermercado sup on sup.id=cor.fksupermercado inner join areas ar on cor.fkarea=ar.id where fksupermercado=2;
-        
-
-
---TESTE LETICIA
