@@ -207,12 +207,10 @@
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
   window.onload = atualizarKPIs();
 
-
   function sair() {
     sessionStorage.clear()
     window.location.href = "../login.html";
   }
-
 
   function perfil() {
     infoPerfil.innerHTML = `
@@ -258,18 +256,18 @@
             `
 
       document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloCorredor${item.id}">${item.posicao}</span>
-                    </h3>
-                    <div class="graph">
-                        <canvas id="myChartCanvas${item.id}"></canvas>
-                    </div>
-                    <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
-                    </div>
-                </div>
-            `
+        <div id="grafico${item.id}" class="display-none">
+          <h3 class="tituloGraficos">
+          <span id="tituloCorredor${item.id}">${item.posicao}</span>
+          </h3>
+          <div class="graph">
+            <canvas id="myChartCanvas${item.id}"></canvas>
+          </div>
+          <div class="label-captura">
+            <p id="avisoCaptura${item.id}" style="color: white"></p>
+          </div>
+        </div>
+    `
 
       obterDadosGraficoCorredores(item.id, item.fksupermercado, anocorredor)
     });
