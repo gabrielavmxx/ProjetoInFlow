@@ -69,7 +69,7 @@
   <!-- FIM DO MENU LATERAL -->
   <div id="main">
     <div class="conteudoDashboard">
-      <div class="div_titulo_mercado">
+      <div class="div_titulo_mercado" id="div_titulo_mercado">
         <h1> Carrefour 12312</h1>
       </div>
       <div class="div_escolhermes">
@@ -218,6 +218,7 @@
 
 </html>
 <script>
+  
   window.onload = exibirCorredorDoUsuario()
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
@@ -238,7 +239,7 @@
     })
     .catch(err => console.error('Erro ao buscar KPIs:', err));
 }
-  function exibirCorredorDoUsuario() {
+  function exibirCorredorDoUsuario() {div_titulo_mercado.innerHTML=`${sessionStorage.NOME_SUPERMERCADO}`
     var corredores = JSON.parse(sessionStorage.CORREDORES)
     console.log(corredores.id)
     var anocorredor = document.getElementById("ano_g3").value
