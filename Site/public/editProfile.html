@@ -30,7 +30,7 @@
             <div class="container-foto">
                 <p class="paragrafo-foto">Alterar foto de perfil</p>  
                 <label for="input_foto"class="botao-customizado" id="imagem_fundo">
-                    <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+                    
                 </label>
                 <input id="input_foto" type="file" name="imagem" accept="image/png, image/jpeg" required/>
 
@@ -74,6 +74,20 @@
     </div>
 
     <script>
+        window.onload = foto()
+
+        function foto(){
+            if(sessionStorage.FOTO_PERFIL == null){
+                imagem_fundo.innerHTML = `
+                    <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+                `
+            }else{
+                imagem_fundo.innerHTML = `
+                    <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="Selecione uma imagem" class="botao-customizado">
+                `
+            }
+        }
+
         let imagemFundo = document.getElementById('imagem_fundo')
         let arquivo = document.getElementById('input_foto')
 
@@ -101,7 +115,7 @@
             if (!data.erro && data.nomeArquivo) {
                 sessionStorage.setItem("fotoPerfil", data.nomeArquivo);
                 sessionStorage.FOTO_PERFIL =  data.nomeArquivo
-                
+
                 alert("Upload realizado com sucesso!");
 
                 fetch("/usuarios/alterarDados", {
@@ -118,7 +132,7 @@
                     if (res.ok) {
                         alert("Dados alterados com sucesso!");
                         setTimeout(() => {
-                            window.location = "login.html";
+                            window.location = "dashboard/dashboard.html";
                         }, 2000);
                     } else {
                         alert("Erro ao salvar dados.");
