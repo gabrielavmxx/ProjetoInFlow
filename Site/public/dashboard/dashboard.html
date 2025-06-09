@@ -42,7 +42,7 @@
       </div>
       <div class="box">
         <div class="icon">
-          <i  class="fa-solid fa-circle-question"></i>
+          <i class="fa-solid fa-circle-question"></i>
         </div>
         <a href="https://inflowcompany.atlassian.net/servicedesk/customer/portals" class="titulo">Suporte</a>
       </div>
@@ -53,11 +53,12 @@
         <p class="titulo">Sair</p>
       </div>
     </div>
-    <div class="dadosPerfil" onclick="mudarPagina()">
+    <div class="dadosPerfil" onclick="mudarPagina()" style="cursor: pointer;">
       <div class="fotoPerfil conteudo" id="fotoPerfil">
+
       </div>
       <div class="infoPerfil conteudo" id="infoPerfil">
-        
+
       </div>
       <div class="maisInfo conteudo">
         <i class="fa-solid fa-angle-right"></i>
@@ -71,43 +72,43 @@
         <h1 class="nome-mercado"> Carrefour 12312</h1>
       </div>
 
-        <div class="container-mes-card">
-          <div class="card-fluxo">
-            <div class="fluxo-paragrafo">
-              <p class="texto-card">Fluxo:</p>
-              <p class="paragrafo-texto">É a quantidade de ativações de pessoas passando pelo sensor em um certo momento
-              </p>
-            </div>
+      <div class="container-mes-card">
+        <div class="card-fluxo">
+          <div class="fluxo-paragrafo">
+            <p class="texto-card">Fluxo:</p>
+            <p class="paragrafo-texto">É a quantidade de ativações de pessoas passando pelo sensor em um certo momento
+            </p>
           </div>
+        </div>
 
-          <div class="select card-mes">
-            <div>
-              <label for="select_mes">Escolha o mês:</label>
-              <br>
-              <select id="select_mes">
-                <option value="1">Janeiro</option>
-                <option value="2">Fevereiro</option>
-                <option value="3">Março</option>
-                <option value="4">Abril</option>
-                <option value="5">Maio</option>
-                <option value="6">Junho</option>
-                <option value="7">Julho</option>
-                <option value="8">Agosto</option>
-                <option value="9">Setembro</option>
-                <option value="10">Outubro</option>
-                <option value="11">Novembro</option>
-                <option value="12">Dezembro</option>
-              </select>
-            </div>
-            <div>
-              <label for="select_ano">Escolha o ano:</label>
-              <br>
-              <select id="ano_g3">
-                <option value="2025">2025</option>
-                <option value="2024">2024</option>
-                <option value="2023">2023</option>
-              </select>
-            </div>
+        <div class="select card-mes">
+          <div>
+            <label for="select_mes">Escolha o mês:</label>
+            <br>
+            <select id="select_mes">
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+          <div>
+            <label for="select_ano">Escolha o ano:</label>
+            <br>
+            <select id="ano_g3">
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
 
           <button class="botao-escolher-mes"
             onclick=" obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO),obterDadosPizza(sessionStorage.SUPERMERCADO), atualizarKPIs();">
@@ -187,16 +188,16 @@
         </div>
         <div id="container-corredor" class="container-corredor">
           <div class="container-cards-grafico">
-          <div class="select-ano">
-            <select id="ano_g3">
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-            </select>
+            <div class="select-ano">
+              <select id="ano_g3">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
+            <div id="graficos" class="graficos"></div>
           </div>
-          <div id="graficos" class="graficos"></div>
         </div>
-      </div>
 
 
 
@@ -220,18 +221,42 @@
 
 </html>
 <script>
-  
+
+  window.onload = perfil();
   window.onload = exibirCorredorDoUsuario()
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
   window.onload = obterDadosPizza(sessionStorage.SUPERMERCADO)
   window.onload = atualizarKPIs();
-  window.onload = perfil()
 
-  function mudarPagina()
-  {
+
+  function sair() {
+    sessionStorage.clear()
+    window.location.href = "../login.html";
+  }
+
+
+  function perfil() {
+    console.log("oi");
+    infoPerfil.innerHTML = `
+      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
+      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
+    `
+
+    if (sessionStorage.FOTO_PERFIL == null) {
+      fotoPerfil.innerHTML = `
+        <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+      `
+    } else {
+      fotoPerfil.innerHTML = `
+        <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="Selecione uma imagem" class="botao-customizado">
+      `
+    }
+  }
+
+  function mudarPagina() {
     window.location.href = "../editProfile.html";
   }
-  
+
   function atualizarKPIs() {
     const idSupermercado = sessionStorage.SUPERMERCADO;
     const mes = document.getElementById('select_mes').value;
@@ -422,8 +447,6 @@
     );
 
   }
-
-  /////////////////////////////////////////////////////////////////
 
   let myChartBarra = null
   function obterDadosGraficoMedidas(idSupermercado) {
@@ -629,20 +652,4 @@
     });
   }
 
-  function sair() {
-    sessionStorage.clear()
-    window.location.href = "../login.html";
-  }
-
-
-  function perfil(){
-    infoPerfil.innerHTML = `
-      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
-      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
-    `
-
-    fotoPerfil.innerHTML = `
-      <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="">
-    `
-  }
 </script>
