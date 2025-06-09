@@ -647,3 +647,8 @@ canvas {
   text-align: center;
   font-family: 'Belanosima', sans-serif;
 }
+
+.dadosPerfil
+{
+  cursor: pointer;
+}
