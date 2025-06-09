@@ -77,34 +77,16 @@
           <div class="kpi k1">
             <p class="titulo">Corredor com Menor fluxo</p>
             <div class="dados">
-              <p>Corredor 5</p>
-              <p>:</p>
-              <p><span class="status">Tranquilo</span></p>
+              <p><span class="corredor">-</span></p>
+              <p><span class="pessoas">0 pessoas</span></p>
             </div>
           </div>
           <div class="kpi k2">
-            <p class="titulo">Corredor com Maior fluxo</p>
-            <div class="dados">
-              <p>Corredor 1</p>
-              <p>:</p>
-              <p><b><span class="status">ATENÇÃO</span></b></p>
-            </div>
-          </div>
-          <div class="kpi k3">
-            <p class="titulo">Corredor com Menor fluxo</p>
-            <div class="dados">
-              <p>Agora</p>
-              <p>:</p>
-              <p><span class="pessoas">10 pessoas</span></p>
-            </div>
-          </div>
-          <div class="kpi k4">
-            <p class="titulo">Corredor com Maior fluxo</p>
-            <div class="dados">
-              <p>Agora</p>
-              <p>:</p>
-              <p><span class="pessoas">80 pessoas</span></p>
-            </div>
+              <p class="titulo">Corredor com Maior fluxo</p>
+              <div class="dados">
+                <p><span class="corredor">-</span></p>
+                <p><span class="pessoas">0 pessoas</span></p>
+              </div>
           </div>
         </div>
         <div id="heatmapareas">
@@ -290,23 +272,17 @@
     fetch(`/kpi/kpisTempoReal/${supermercado}`)
       .then(response => response.json())
       .then(data => {
-      // Maior fluxo
-      const kpiMaior = document.querySelector('.kpi.k1 .dados');
-      kpiMaior.querySelector('.status').textContent = data.statusMenor;
+        // Menor fluxo
+        const kpiMenor = document.querySelector('.kpi.k1 .dados');
+        kpiMenor.querySelector('.corredor').textContent = `${data.corredorMenor}:`;
+        kpiMenor.querySelector('.pessoas').textContent = `${data.pessoasMenor} pessoas`;
 
-      // Menor fluxo
-      const kpiMenor = document.querySelector('.kpi.k2 .dados');
-      kpiMenor.querySelector('.status').textContent = data.statusMaior;
-
-      const kpiMenorAgora = document.querySelector('.kpi.k3 .dados');
-      kpiMenorAgora.querySelector('.pessoas').textContent = `${data.pessoasMenor} pessoas`;
-
-      // Maior fluxo (Agora)
-      const kpiMaiorAgora = document.querySelector('.kpi.k4 .dados');
-      kpiMaiorAgora.querySelector('.pessoas').textContent = `${data.pessoasMaior} pessoas`;
-    })
+        // Maior fluxo
+        const kpiMaior = document.querySelector('.kpi.k2 .dados');
+        kpiMaior.querySelector('.corredor').textContent = `${data.corredorMaior}:`;
+        kpiMaior.querySelector('.pessoas').textContent = `${data.pessoasMaior} pessoas`;
+      })
       .catch(err => console.error('Erro ao buscar KPIs tempo real:', err));
-    
   }
 
 // Atualizar a cada 2 segundos

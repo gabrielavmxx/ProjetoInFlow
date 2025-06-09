@@ -66,8 +66,8 @@ function corredorMenorFluxo(idSupermercado, mes, ano) {
 }
 
 function corredorMaiorFluxoAgora(idSupermercado) {
-  const sql = `
-    SELECT c.posicao AS corredor, 'ATENÇÃO' AS status, COUNT(r.id) AS pessoas
+  const instrucaoSql = `
+    SELECT c.posicao AS corredor, COUNT(r.id) AS pessoas
     FROM registros r
     JOIN sensor s ON r.fksensor = s.id
     JOIN corredor c ON s.fkcorredor = c.id
@@ -77,12 +77,12 @@ function corredorMaiorFluxoAgora(idSupermercado) {
     ORDER BY pessoas DESC
     LIMIT 1;
   `;
-  return database.executar(sql);
+  return database.executar(instrucaoSql);
 }
 
 function corredorMenorFluxoAgora(idSupermercado) {
-  const sql = `
-    SELECT c.posicao AS corredor, 'Tranquilo' AS status, COUNT(r.id) AS pessoas
+  const instrucaoSql = `
+    SELECT c.posicao AS corredor, COUNT(r.id) AS pessoas
     FROM registros r
     JOIN sensor s ON r.fksensor = s.id
     JOIN corredor c ON s.fkcorredor = c.id
@@ -92,10 +92,8 @@ function corredorMenorFluxoAgora(idSupermercado) {
     ORDER BY pessoas ASC
     LIMIT 1;
   `;
-  return database.executar(sql);
+  return database.executar(instrucaoSql);
 }
-
-module.exports = {  };
 
 module.exports = {
   totalAtivacoes,
