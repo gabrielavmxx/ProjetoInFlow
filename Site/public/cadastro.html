@@ -51,15 +51,15 @@
 <script>
 
     function cadastrar() {
-        var email = (ipt_email.value).toLowerCase();
-        var senha = ipt_senha.value;
-        var nome_usuario = ipt_nomeUsuario.value
+        var emailVar = (ipt_email.value).toLowerCase();
+        var senhaVar = ipt_senha.value;
+        var nomeVar = ipt_nomeUsuario.value
         var confrimação_senha = ipt_confirmarSenha.value
         output_email.innerHTML = "";
         output_senha.innerHTML = "";
         output_confirmacao.innerHTML = "";
 
-        var textoPreenchido = (nome_usuario == '' | ipt_email == '' || ipt_senha == '' || ipt_confirmarSenha == '');
+        var textoPreenchido = (nomeVar == '' | emailVar == '' || senhaVar == '' || confrimação_senha == '');
 
         while (textoPreenchido) {
             div_mensagemImportante.innerHTML = `Preencha todos os campos`;
@@ -74,7 +74,7 @@
         for (i = 1; i < 4; i++) {
             //Condicao 1
             if (i == 1) {
-                if (!email.endsWith(".com")) {
+                if (!emailVar.endsWith(".com")) {
                     output_email.innerHTML += `O email deve terminar em .com<br>`
                     output_email.style.color = 'red';
                     return;
@@ -84,7 +84,7 @@
             }
             //Condicao 2
             else if (i == 2) {
-                if (!email.includes("@")) {
+                if (!emailVar.includes("@")) {
                     output_email.innerHTML += `O email deve conter @<br>`
                     output_email.style.color = 'red';
                     return;
@@ -95,7 +95,7 @@
         //loop para percorrer as verificacoes da senha
         for (j = 1; j < 6; j++) {
             if (j == 1) {
-                if (!caracteres_especias.test(senha)) {
+                if (!caracteres_especias.test(senhaVar)) {
                     output_senha.innerHTML += `A senha deve conter no mínimo 1 caracter especial<br>`
                     output_senha.style.color = `red`
                 }
@@ -103,27 +103,27 @@
             }
 
             else if (j == 2) {
-                if (senha.length < 8) {
+                if (senhaVar.length < 8) {
                     output_senha.innerHTML += `A senha deve conter no mínimo 8 caracteres<br>`
                     output_senha.style.color = `red`
                 }
 
             }
             else if (j == 3) {
-                if (!numeros.test(senha)) {
+                if (!numeros.test(senhaVar)) {
                     output_senha.innerHTML += `A senha deve conter no mínimo 1 caracter numérico<br>`
                     output_senha.style.color = `red`
                 }
 
             }
             else if (j == 4) {
-                if (!letra_maiuscula.test(senha)) {
+                if (!letra_maiuscula.test(senhaVar)) {
                     output_senha.innerHTML += `A senha deve conter no mínimo 1 letra maiúscula<br>`
                     output_senha.style.color = `red`
                     return;
                 }
                 else if (i == 3) {
-                    if (senha != confrimação_senha) {
+                    if (senhaVar != confrimação_senha) {
                         output_confirmacao.innerHTML += `As senhas devem ser iguais`
                         output_confirmacao.style.color = 'red';
                         return;
@@ -135,35 +135,35 @@
         }
     }
 
-    // fetch("/usuarios/cadastrar", {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //         nomeServer: nomeVar,
-    //         emailServer: emailVar,
-    //         senhaServer: senhaVar,
-    //     }),
-    // })
-    //     .then(function (resposta) {
-    //         console.log("resposta: ", resposta);
+    fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
 
-    //         if (resposta.ok) {
-    //             alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...")
+            if (resposta.ok) {
+                alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...")
 
-    //             setTimeout(() => {
-    //                 window.location = "login.html";
-    //             }, "2000");
+                setTimeout(() => {
+                    window.location = "login.html";
+                }, "2000");
 
-    //         } else {
-    //             throw "Houve um erro ao tentar realizar o cadastro!";
-    //         }
-    //     })
-    //     .catch(function (resposta) {
-    //         console.log(`#ERRO: ${resposta}`);
-    //     });
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
 
-    // return false;
+    return false;
 
 </script>

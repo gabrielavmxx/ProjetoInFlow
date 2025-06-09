@@ -95,6 +95,18 @@
         var supermercado = sessionStorage.SUPERMERCADO;
         console.log(supermercado);
 
+        function deletarUsuario(idUsuario) {
+            console.log("Criar função de apagar usuario escolhido - ID" + idUsuario);
+            fetch(`/usuarios/deletar/${idUsuario}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+        }
+
+
         fetch(`/usuarios/listar/${supermercado}`, { cache: 'no-store' }).then(function (resposta) {
             console.log(resposta);
             if (resposta.ok) {
@@ -125,7 +137,7 @@
                             <td class="colunaEmail">${usuario.email}</td>
                             <td class="colunaAcesso">${usuario.acesso}</td>
                             <td class="colunaDelete">
-                                <button>
+                                <button onclick="deletarUsuario(${usuario.id})">
                                     <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
                                 </button>
                             </td>
