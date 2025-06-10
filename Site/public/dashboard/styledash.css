@@ -239,6 +239,10 @@ body {
   padding: 0 30% 0 30%;
 }
 
+.display-none {
+  display: none;
+}
+
 .graph {
   width: 70%;
   margin: auto;

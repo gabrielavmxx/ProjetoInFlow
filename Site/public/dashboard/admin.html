@@ -28,7 +28,7 @@
                     </div>
                     <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
                 </div>
-                <div class="box agora">
+                <div class="box agora" id="controleUsuario">
                     <div class="icon">
                         <i class="fa-solid fa-users"></i>
                     </div>
@@ -92,6 +92,18 @@
 
 </html>
 <script>
+    var acesso = sessionStorage.ACESSO;
+    console.log(acesso)
+
+    if (acesso != 'Admin') {
+        controleUsuario.style.display = 'none';
+    }
+
+    function sair() {
+        sessionStorage.clear()
+        window.location.href = "../login.html";
+    }
+
     function listarUsuarios() {
         var supermercado = sessionStorage.SUPERMERCADO;
         console.log(supermercado);
