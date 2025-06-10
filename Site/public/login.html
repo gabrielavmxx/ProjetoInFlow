@@ -78,6 +78,7 @@
 
             if (resposta.ok) {
                 console.log(resposta);
+                if(resposta.fksupermercado == undefined)
 
                 resposta.json().then(json => {
                     console.log(json);  
