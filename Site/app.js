@@ -28,6 +28,7 @@ var corredoresRouter = require("./src/routes/corredores");
 var mapaRouter = require("./src/routes/mapa");
 var supermercadoRouter = require("./src/routes/supermercado");
 var kpiRouter = require("./src/routes/kpi");
+var BobIaRouter = require("./src/routes/BobIa");
 
 
 var medidasRouter = require("./src/routes/medidas");
@@ -46,6 +47,7 @@ app.use("/dashboard", dashRouter);
 app.use("/mapa", mapaRouter);
 app.use("/supermercado", supermercadoRouter);
 app.use("/kpi", kpiRouter);
+app.use("/BobIa", BobIaRouter);
 
 app.use("/medidas", medidasRouter);
 
