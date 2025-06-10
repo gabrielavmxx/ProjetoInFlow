@@ -69,8 +69,9 @@
   <!-- FIM DO MENU LATERAL -->
   <div id="main">
     <div class="conteudoDashboard">
-      <div class="div_titulo_mercado">
-        <h1 class="nome-mercado"> Carrefour 12312</h1>
+      <div class="div_titulo_mercado" id="div_titulo_mercado">
+       
+    
       </div>
 
       <div class="container-mes-card">
@@ -194,7 +195,7 @@
 
 </html>
 <script>
-
+div_titulo_mercado.innerHTML=`${sessionStorage.NOME_SUPERMERCADO}`
   window.onload = perfil();
   window.onload = exibirCorredorDoUsuario()
   window.onload = obterDadosGraficoMedidas(sessionStorage.SUPERMERCADO)
@@ -242,6 +243,7 @@
       .catch(err => console.error('Erro ao buscar KPIs:', err));
   }
   function exibirCorredorDoUsuario() {
+
     var corredores = JSON.parse(sessionStorage.CORREDORES)
     var anocorredor = document.getElementById("ano_g3").value
     corredores.forEach(item => {
@@ -450,16 +452,16 @@
     if (myChartBarra) {
       myChartBarra.destroy();
     }
-
+let meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     let labels = [];
-
+let titulo = `Fluxo de Pessoas por Corredor no Supermercado(${meses[resposta[0].mes-1]} de ${resposta[0].ano})`
 
     let dadosFluxo = [];
 
 
     for (let i = 0; i < resposta.length; i++) {
       let registro = resposta[i];
-      labels.push(`Corredor ${registro.corredor}`);
+      labels.push(` ${registro.corredor}`);
       dadosFluxo.push(registro.fluxoPessoas);
     }
 
@@ -503,7 +505,7 @@
           },
           title: {
             display: true,
-            text: 'Fluxo de Pessoas por Corredor'
+            text: titulo 
           }
         }
       }
@@ -516,6 +518,9 @@
   }
   let myChartPizza = null
   function plotarGraficoPizza(resposta, idSupermercado) {
+    meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
+    console.log(resposta)
+    let titulo=`Distribuição de movimento por período do dia(${meses[resposta[0].mes-1]} de ${resposta[0].ano})`
     if (myChartPizza) {
       myChartPizza.destroy();
     }
@@ -544,7 +549,7 @@
         plugins: {
           title: {
             display: true,
-            text: 'Distribuição de Movimento por Período do Dia',
+            text: titulo,
             font: {
               size: 18
             }
@@ -559,27 +564,7 @@
 
 
 
-  const heatmapInstance = h337.create({
-    container: document.getElementById('heatmapContainer'),
-    radius: 70,
-  });
-
-  const data = {
-    max: 100,
-    data: [
-      { x: 500, y: 100, value: 100 },
-      { x: 400, y: 300, value: 60 },
-      { x: 100, y: 400, value: 90 },
-      { x: 200, y: 200, value: 40 },
-      { x: 100, y: 100, value: 70 },
-      { x: 250, y: 450, value: 80 },
-      { x: 500, y: 400, value: 95 },
-      { x: 50, y: 300, value: 40 },
-    ]
-  };
-
-  heatmapInstance.setData(data);
-
+ 
 
 
   function exibirCorredores() {

@@ -23,13 +23,14 @@ function buscarFluxoPorCorredor(idSupermercado, mes, ano) {
         SELECT 
             corredor.id AS idCorredor,
             corredor.posicao AS corredor,
-            COUNT(registros.id) AS fluxoPessoas
+            COUNT(registros.id) AS fluxoPessoas,
+            month(registros.datahora) as mes, year(registros.datahora) as ano
         FROM registros
         JOIN sensor ON registros.fksensor = sensor.id
         JOIN corredor ON sensor.fkcorredor = corredor.id
     WHERE corredor.fksupermercado = ${idSupermercado} and month(datahora)=${mes} and year(datahora)=${ano}
-        GROUP BY corredor.id, corredor.posicao
-        ORDER BY idCorredor;
+        GROUP BY corredor.id, corredor.posicao,month(registros.datahora),year(registros.datahora)
+        ORDER BY corredor.posicao;
     `;
 
     console.log("Executando a SQL: \n" + instrucaoSql);
@@ -40,25 +41,29 @@ function buscarFluxoPorPeriodo(idSupermercado, ano, mes) {
 
     var instrucaoSql = `
        
-SELECT 
+  SELECT 
 
     c.fksupermercado AS Supermercado,
     CASE 
         WHEN TIME(datahora) >= '07:00:00' AND TIME(datahora) < '12:00:00' THEN 'Manhã'
         WHEN TIME(datahora) >= '12:00:00' AND TIME(datahora) < '18:00:00' THEN 'Tarde'
         WHEN TIME(datahora) >= '18:00:00' AND TIME(datahora) < '22:00:00' THEN 'Noite'
-        ELSE 'Noite'
+        else 'Noite'
     END AS Horarios_SuperMercado,
-    COUNT(*) AS Total_Registros
+    COUNT(*) AS Total_Registros, month(r.datahora) as mes, year(r.datahora) as ano
 FROM registros r 
 INNER JOIN sensor s ON s.id = r.fksensor
 INNER JOIN corredor c ON c.id = s.fkcorredor
-where fksupermercado = ${idSupermercado} and year(datahora) =${ano} and month(datahora) = ${mes}
+where fksupermercado = ${idSupermercado} and year(r.datahora) ='${ano}' and month(r.datahora) = '${mes}'
 GROUP BY 
 
     c.fksupermercado,
-    Horarios_SuperMercado
+    Horarios_SuperMercado,
+    month(r.datahora),
+    year(r.datahora)
+    
 order by Horarios_SuperMercado;
+    ;
     `;
 
     console.log("Executando a SQL: \n" + instrucaoSql);
