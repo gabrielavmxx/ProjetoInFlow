@@ -33,7 +33,7 @@ function dadosPorCorredor(idSupermercado, idCorredor, ano){
       AND c.id = '${idCorredor}'
       AND YEAR(r.datahora) = '${ano}'
     GROUP BY MONTH(r.datahora)
-    ORDER BY total_movimentacoes asc;
+    ORDER BY  mes desc;
   `
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
