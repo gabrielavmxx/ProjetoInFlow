@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,10 @@
     <link rel="stylesheet" href="bobo.css">
     <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
-     <div class="nav">
+    <div class="nav">
         <div>
             <p class="nav_titulo">In<span style="color: teal;">Flow</span></p>
         </div>
@@ -39,7 +41,7 @@
     </div>
 
     <script>
-        
+
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
 
@@ -58,22 +60,23 @@
         }
 
         function VerificarConta() {
-        const divBotoes = document.getElementById('botao_login')
-        const iconEscondido = document.getElementById('icon_escondido')
-        console.log(iconEscondido)
+            const divBotoes = document.getElementById('botao_login')
+            const iconEscondido = document.getElementById('icon_escondido')
+            console.log(iconEscondido)
 
-        if (sessionStorage.NOME_USUARIO == null) {
-            divBotoes.style.display = 'flex';
-            iconEscondido.style.display = 'none'
-        } else {
-            divBotoes.style.display = 'none';
-            iconEscondido.style.display = 'block'
+            if (sessionStorage.NOME_USUARIO == null) {
+                divBotoes.style.display = 'flex';
+                iconEscondido.style.display = 'none'
+            } else {
+                divBotoes.style.display = 'none';
+                iconEscondido.style.display = 'block'
+            }
         }
-    }
 
-    VerificarConta()
+        VerificarConta()
 
     </script>
-    
+
 </body>
+
 </html>
