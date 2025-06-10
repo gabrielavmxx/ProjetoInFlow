@@ -36,9 +36,10 @@
                 </div>
                 <div class="box">
                     <div class="icon">
-                        <i class="fa-solid fa-gear"></i>
+                        <i class="fa-solid fa-circle-question"></i>
                     </div>
-                    <p class="titulo">Configurações</p>
+                    <a href="https://inflowcompany.atlassian.net/servicedesk/customer/portals"
+                        class="titulo">Suporte</a>
                 </div>
                 <div class="box" onclick="sair()">
                     <div class="icon">
@@ -124,13 +125,12 @@
                             <td class="colunaEmail">${usuario.email}</td>
                             <td class="colunaAcesso">${usuario.acesso}</td>
                             <td class="colunaDelete">
-                                ${
-                                    isSelf
-                                    ? '<span style="color:gray;opacity:0.5;cursor:not-allowed;"><i class="fa-solid fa-trash"></i></span>'
-                                    : `<button onclick="deletarUsuario(${usuario.id})">
+                                ${isSelf
+                                ? '<span style="color:gray;opacity:0.5;cursor:not-allowed;"><i class="fa-solid fa-trash"></i></span>'
+                                : `<button onclick="deletarUsuario(${usuario.id})">
                                         <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
                                     </button>`
-                        }
+                            }
                             </td>
                         `;
 
@@ -151,17 +151,17 @@
             fetch(`/usuarios/deletar/${idUsuario}`, {
                 method: "DELETE"
             })
-            .then(response => {
-                if (response.ok) {
-                    listarUsuarios(); // Refresh the list
-                } else {
+                .then(response => {
+                    if (response.ok) {
+                        listarUsuarios(); // Refresh the list
+                    } else {
+                        console.log("Erro ao deletar usuário.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
                     console.log("Erro ao deletar usuário.");
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                console.log("Erro ao deletar usuário.");
-            });
+                });
         }
     }
 </script>
