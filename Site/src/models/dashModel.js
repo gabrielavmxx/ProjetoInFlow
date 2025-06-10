@@ -13,7 +13,7 @@ function buscarDadosDashBoard() {
         INNER JOIN corredor c ON s.fkcorredor = c.id
         INNER JOIN supermercado sm ON c.fksupermercado = sm.id
         GROUP BY sm.nome, c.posicao, mes, ano
-        ORDER BY ano DESC, mes DESC, sm.nome, c.posicao;
+        ORDER BY total_movimentacao asc;
   `;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -33,7 +33,7 @@ function dadosPorCorredor(idSupermercado, idCorredor, ano){
       AND c.id = '${idCorredor}'
       AND YEAR(r.datahora) = '${ano}'
     GROUP BY MONTH(r.datahora)
-    ORDER BY mes;
+    ORDER BY total_movimentacoes asc;
   `
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
