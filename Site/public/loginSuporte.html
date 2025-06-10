@@ -64,7 +64,7 @@
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
 
-        fetch("/usuarios/autenticar", {
+        fetch("/Suporte/autenticarSuporte", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -78,7 +78,6 @@
 
             if (resposta.ok) {
                 console.log(resposta);
-                if(resposta.fksupermercado == undefined)
 
                 resposta.json().then(json => {
                     console.log(json);  
@@ -86,13 +85,9 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.CORREDORES = JSON.stringify(json.corredores)
-                    sessionStorage.SUPERMERCADO=JSON.stringify(json.supermercado);
-                    sessionStorage.NOME_SUPERMERCADO=json.nomeSupermercado
-
 
                     setTimeout(function () {
-                        window.location = "dashboard/dashboard.html";
+                        window.location = "BobIa.html";
                     }, 1000); // apenas para exibir o loading
 
                 });
