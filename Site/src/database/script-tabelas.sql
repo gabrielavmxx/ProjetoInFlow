@@ -40,6 +40,15 @@ CREATE TABLE usuario(
     CHECK(acesso IN('Admin', 'Analista', 'Gestor'))
 );
 
+CREATE TABLE suporte (
+    id int AUTO_INCREMENT,
+    nome varchar(50),
+    email varchar(50),
+    senha varchar(50),
+    primary key (id),
+    unique (email)
+);  
+
 -- Tabela areas 
 CREATE TABLE areas(
     id INT PRIMARY KEY AUTO_INCREMENT,
