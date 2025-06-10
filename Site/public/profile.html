@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <title>Perfil Usuario</title>
 </head>
+
 <body>
     <div class="nav">
         <div>
@@ -23,30 +25,30 @@
         </a>
     </div>
     <form class="container-todo-perfil" id="uploadForm" action="/profile" method="post" enctype="multipart/form-data">
-            <div class="container-perfil">
-                <div class="container-foto">
-                    <p class="paragrafo-foto">Alterar foto de perfil</p>  
-                    <label for="input_foto"class="botao-customizado" id="imagem_fundo">
-                        <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
-                    </label>
-                    <input id="input_foto" type="file" name="imagem" accept="image/png, image/jpeg" required/>
+        <div class="container-perfil">
+            <div class="container-foto">
+                <p class="paragrafo-foto">Alterar foto de perfil</p>
+                <label for="input_foto" class="botao-customizado" id="imagem_fundo">
+                    <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+                </label>
+                <input id="input_foto" type="file" name="imagem" accept="image/png, image/jpeg" required />
 
-                </div>
-                <div class="container-items-foto">
-                    <div class="items-ipt">
-                        <p class="paragrafo-foto">Nome</p>
-                        <div class="ipt-container-foto icf" id="div_nome"></div>
-                    </div>
-                    <div class="items-ipt">
-                        <p class="paragrafo-foto">Email</p>
-                        <div class="ipt-container-foto icf" id="div_email"></div>
-                    </div>
-                </div>
-                <button type="submit" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
             </div>
+            <div class="container-items-foto">
+                <div class="items-ipt">
+                    <p class="paragrafo-foto">Nome</p>
+                    <div class="ipt-container-foto icf" id="div_nome"></div>
+                </div>
+                <div class="items-ipt">
+                    <p class="paragrafo-foto">Email</p>
+                    <div class="ipt-container-foto icf" id="div_email"></div>
+                </div>
+            </div>
+            <button type="submit" onclick="alterarDados()" class="btn-foto">Salvar dados</button>
+        </div>
     </form>
 
-     <div class="todo-rodape">
+    <div class="todo-rodape">
         <div class="rodape">
             <div>
                 <p class="nav_titulo">In<span style="color: teal;">Flow</span></p>
@@ -66,6 +68,7 @@
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
