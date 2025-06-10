@@ -33,6 +33,7 @@ function autenticar(req, res) {
                                         email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
                                         senha: resultadoAutenticar[0].senha,
+                                        acesso: resultadoAutenticar[0].acesso,
                                         supermercado: resultadoAutenticar[0].IdSupermercado,
                                         corredores: resultadoCorredores,
                                         nomeSupermercado: resultadoAutenticar[0].nomeSupermercado
