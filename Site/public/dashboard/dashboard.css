@@ -302,8 +302,16 @@ body {
   border-radius: 15px;
   color: azure;
 }
-
-.k1,.k2
+.botao_corredores{
+  width: 100px;
+  height: 40px;
+  background-color: #008080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.k1,.k2,
 .k3 {
   background-color: teal;
 }
