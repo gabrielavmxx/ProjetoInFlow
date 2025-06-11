@@ -296,12 +296,11 @@ width: fit-content;
   color: azure;
 }
 
-.k1,
+.k1,.k2
 .k3 {
   background-color: teal;
 }
 
-.k2,
 .k4 {
   background-color: brown;
 }
