@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styledash.css">
 </head>
 
-<body onload="listarUsuarios()">
+<body onload="listarUsuarios(), perfil()">
     <div class="container">
         <div id="menu">
             <div class="logo">
@@ -32,7 +32,7 @@
                     <div class="icon">
                         <i class="fa-solid fa-users"></i>
                     </div>
-                    <a href="cadastro.html" class="titulo">Controle de Usuários</a>
+                    <a href="./admin.html" class="titulo">Controle de Usuários</a>
                 </div>
                 <div class="box">
                     <div class="icon">
@@ -48,21 +48,24 @@
                     <p class="titulo">Sair</p>
                 </div>
             </div>
-            <div class="dadosPerfil">
-                <div class="fotoPerfil conteudo">
-                    <img src="../assets/img/homem1.jpg" alt="">
+            <div class="dadosPerfil" onclick="mudarPagina()" style="cursor: pointer;">
+                <div class="fotoPerfil conteudo" id="fotoPerfil">
+
                 </div>
-                <div class="infoPerfil conteudo">
-                    <p class="nome">Renato</p>
-                    <p class="email">renato.silva@gmail.com</p>
+                <div class="infoPerfil conteudo" id="infoPerfil">
+
                 </div>
                 <div class="maisInfo conteudo">
                     <i class="fa-solid fa-angle-right"></i>
                 </div>
             </div>
         </div>
-        <main id="main">
-            <div class="conteudoDashboard">
+    </div>
+    <main id="main">
+        <div class="conteudoDashboard">
+            <div class="div_titulo_mercado" id="div_titulo_mercado">
+            </div>
+            <div class="conteudoAdmin">
                 <div class="div_titulo">
                     <h1>Controle de Usuários</h1>
                 </div>
@@ -86,7 +89,8 @@
                     </table>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
     </div>
 </body>
 
@@ -99,9 +103,32 @@
         controleUsuario.style.display = 'none';
     }
 
+    div_titulo_mercado.innerHTML = `${sessionStorage.NOME_SUPERMERCADO}`
+
     function sair() {
         sessionStorage.clear()
         window.location.href = "../login.html";
+    }
+
+    function perfil() {
+        infoPerfil.innerHTML = `
+      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
+      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
+    `
+
+        if (sessionStorage.FOTO_PERFIL == null) {
+            fotoPerfil.innerHTML = `
+        <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+      `
+        } else {
+            fotoPerfil.innerHTML = `
+        <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="Selecione uma imagem" class="botao-customizado">
+      `
+        }
+    }
+
+    function mudarPagina() {
+        window.location.href = "../editProfile.html";
     }
 
     function listarUsuarios() {

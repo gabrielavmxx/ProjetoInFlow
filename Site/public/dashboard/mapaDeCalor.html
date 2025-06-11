@@ -36,7 +36,7 @@
           <div class="icon">
             <i class="fa-solid fa-users"></i>
           </div>
-          <a href="admin.html" class="titulo">Adicionar usuários</a>
+          <a href="admin.html" class="titulo">Adicionar Usuários</a>
         </div>
         <div class="box">
           <div class="icon">
@@ -51,13 +51,12 @@
           <p class="titulo">Sair</p>
         </div>
       </div>
-      <div class="dadosPerfil">
-        <div class="fotoPerfil conteudo">
-          <img src="../assets/img/homem1.jpg" alt="">
+      <div class="dadosPerfil" onclick="mudarPagina()" style="cursor: pointer;">
+        <div class="fotoPerfil conteudo" id="fotoPerfil">
+
         </div>
-        <div class="infoPerfil conteudo">
-          <p class="nome">Renato</p>
-          <p class="email">renato.silva@gmail.com</p>
+        <div class="infoPerfil conteudo" id="infoPerfil">
+
         </div>
         <div class="maisInfo conteudo">
           <i class="fa-solid fa-angle-right"></i>
@@ -67,6 +66,8 @@
     <!-- FIM DO MENU LATERAL -->
     <div id="main">
       <div class="conteudoDashboard">
+        <div class="div_titulo_mercado" id="div_titulo_mercado">
+        </div>
         <!-- <div id="mercadosGeral">
           <select id="select_mercadosGeral" class="btn-chart"
             onchange="exibirSupermercado(this.options[this.selectedIndex].value)">
@@ -109,9 +110,13 @@
     controleUsuario.style.display = 'none';
   }
 
+  div_titulo_mercado.innerHTML = `${sessionStorage.NOME_SUPERMERCADO}`
   var supermercado = sessionStorage.SUPERMERCADO;
+
+  window.onload = perfil();
   window.onload = buscarSupermercadoPorId();
   window.onload = atualizarKPIsTempoReal();
+
 
   var instanciaHeatmap = h337.create({
     container: document.getElementById('heatmapContainer'),
@@ -296,6 +301,26 @@
   setInterval(atualizarKPIsTempoReal, 2000);
 
 
+  function mudarPagina() {
+    window.location.href = "../editProfile.html";
+  }
+
+  function perfil() {
+    infoPerfil.innerHTML = `
+      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
+      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
+    `
+
+    if (sessionStorage.FOTO_PERFIL == null) {
+      fotoPerfil.innerHTML = `
+        <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+      `
+    } else {
+      fotoPerfil.innerHTML = `
+        <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="Selecione uma imagem" class="botao-customizado">
+      `
+    }
+  }
 
   function sair() {
     sessionStorage.clear()
