@@ -19,6 +19,7 @@ body {
   display: flex;
   height: 100%;
 }
+
 /* MENU LATERAL */
 #menu {
   position: fixed;
@@ -59,7 +60,7 @@ body {
 }
 
 #menu .agora .icon i,
-#menu .agora a{
+#menu .agora a {
   color: #ffffff;
 }
 
@@ -83,13 +84,13 @@ body {
   margin-right: 10px;
   text-align: center;
 }
+
 #menu .box i {
   color: #008080;
   font-size: 30px;
 }
 
-.box
-{
+.box {
   cursor: pointer;
 }
 
@@ -99,7 +100,7 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 10px 3px;
-  border-radius: 10px; 
+  border-radius: 10px;
   width: 100%;
 }
 
@@ -119,7 +120,8 @@ body {
   border-radius: 50px;
 }
 
-.infoPerfil p, .maisInfo i {
+.infoPerfil p,
+.maisInfo i {
   font-size: 12px;
   color: white;
 }
@@ -131,6 +133,7 @@ body {
 .infoPerfil .email {
   font-size: 11px;
 }
+
 /* FIM DO MENU LATERAL */
 
 /* DASHBOARD */
@@ -142,7 +145,8 @@ body {
   top: 0;
   left: 15%;
 }
-.div_titulo_mercado{
+
+.div_titulo_mercado {
   display: flex;
   background-color: #008080;
   height: 100px;
@@ -150,25 +154,27 @@ body {
   justify-content: center;
 }
 
-.div_escolhermes
-{
+.div_escolhermes {
   display: flex;
   align-items: center;
   padding-bottom: 15px;
   border-bottom: 2px solid gray;
 }
-.div_escolhermes .logo{
-width: fit-content;
+
+.div_escolhermes .logo {
+  width: fit-content;
 }
-.select{
+
+.select {
   border: #008080 solid 3px;
   margin: 10px;
-display: flex;
-flex-direction: row;
-  width:400px;
+  display: flex;
+  flex-direction: row;
+  width: 400px;
   padding: 10px;
 }
-.select button{
+
+.select button {
   background-color: #008080;
   color: white;
   border: none;
@@ -177,16 +183,16 @@ flex-direction: row;
   border-radius: 5px;
   cursor: pointer;
 }
-.select button:hover{
+
+.select button:hover {
   background-color: #006666;
 }
-.div_escolhermes h1{
+
+.div_escolhermes h1 {
   font-size: 70px;
-width: fit-content;
+  width: fit-content;
   margin-right: 20px;
-
 }
-
 
 .conteudoDashboard {
   width: 100%;
@@ -203,16 +209,18 @@ width: fit-content;
 
 .conteudoGrafico1 {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   width: 100%;
 }
-.corredores{
+
+.corredores {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin: 0 40px;
 }
-.corredor{
+
+.corredor {
   display: flex;
   flex-direction: column;
   border: #a8a8a8 solid 3px;
@@ -222,19 +230,19 @@ width: fit-content;
   margin: 20px;
   width: 100%;
 }
-.container-corredor{
+
+.container-corredor {
   display: flex;
   width: 80%;
   border: #a8a8a8 solid 3px;
-  justify-content:start;
+  justify-content: start;
   align-items: center;
   flex-direction: column;
   height: 700px;
   align-self: center;
 }
 
-.container-mes-card
-{
+.container-mes-card {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -243,8 +251,7 @@ width: fit-content;
   align-items: center;
 }
 
-.container-cards-grafico
-{
+.container-cards-grafico {
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -253,7 +260,7 @@ width: fit-content;
   /* background-color: teal; */
 }
 
-.conteudoGrafico{
+.conteudoGrafico {
   display: flex;
   flex-direction: row;
 }
@@ -266,7 +273,7 @@ width: fit-content;
   width: 50%;
 }
 
-.grafico #graficoPizza{
+.grafico #graficoPizza {
   width: 50%;
   height: 100%;
   border-radius: 10px;
@@ -310,7 +317,7 @@ width: fit-content;
   height: 85vh;
   border: 1px solid #ccc;
   background-image: url('../assets/img/mapa.png');
-  background-size: cover; 
+  background-size: cover;
   background-position: center;
 }
 
@@ -322,15 +329,17 @@ width: fit-content;
   align-items: center;
 
 }
-.heatmap{
+
+.heatmap {
   width: 50%;
   height: 50%;
   border: #ffffff 4px solid;
   border-radius: 20px;
 }
+
 .heatmaparea {
   margin-top: 40px;
- background-color: #008080;
+  background-color: #008080;
   width: 100%;
   height: fit-content;
   border-radius: 10px;
@@ -463,7 +472,6 @@ dash-header {
 .btn-pink {
   color: white;
   background-color: #008080
-
 }
 
 .btn-white {
@@ -594,6 +602,7 @@ canvas {
   margin-bottom: 100px;
   cursor: pointer;
 }
+
 .graficocorredores {
   display: flex;
   flex-direction: column;
@@ -602,7 +611,7 @@ canvas {
   width: 100%;
 }
 
-#ano_g3{
+#ano_g3 {
   width: 100px;
   align-self: center;
   height: 40px;
@@ -619,18 +628,17 @@ canvas {
   border: #212124;
   border-radius: 5px;
 }
+
 .graficocorredores canvas {
   width: 500px;
-  height:500px;
+  height: 500px;
 }
 
-.card-fluxo
-{
+.card-fluxo {
   margin-top: 20px;
 }
 
-.fluxo-paragrafo
-{
+.fluxo-paragrafo {
   background-color: aliceblue;
   border-radius: 10px;
   width: 300px;
@@ -641,31 +649,26 @@ canvas {
   justify-content: center;
 }
 
-.texto-card
-{
+.texto-card {
   color: teal;
   font-weight: bold;
 }
 
-.paragrafo-texto
-{
+.paragrafo-texto {
   color: teal;
   width: 80%;
 }
 
-.botao-escolher-mes
-{
+.botao-escolher-mes {
   width: 30%;
   font-weight: bold;
 }
 
-.nome-mercado
-{
+.nome-mercado {
   color: aliceblue;
 }
 
-.card-mes
-{
+.card-mes {
   width: 500px;
   height: 90px;
   display: flex;
@@ -673,11 +676,12 @@ canvas {
   border-radius: 10px;
   padding: 10px 25px;
 }
-.div_titulo_mercado{
+
+.div_titulo_mercado {
   color: white;
   font-size: 30px;
-  font-weight:300;
+  font-weight: 300;
   text-align: center;
- 
+
   font-family: 'Belanosima', sans-serif;
 }

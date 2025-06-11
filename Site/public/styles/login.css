@@ -29,6 +29,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;    
+    flex-direction: column;
 }
 
 .imagem-lateral img{
@@ -39,6 +40,24 @@ main {
 .imagem-lateral{
     display: flex;
     justify-content: flex-end;
+}
+
+.voltarCadastro, .voltarCadastro a {
+    align-self: flex-end;
+    margin-right: 40px;
+    margin-top: 15px;
+    display: flex;
+    color: black;
+    align-items: center;
+}
+
+.voltarCadastro span {
+    color: black;
+}
+
+.voltarCadastro i {
+    font-size: 32px;
+    margin-left: 10px;
 }
 
 .formulario-login{
@@ -111,6 +130,18 @@ button {
 
 p{
     font: 500 16px "Poppins", sans-serif;
+}
+
+select {
+    font: 500 14px "Poppins", sans-serif;
+    border: 1px solid #8692A6;
+    border-radius: 6px;
+    background-color: white;
+    padding: 10px;
+} 
+
+option:hover {
+    background-color: #008080;
 }
 
 .nao-cliente {

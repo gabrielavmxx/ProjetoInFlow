@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styledash.css">
 </head>
 
-<body onload="listarUsuarios()">
+<body onload="listarUsuarios(), perfil()">
     <div class="container">
         <div id="menu">
             <div class="logo">
@@ -28,17 +28,18 @@
                     </div>
                     <a href="mapaDeCalor.html" class="titulo">Dashboard de Gestão</a>
                 </div>
-                <div class="box agora">
+                <div class="box agora" id="controleUsuario">
                     <div class="icon">
                         <i class="fa-solid fa-users"></i>
                     </div>
-                    <a href="cadastro.html" class="titulo">Controle de Usuários</a>
+                    <a href="./admin.html" class="titulo">Controle de Usuários</a>
                 </div>
                 <div class="box">
                     <div class="icon">
-                        <i class="fa-solid fa-gear"></i>
+                        <i class="fa-solid fa-circle-question"></i>
                     </div>
-                    <p class="titulo">Configurações</p>
+                    <a href="https://inflowcompany.atlassian.net/servicedesk/customer/portals"
+                        class="titulo">Suporte</a>
                 </div>
                 <div class="box" onclick="sair()">
                     <div class="icon">
@@ -47,21 +48,24 @@
                     <p class="titulo">Sair</p>
                 </div>
             </div>
-            <div class="dadosPerfil">
-                <div class="fotoPerfil conteudo">
-                    <img src="../assets/img/homem1.jpg" alt="">
+            <div class="dadosPerfil" onclick="mudarPagina()" style="cursor: pointer;">
+                <div class="fotoPerfil conteudo" id="fotoPerfil">
+
                 </div>
-                <div class="infoPerfil conteudo">
-                    <p class="nome">Renato</p>
-                    <p class="email">renato.silva@gmail.com</p>
+                <div class="infoPerfil conteudo" id="infoPerfil">
+
                 </div>
                 <div class="maisInfo conteudo">
                     <i class="fa-solid fa-angle-right"></i>
                 </div>
             </div>
         </div>
-        <main id="main">
-            <div class="conteudoDashboard">
+    </div>
+    <main id="main">
+        <div class="conteudoDashboard">
+            <div class="div_titulo_mercado" id="div_titulo_mercado">
+            </div>
+            <div class="conteudoAdmin">
                 <div class="div_titulo">
                     <h1>Controle de Usuários</h1>
                 </div>
@@ -85,12 +89,48 @@
                     </table>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
     </div>
 </body>
 
 </html>
 <script>
+    var acesso = sessionStorage.ACESSO;
+    console.log(acesso)
+
+    if (acesso != 'Admin') {
+        controleUsuario.style.display = 'none';
+    }
+
+    div_titulo_mercado.innerHTML = `${sessionStorage.NOME_SUPERMERCADO}`
+
+    function sair() {
+        sessionStorage.clear()
+        window.location.href = "../login.html";
+    }
+
+    function perfil() {
+        infoPerfil.innerHTML = `
+      <p class="nome">${sessionStorage.NOME_USUARIO}</p>
+      <p class="email">${sessionStorage.EMAIL_USUARIO}</p>
+    `
+
+        if (sessionStorage.FOTO_PERFIL == null) {
+            fotoPerfil.innerHTML = `
+        <img src="../assets/img/icon_foto.jpg" alt="Selecione uma imagem" class="botao-customizado">
+      `
+        } else {
+            fotoPerfil.innerHTML = `
+        <img src="../assets/upload/users/${sessionStorage.FOTO_PERFIL}" alt="Selecione uma imagem" class="botao-customizado">
+      `
+        }
+    }
+
+    function mudarPagina() {
+        window.location.href = "../editProfile.html";
+    }
+
     function listarUsuarios() {
         var supermercado = sessionStorage.SUPERMERCADO;
         console.log(supermercado);
@@ -124,13 +164,12 @@
                             <td class="colunaEmail">${usuario.email}</td>
                             <td class="colunaAcesso">${usuario.acesso}</td>
                             <td class="colunaDelete">
-                                ${
-                                    isSelf
-                                    ? '<span style="color:gray;opacity:0.5;cursor:not-allowed;"><i class="fa-solid fa-trash"></i></span>'
-                                    : `<button onclick="deletarUsuario(${usuario.id})">
+                                ${isSelf
+                                ? '<span style="color:gray;opacity:0.5;cursor:not-allowed;"><i class="fa-solid fa-trash"></i></span>'
+                                : `<button onclick="deletarUsuario(${usuario.id})">
                                         <i class="fa-solid fa-trash" style="color: #ac0000;"></i>
                                     </button>`
-                        }
+                            }
                             </td>
                         `;
 
@@ -151,17 +190,17 @@
             fetch(`/usuarios/deletar/${idUsuario}`, {
                 method: "DELETE"
             })
-            .then(response => {
-                if (response.ok) {
-                    listarUsuarios(); // Refresh the list
-                } else {
+                .then(response => {
+                    if (response.ok) {
+                        listarUsuarios(); // Refresh the list
+                    } else {
+                        console.log("Erro ao deletar usuário.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
                     console.log("Erro ao deletar usuário.");
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                console.log("Erro ao deletar usuário.");
-            });
+                });
         }
     }
 </script>

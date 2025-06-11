@@ -19,6 +19,7 @@ body {
   display: flex;
   height: 100%;
 }
+
 /* MENU LATERAL */
 #menu {
   position: fixed;
@@ -59,7 +60,7 @@ body {
 }
 
 #menu .agora .icon i,
-#menu .agora a{
+#menu .agora a {
   color: #ffffff;
 }
 
@@ -83,6 +84,7 @@ body {
   margin-right: 10px;
   text-align: center;
 }
+
 #menu .box i {
   color: #008080;
   font-size: 30px;
@@ -94,12 +96,13 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 10px 3px;
-  border-radius: 10px; 
+  border-radius: 10px;
   width: 100%;
 }
 
 .dadosPerfil .conteudo {
   margin: 0 5px;
+  color: aliceblue;
 }
 
 .fotoPerfil {
@@ -113,7 +116,8 @@ body {
   border-radius: 50px;
 }
 
-.infoPerfil p, .maisInfo i {
+.infoPerfil p,
+.maisInfo i {
   font-size: 12px;
   color: white;
 }
@@ -125,6 +129,7 @@ body {
 .infoPerfil .email {
   font-size: 11px;
 }
+
 /* FIM DO MENU LATERAL */
 
 /* DASHBOARD */
@@ -134,16 +139,35 @@ body {
 
 #main {
   display: flex;
-  width: 75%;
+  width: 85%;
   height: fit-content;
   position: relative;
   top: 0;
-  left: 20%;
+  left: 15%;
   height: 100vh;
 }
 
 .conteudoDashboard {
   width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.div_titulo_mercado {
+  display: flex;
+  background-color: #008080;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.div_titulo_mercado {
+  color: white;
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+  font-family: 'Belanosima', sans-serif;
 }
 
 .conteudoGrafico {
@@ -203,7 +227,7 @@ body {
   height: 800px;
   border: 1px solid #ccc;
   background-image: url('mapa.png');
-  background-size: cover; 
+  background-size: cover;
   background-position: center;
 }
 
@@ -212,18 +236,21 @@ body {
   width: 100%;
   justify-content: space-evenly;
 }
-.heatmap{
+
+.heatmap {
   height: 100%;
   border: #ffffff 4px solid;
   border-radius: 20px;
 }
+
 #heatmapareas {
- background-color: #008080;
-  width: 100%;
+  background-color: #008080;
+  width: 85%;
   height: fit-content;
   border-radius: 10px;
   display: flex;
   align-items: center;
+  align-self: center;
   justify-content: center;
   flex-direction: column;
   color: white;
@@ -237,6 +264,10 @@ body {
   margin-top: 30px;
   flex-wrap: wrap;
   padding: 0 30% 0 30%;
+}
+
+.display-none {
+  display: none;
 }
 
 .graph {
@@ -295,6 +326,7 @@ canvas {
   width: 100%;
   height: 100%;
 }
+
 .btns-dash {
   display: flex;
   align-items: center;
@@ -303,6 +335,7 @@ canvas {
   flex-wrap: wrap;
   padding: 0 30% 0 30%;
 }
+
 .btn-chart {
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border: 0;
@@ -317,6 +350,11 @@ canvas {
 }
 
 /* USUÁRIOS */
+.conteudoAdmin {
+  width: 85%;
+  align-self: center;
+}
+
 .div_titulo {
   margin-top: 20px;
 }
@@ -347,7 +385,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding: 10px;
 }
@@ -358,4 +397,8 @@ thead {
 
 td {
   border-bottom: 1px solid #008080;
+}
+
+.colunaDelete {
+  text-align: center;
 }
