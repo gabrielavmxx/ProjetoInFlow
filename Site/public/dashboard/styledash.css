@@ -398,3 +398,7 @@ thead {
 td {
   border-bottom: 1px solid #008080;
 }
+
+.colunaDelete {
+  text-align: center;
+}
